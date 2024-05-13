@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CORSPolicy", builder => builder.WithOrigins("http://localhost:4200/").AllowAnyMethod().AllowAnyHeader().AllowCredentials().SetIsOriginAllowed((host) => true));
+    options.AddPolicy("CORSPolicy", builder => builder.WithOrigins("https://apclone-22ec7.web.app/").AllowAnyMethod().AllowAnyHeader().AllowCredentials().SetIsOriginAllowed((host) => true));
 
 });
 
@@ -43,7 +43,8 @@ builder.Services.AddIdentityApiEndpoints<IdentityUser>()
 builder.Services.AddScoped<ISinhVienDependency, SinhVienDependency>();
 builder.Services.AddScoped<IGiangVienDependency, GiangVienDependency>();
 builder.Services.AddScoped<IMonHocDependency, MonHocDependency>();
-builder.Services.AddScoped<IPhongHocDependency, PhongHocDependency>();
+builder.Services.AddScoped<IPhongHocDependency, PhongHocDependency>(); 
+builder.Services.AddScoped<IMonHocChiTietDependency, MonHocChiTietDependency>();
 
 
 var app = builder.Build();
@@ -51,9 +52,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+  
+}  app.UseSwagger();
     app.UseSwaggerUI();
-}
 app.UseCors("CORSPolicy");
 app.UseRouting();
 app.MapIdentityApi<IdentityUser>();

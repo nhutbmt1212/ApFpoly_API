@@ -33,12 +33,8 @@ namespace ApFpoly_API.Controllers
             try
             {
                 
-                for (global::System.Int32 i = 0; i < 1000; i++)
-                {
-                    MonHoc.MaMonHoc = (i+1).ToString();
-                  var  MonHocMoi = _MonHoc.ThemMonHoc(MonHoc);
-                }
-               
+                      var  MonHocMoi = _MonHoc.ThemMonHoc(MonHoc);
+          
                 return Ok(new { success = true, data = MonHoc });
             }
             catch (Exception ex)

@@ -31,6 +31,11 @@ namespace ApFpoly_API.Model
         [ForeignKey("MaPhong")]
         public virtual PhongHoc PhongHoc { get; set; }
 
+        [StringLength(7)]
+        public string MaHocKyBlock { get; set; }
+        [ForeignKey("MaHocKyBlock")]
+        public virtual HocKyBlock HocKyBlock { get; set; }
+
 
         public sbyte? DiemSo { get; set; }
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApFpoly_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240510144442_fixMonHocChiTiet")]
-    partial class fixMonHocChiTiet
+    [Migration("20240513080249_InitDataContext")]
+    partial class InitDataContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,6 +98,38 @@ namespace ApFpoly_API.Migrations
                     b.ToTable("GiangVien");
                 });
 
+            modelBuilder.Entity("ApFpoly_API.Model.HocKyBlock", b =>
+                {
+                    b.Property<string>("MaHocKyBlock")
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<DateTime>("NgayBatDau")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayKetThuc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TenBlock")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("TenHocKy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("TinhTrang")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("MaHocKyBlock");
+
+                    b.ToTable("HocKyBlock");
+                });
+
             modelBuilder.Entity("ApFpoly_API.Model.MonHoc", b =>
                 {
                     b.Property<string>("MaMonHoc")
@@ -160,6 +192,11 @@ namespace ApFpoly_API.Migrations
                         .HasMaxLength(7)
                         .HasColumnType("nvarchar(7)");
 
+                    b.Property<string>("MaHocKyBlock")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
                     b.Property<string>("MaMonHoc")
                         .IsRequired()
                         .HasMaxLength(7)
@@ -189,6 +226,8 @@ namespace ApFpoly_API.Migrations
                     b.HasKey("MaMonHocChiTiet");
 
                     b.HasIndex("MaGiangVien");
+
+                    b.HasIndex("MaHocKyBlock");
 
                     b.HasIndex("MaMonHoc");
 
@@ -312,6 +351,12 @@ namespace ApFpoly_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ApFpoly_API.Model.HocKyBlock", "HocKyBlock")
+                        .WithMany()
+                        .HasForeignKey("MaHocKyBlock")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ApFpoly_API.Model.MonHoc", "MonHoc")
                         .WithMany()
                         .HasForeignKey("MaMonHoc")
@@ -331,6 +376,8 @@ namespace ApFpoly_API.Migrations
                         .IsRequired();
 
                     b.Navigation("GiangVien");
+
+                    b.Navigation("HocKyBlock");
 
                     b.Navigation("MonHoc");
 

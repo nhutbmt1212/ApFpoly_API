@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ApFpoly_API.Migrations
 {
     /// <inheritdoc />
-    public partial class fixMonHocChiTiet : Migration
+    public partial class InitDataContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,6 +34,22 @@ namespace ApFpoly_API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GiangVien", x => x.MaGiangVien);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HocKyBlock",
+                columns: table => new
+                {
+                    MaHocKyBlock = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    TenHocKy = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    TenBlock = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    NgayBatDau = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NgayKetThuc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TinhTrang = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HocKyBlock", x => x.MaHocKyBlock);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,6 +120,7 @@ namespace ApFpoly_API.Migrations
                     MaMonHoc = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     MaGiangVien = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     MaPhong = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    MaHocKyBlock = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     DiemSo = table.Column<short>(type: "smallint", nullable: true),
                     HocKy = table.Column<short>(type: "smallint", nullable: false),
                     Lop = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
@@ -120,6 +137,12 @@ namespace ApFpoly_API.Migrations
                         column: x => x.MaGiangVien,
                         principalTable: "GiangVien",
                         principalColumn: "MaGiangVien",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MonHocChiTiet_HocKyBlock_MaHocKyBlock",
+                        column: x => x.MaHocKyBlock,
+                        principalTable: "HocKyBlock",
+                        principalColumn: "MaHocKyBlock",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MonHocChiTiet_MonHoc_MaMonHoc",
@@ -147,6 +170,11 @@ namespace ApFpoly_API.Migrations
                 column: "MaGiangVien");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MonHocChiTiet_MaHocKyBlock",
+                table: "MonHocChiTiet",
+                column: "MaHocKyBlock");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MonHocChiTiet_MaMonHoc",
                 table: "MonHocChiTiet",
                 column: "MaMonHoc");
@@ -170,6 +198,9 @@ namespace ApFpoly_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "GiangVien");
+
+            migrationBuilder.DropTable(
+                name: "HocKyBlock");
 
             migrationBuilder.DropTable(
                 name: "MonHoc");

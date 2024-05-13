@@ -16,7 +16,9 @@ namespace ApFpoly_API.Data
         public DbSet<GiangVien> GiangVien { get; set; }
         public DbSet<MonHoc> MonHoc { get; set; }
         public DbSet<PhongHoc> PhongHoc { get; set; }
+        public DbSet<HocKyBlock> HocKyBlock { get; set; }
         public DbSet<MonHocChiTiet> MonHocChiTiet { get; set; }
+
         //protected override void OnModelCreating(ModelBuilder modelbuilder)
         //{
         //    modelbuilder.Entity<MonHocChiTiet>()
