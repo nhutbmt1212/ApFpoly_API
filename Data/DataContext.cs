@@ -16,7 +16,6 @@ namespace ApFpoly_API.Data
         public DbSet<HocKyBlock> HocKyBlock { get; set; }
         public DbSet<LopHoc> LopHoc { get; set; }
         public DbSet<LopHocChiTiet> LopHocChiTiet { get; set; }
-        public DbSet<MonHocChiTiet> MonHocChiTiet { get; set; }
         public DbSet<LichHoc> LichHoc { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -314,7 +313,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Toán Cao Cấp",
               NgayTao = new DateTime(2023, 1, 10),
               TinChi = 3,
-              ThoiGianHoc = 45,
+              SoBuoi = 45,
               NoiDungMonHoc = "Toán cao cấp dành cho sinh viên ngành kỹ thuật.",
               TaiLieu = "Giáo trình Toán Cao Cấp - Tập 1",
               TinhTrang = "Hoạt động"
@@ -325,7 +324,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Vật Lý Đại Cương",
               NgayTao = new DateTime(2023, 1, 12),
               TinChi = 4,
-              ThoiGianHoc = 60,
+              SoBuoi = 60,
               NoiDungMonHoc = "Kiến thức cơ bản về vật lý cho sinh viên.",
               TaiLieu = "Giáo trình Vật Lý Đại Cương",
               TinhTrang = "Hoạt động"
@@ -336,7 +335,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Hóa Học Cơ Bản",
               NgayTao = new DateTime(2023, 1, 15),
               TinChi = 3,
-              ThoiGianHoc = 45,
+              SoBuoi = 45,
               NoiDungMonHoc = "Kiến thức hóa học cơ bản cho sinh viên không chuyên.",
               TaiLieu = "Giáo trình Hóa Học Cơ Bản",
               TinhTrang = "Hoạt động"
@@ -347,7 +346,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Lập Trình C",
               NgayTao = new DateTime(2023, 1, 18),
               TinChi = 3,
-              ThoiGianHoc = 45,
+              SoBuoi = 45,
               NoiDungMonHoc = "Giới thiệu về lập trình C.",
               TaiLieu = "Giáo trình Lập Trình C",
               TinhTrang = "Hoạt động"
@@ -358,7 +357,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Cơ Sở Dữ Liệu",
               NgayTao = new DateTime(2023, 1, 20),
               TinChi = 4,
-              ThoiGianHoc = 60,
+              SoBuoi = 60,
               NoiDungMonHoc = "Kiến thức cơ bản về cơ sở dữ liệu.",
               TaiLieu = "Giáo trình Cơ Sở Dữ Liệu",
               TinhTrang = "Hoạt động"
@@ -369,7 +368,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Hệ Điều Hành",
               NgayTao = new DateTime(2023, 1, 22),
               TinChi = 3,
-              ThoiGianHoc = 45,
+              SoBuoi = 45,
               NoiDungMonHoc = "Giới thiệu về hệ điều hành và các khái niệm cơ bản.",
               TaiLieu = "Giáo trình Hệ Điều Hành",
               TinhTrang = "Hoạt động"
@@ -380,7 +379,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Mạng Máy Tính",
               NgayTao = new DateTime(2023, 1, 25),
               TinChi = 3,
-              ThoiGianHoc = 45,
+              SoBuoi = 45,
               NoiDungMonHoc = "Kiến thức cơ bản về mạng máy tính.",
               TaiLieu = "Giáo trình Mạng Máy Tính",
               TinhTrang = "Hoạt động"
@@ -391,7 +390,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Trí Tuệ Nhân Tạo",
               NgayTao = new DateTime(2023, 1, 27),
               TinChi = 4,
-              ThoiGianHoc = 60,
+              SoBuoi = 60,
               NoiDungMonHoc = "Giới thiệu về trí tuệ nhân tạo và các ứng dụng.",
               TaiLieu = "Giáo trình Trí Tuệ Nhân Tạo",
               TinhTrang = "Hoạt động"
@@ -402,7 +401,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Phân Tích Thiết Kế Hệ Thống",
               NgayTao = new DateTime(2023, 1, 29),
               TinChi = 3,
-              ThoiGianHoc = 45,
+              SoBuoi = 45,
               NoiDungMonHoc = "Giới thiệu về phân tích và thiết kế hệ thống.",
               TaiLieu = "Giáo trình Phân Tích Thiết Kế Hệ Thống",
               TinhTrang = "Hoạt động"
@@ -413,7 +412,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Kinh Tế Học",
               NgayTao = new DateTime(2023, 1, 31),
               TinChi = 3,
-              ThoiGianHoc = 45,
+              SoBuoi = 45,
               NoiDungMonHoc = "Kiến thức cơ bản về kinh tế học.",
               TaiLieu = "Giáo trình Kinh Tế Học",
               TinhTrang = "Hoạt động"

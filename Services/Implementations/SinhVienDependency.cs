@@ -14,7 +14,7 @@ namespace ApFpoly_API.Services.Implementations
         }
         public List<SinhVien> LaySinhVien()
         {
-            var getSinhVien = _db.SinhVien.ToList();
+            var getSinhVien = _db.SinhVien.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
             return getSinhVien;
         }
 

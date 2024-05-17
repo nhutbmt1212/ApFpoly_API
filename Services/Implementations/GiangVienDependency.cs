@@ -14,7 +14,7 @@ namespace ApFpoly_API.Services.Implementations
         }
         public List<GiangVien> LayGiangVien()
         {
-            var getGiangVien = _db.GiangVien.ToList();
+            var getGiangVien = _db.GiangVien.Where(s=>s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
             return getGiangVien;
         }
 

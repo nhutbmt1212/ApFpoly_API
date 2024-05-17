@@ -15,10 +15,7 @@ namespace ApFpoly_API.Model
 
      
         public sbyte? TinChi { get; set; }
-
-        public sbyte? ThoiGianHoc { get; set; }
-
-        
+        public sbyte SoBuoi { get; set; }
         public string? NoiDungMonHoc { get; set; }
 
 

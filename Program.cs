@@ -47,7 +47,10 @@ builder.Services.AddScoped<ISinhVienDependency, SinhVienDependency>();
 builder.Services.AddScoped<IGiangVienDependency, GiangVienDependency>();
 builder.Services.AddScoped<IMonHocDependency, MonHocDependency>();
 builder.Services.AddScoped<IPhongHocDependency, PhongHocDependency>(); 
-builder.Services.AddScoped<IMonHocChiTietDependency, MonHocChiTietDependency>();
+builder.Services.AddScoped<ILopHocChiTietDependency, LopHocChiTietDependency>(); 
+builder.Services.AddScoped<ILichHocDependency, LichHocDependency>();
+builder.Services.AddScoped<ILopHocDependency, LopHocDependency>(); 
+builder.Services.AddScoped<IHocKyBlockDependency, HocKyBlockDependency>();
 
 
 var app = builder.Build();

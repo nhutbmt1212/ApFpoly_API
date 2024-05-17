@@ -14,7 +14,7 @@ namespace ApFpoly_API.Services.Implementations
         }
         public List<MonHoc> LayMonHoc()
         {
-            var getMonHoc = _db.MonHoc.ToList();
+            var getMonHoc = _db.MonHoc.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
             return getMonHoc;
         }
 

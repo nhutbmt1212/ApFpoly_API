@@ -15,8 +15,24 @@ namespace ApFpoly_API.Model
         [Required,MaxLength(30)]
         public string TinhTrang { get; set; }
         [MaxLength(7)]
-        public string MaMonHocChiTiet { get; set; } // Khóa ngoại
-        [ForeignKey("MaMonHocChiTiet")]
-        public virtual MonHocChiTiet MonHocChiTiet { get; set; }
+        public string MaLop { get; set; } // Khóa ngoại
+        [ForeignKey("MaLop")]
+        public virtual LopHoc LopHoc { get; set; }
+        [MaxLength(7)]
+        public string MaHocKyBlock { get; set; } // Khóa ngoại
+        [ForeignKey("MaHocKyBlock")]
+        public virtual HocKyBlock HocKyBlock { get; set; }
+        [MaxLength(7)]
+        public string MaPhong { get; set; } // Khóa ngoại
+        [ForeignKey("MaPhong")]
+        public virtual PhongHoc PhongHoc { get; set; }
+        [MaxLength(7)]
+        public string MaGiangVien { get; set; } // Khóa ngoại
+        [ForeignKey("MaGiangVien ")]
+        public virtual GiangVien GiangVien { get; set; }
+        [MaxLength(7)]
+        public string MaMonHoc { get; set; } // Khóa ngoại
+        [ForeignKey("MaMonHoc")]
+        public virtual MonHoc MonHoc { get; set; }
     }
 }

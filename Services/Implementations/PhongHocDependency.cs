@@ -14,7 +14,7 @@ namespace ApFpoly_API.Services.Implementations
         }
         public List<PhongHoc> LayPhongHoc()
         {
-            var getPhongHoc = _db.PhongHoc.ToList();
+            var getPhongHoc = _db.PhongHoc.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
             return getPhongHoc;
         }
 

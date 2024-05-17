@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ApFpoly_API.DTO;
+using ApFpoly_API.Model;
+using ApFpoly_API.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace ApFpoly_API.Controllers
 {
@@ -7,5 +12,77 @@ namespace ApFpoly_API.Controllers
     [ApiController]
     public class LopHocChiTietController : ControllerBase
     {
+        private readonly ILopHocChiTietDependency _lopHocChiTietDependency;
+
+        public LopHocChiTietController(ILopHocChiTietDependency lopHocChiTietDependency)
+        {
+            _lopHocChiTietDependency = lopHocChiTietDependency;
+        }
+
+        [HttpGet]
+        public IActionResult GetAllLopHocChiTiet()
+        {
+            var result = _lopHocChiTietDependency.LayLopHocChiTiet();
+            return Ok(result);
+        }
+
+        [HttpGet, Route("GetLopHocChiTietTheoId/{id}")]
+        public IActionResult GetLopHocChiTietTheoId(string id)
+        {
+            var result = _lopHocChiTietDependency.LayLopHocChiTietTheoMa(id);
+            return Ok(result);
+        }
+
+        [HttpPost, Route("ThemLopHocChiTiet")]
+        public IActionResult ThemLopHocChiTiet(LopHocChiTietDTO lopHocChiTiet)
+        {
+            try
+            {
+                var newLopHocChiTiet = new LopHocChiTiet
+                {
+                    MaLopHocChiTiet = lopHocChiTiet.MaLopHocChiTiet,
+                    MaLop = lopHocChiTiet.MaLop,
+                    MaSinhVien = lopHocChiTiet.MaSinhVien,
+                    TinhTrang = lopHocChiTiet.TinhTrang
+                };
+
+                var addedLopHocChiTiet = _lopHocChiTietDependency.ThemLopHocChiTiet(newLopHocChiTiet);
+
+                return Ok(new { success = true, data = addedLopHocChiTiet });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+
+        [HttpPut, Route("{id}")]
+        public async Task<IActionResult> SuaLopHocChiTiet(string id, LopHocChiTiet lopHocChiTiet)
+        {
+            try
+            {
+                var updatedLopHocChiTiet = await _lopHocChiTietDependency.SuaLopHocChiTiet(lopHocChiTiet);
+                return Ok(new { success = true, data = updatedLopHocChiTiet });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpDelete, Route("{id}")]
+        public async Task<IActionResult> XoaLopHocChiTiet(string id)
+        {
+            try
+            {
+                var deletedLopHocChiTiet = await _lopHocChiTietDependency.XoaLopHocChiTiet(id);
+                return Ok(new { success = true, message = deletedLopHocChiTiet });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

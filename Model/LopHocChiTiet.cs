@@ -17,11 +17,7 @@ namespace ApFpoly_API.Model
         [ForeignKey("MaSinhVien")]
         public virtual SinhVien SinhVien { get; set; }
         [StringLength(7)]
-        public string? MaMonHocChiTiet { get; set; } // Khóa ngoại
-        [ForeignKey("MaMonHocChiTiet")]
-        public virtual MonHocChiTiet MonHocChiTiet { get; set; }
-        [Required, MaxLength(30)]
-        public double DiemSo { get; set; }
+   
         [Required,MaxLength(30)]
         public string TinhTrang { get; set; }
     }
