@@ -14,7 +14,7 @@ namespace ApFpoly_API.Services.Implementations
         }
         public List<MonHocChiTiet> LayMonHocChiTiet()
         {
-            var getMonHocChiTiet = _db.MonHocChiTiet.Include(x =>x.SinhVien).Include(x=>x.HocKyBlock).Include(x=>x.GiangVien).Include(x=>x.MonHoc).Include(x=>x.PhongHoc).ToList();
+            var getMonHocChiTiet = _db.MonHocChiTiet.Include(x=>x.HocKyBlock).Include(x=>x.GiangVien).Include(x=>x.MonHoc).Include(x=>x.PhongHoc).ToList();
             return getMonHocChiTiet;
         }
 

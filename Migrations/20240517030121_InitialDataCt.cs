@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ApFpoly_API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDataContext : Migration
+    public partial class InitialDataCt : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,21 @@ namespace ApFpoly_API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HocKyBlock", x => x.MaHocKyBlock);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LopHoc",
+                columns: table => new
+                {
+                    MaLop = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    TenLop = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SucChua = table.Column<short>(type: "smallint", nullable: false),
+                    TinhTrang = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LopHoc", x => x.MaLop);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,15 +131,10 @@ namespace ApFpoly_API.Migrations
                 columns: table => new
                 {
                     MaMonHocChiTiet = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
-                    MaSinhVien = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     MaMonHoc = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     MaGiangVien = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     MaPhong = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     MaHocKyBlock = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
-                    DiemSo = table.Column<short>(type: "smallint", nullable: true),
-                    HocKy = table.Column<short>(type: "smallint", nullable: false),
-                    Lop = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    Block = table.Column<short>(type: "smallint", maxLength: 1, nullable: false),
                     NgayBatDau = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NgayKetThuc = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TinhTrang = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
@@ -156,13 +166,81 @@ namespace ApFpoly_API.Migrations
                         principalTable: "PhongHoc",
                         principalColumn: "MaPhong",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LichHoc",
+                columns: table => new
+                {
+                    MaLichHoc = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    ThoiGianBatDau = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ThoiGianKetThuc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TinhTrang = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    MaMonHocChiTiet = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LichHoc", x => x.MaLichHoc);
                     table.ForeignKey(
-                        name: "FK_MonHocChiTiet_SinhVien_MaSinhVien",
+                        name: "FK_LichHoc_MonHocChiTiet_MaMonHocChiTiet",
+                        column: x => x.MaMonHocChiTiet,
+                        principalTable: "MonHocChiTiet",
+                        principalColumn: "MaMonHocChiTiet",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LopHocChiTiet",
+                columns: table => new
+                {
+                    MaLopHocChiTiet = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    MaLop = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    MaSinhVien = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    MaMonHocChiTiet = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
+                    DiemSo = table.Column<double>(type: "float", maxLength: 30, nullable: false),
+                    TinhTrang = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LopHocChiTiet", x => x.MaLopHocChiTiet);
+                    table.ForeignKey(
+                        name: "FK_LopHocChiTiet_LopHoc_MaLop",
+                        column: x => x.MaLop,
+                        principalTable: "LopHoc",
+                        principalColumn: "MaLop",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LopHocChiTiet_MonHocChiTiet_MaMonHocChiTiet",
+                        column: x => x.MaMonHocChiTiet,
+                        principalTable: "MonHocChiTiet",
+                        principalColumn: "MaMonHocChiTiet");
+                    table.ForeignKey(
+                        name: "FK_LopHocChiTiet_SinhVien_MaSinhVien",
                         column: x => x.MaSinhVien,
                         principalTable: "SinhVien",
                         principalColumn: "MaSinhVien",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LichHoc_MaMonHocChiTiet",
+                table: "LichHoc",
+                column: "MaMonHocChiTiet");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LopHocChiTiet_MaLop",
+                table: "LopHocChiTiet",
+                column: "MaLop");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LopHocChiTiet_MaMonHocChiTiet",
+                table: "LopHocChiTiet",
+                column: "MaMonHocChiTiet");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LopHocChiTiet_MaSinhVien",
+                table: "LopHocChiTiet",
+                column: "MaSinhVien");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MonHocChiTiet_MaGiangVien",
@@ -183,18 +261,25 @@ namespace ApFpoly_API.Migrations
                 name: "IX_MonHocChiTiet_MaPhong",
                 table: "MonHocChiTiet",
                 column: "MaPhong");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MonHocChiTiet_MaSinhVien",
-                table: "MonHocChiTiet",
-                column: "MaSinhVien");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "LichHoc");
+
+            migrationBuilder.DropTable(
+                name: "LopHocChiTiet");
+
+            migrationBuilder.DropTable(
+                name: "LopHoc");
+
+            migrationBuilder.DropTable(
                 name: "MonHocChiTiet");
+
+            migrationBuilder.DropTable(
+                name: "SinhVien");
 
             migrationBuilder.DropTable(
                 name: "GiangVien");
@@ -207,9 +292,6 @@ namespace ApFpoly_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "PhongHoc");
-
-            migrationBuilder.DropTable(
-                name: "SinhVien");
         }
     }
 }

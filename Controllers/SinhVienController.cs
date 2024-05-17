@@ -2,6 +2,12 @@
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
+using System.Net.NetworkInformation;
+using System.Net.WebSockets;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace ApFpoly_API.Controllers
 {
@@ -9,7 +15,9 @@ namespace ApFpoly_API.Controllers
     [ApiController]
     public class SinhVienController : ControllerBase
     {
+
         private readonly ISinhVienDependency _sinhVien;
+        static int soLuongSinhVien;
         public SinhVienController(ISinhVienDependency sinhVien)
         {
              _sinhVien = sinhVien;
@@ -18,6 +26,7 @@ namespace ApFpoly_API.Controllers
         public IActionResult GetAllSinhVien()
         {
           var result = _sinhVien.LaySinhVien();
+            soLuongSinhVien = result.Count();
             return Ok(result);
         }
 
@@ -31,7 +40,12 @@ namespace ApFpoly_API.Controllers
         {
             try
             {
+                string Base64String = sinhvien.AnhSinhVien;
+                DateTime now = new DateTime();
+                sinhvien.MaSinhVien = "PK" + (soLuongSinhVien + 1).ToString("D4");
+                sinhvien.AnhSinhVien = TaoTenFile(sinhvien.MaSinhVien, Base64String);
                 var sinhVienMoi = _sinhVien.ThemSinhVien(sinhvien);
+                XuLyAnhBase64(sinhvien.AnhSinhVien, Base64String);
                 return Ok(new { success = true, data = sinhVienMoi }) ;
             }
             catch (Exception ex)
@@ -39,6 +53,26 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(new { success = false , message = ex.Message});
             }
         }
+        private string TaoTenFile(string TenFile, string base64String)
+        {
+            var parts = base64String.Split(',');
+            string mediaType = parts[0];
+            var format = mediaType.Split(';')[0].Split('/')[1];
+            string fileName = $"Image_{TenFile}.{format}";
+            return fileName;
+
+        }
+
+        private void XuLyAnhBase64(string TenFile,string base64String)
+        {
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+            var parts = base64String.Split(',');
+            string base64 = parts[1];
+            byte[] imageBytes = Convert.FromBase64String(base64);
+            string filePath =Path.Combine(folderPath, TenFile);
+            System.IO.File.WriteAllBytes(filePath, imageBytes);
+        }
+
         [HttpPut,Route("{id}")]
         public async Task<IActionResult> SuaSinhVien(string id, SinhVien sinhVien)
         {

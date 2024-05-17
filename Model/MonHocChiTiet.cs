@@ -11,12 +11,6 @@ namespace ApFpoly_API.Model
         public string MaMonHocChiTiet { get; set; }
 
         [StringLength(7)]
-        public string MaSinhVien { get; set; }
-        [ForeignKey("MaSinhVien")]
-        public virtual SinhVien SinhVien { get; set;}
-
-
-        [StringLength(7)]
         public string MaMonHoc { get; set; }
         [ForeignKey("MaMonHoc")]
         public virtual MonHoc MonHoc { get; set; }
@@ -35,18 +29,6 @@ namespace ApFpoly_API.Model
         public string MaHocKyBlock { get; set; }
         [ForeignKey("MaHocKyBlock")]
         public virtual HocKyBlock HocKyBlock { get; set; }
-
-
-        public sbyte? DiemSo { get; set; }
-
-        [Required]
-        public sbyte? HocKy { get; set; }
-
-        [MaxLength(15), Required]
-        public string? Lop { get; set; }
-
-        [MaxLength(1), Required]
-        public sbyte? Block { get; set; }
 
         [Required]
         public DateTime NgayBatDau { get; set; }

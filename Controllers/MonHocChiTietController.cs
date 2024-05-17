@@ -36,14 +36,10 @@ namespace ApFpoly_API.Controllers
                 var monHocChiTiet = new MonHocChiTiet
                 {
                     MaMonHocChiTiet = MonHocChiTiet.MaMonHocChiTiet,
-                    MaSinhVien = MonHocChiTiet.MaSinhVien,
+                  
                     MaMonHoc = MonHocChiTiet.MaMonHoc,
                     MaGiangVien = MonHocChiTiet.MaGiangVien,
                     MaPhong = MonHocChiTiet.MaPhong,
-                    DiemSo = MonHocChiTiet.DiemSo,
-                    HocKy = MonHocChiTiet.HocKy,
-                    Lop = MonHocChiTiet.Lop,
-                    Block = MonHocChiTiet.Block,
                     NgayBatDau = MonHocChiTiet.NgayBatDau,
                     NgayKetThuc = MonHocChiTiet.NgayKetThuc,
                     TinhTrang = MonHocChiTiet.TinhTrang,
