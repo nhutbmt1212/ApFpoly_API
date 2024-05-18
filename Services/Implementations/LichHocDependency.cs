@@ -1,4 +1,5 @@
 ﻿using ApFpoly_API.Data;
+using ApFpoly_API.DTO;
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +21,17 @@ namespace ApFpoly_API.Services.Implementations
 
         public List<LichHoc> LayDanhSachLichHoc()
         {
-            return _dbContext.LichHoc.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
+            return _dbContext.LichHoc.Include(x => x.GiangVien).Include(x => x.LopHoc).Include(x => x.MonHoc).Include(x => x.PhongHoc).Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
         }
 
         public LichHoc LayLichHocTheoId(string id)
         {
             return _dbContext.LichHoc.FirstOrDefault(x => x.MaLichHoc == id);
+        }
+
+        public List<LichHoc> LayLichHocTheoMaHocKyBlockVaLop(HocKyBlockVaLopDTO hocKyBlockVaLopDTO)
+        {
+            return _dbContext.LichHoc.Include(x => x.GiangVien).Include(x => x.LopHoc).Include(x => x.MonHoc).Include(x => x.PhongHoc).Where(x => x.MaHocKyBlock == hocKyBlockVaLopDTO.MaHocKyBlock && x.MaLop == hocKyBlockVaLopDTO.MaLop).ToList();
         }
 
         public List<LichHoc> ThemLichHoc(List<LichHoc> lichHoc)

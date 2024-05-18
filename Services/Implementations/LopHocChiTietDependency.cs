@@ -28,6 +28,11 @@ namespace ApFpoly_API.Services.Implementations
             return _db.LopHocChiTiet.FirstOrDefault(s => s.MaLopHocChiTiet == MaLopHocChiTiet);
         }
 
+        public  List<LopHocChiTiet> LayLopHocChiTietTheoMaLop(string MaLop)
+        {
+            return _db.LopHocChiTiet.Where(s => s.MaLop == MaLop).ToList();
+        }
+
         public async Task<LopHocChiTiet> SuaLopHocChiTiet(LopHocChiTiet lopHocChiTiet)
         {
             try

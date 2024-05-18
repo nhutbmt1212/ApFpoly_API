@@ -52,5 +52,12 @@ namespace ApFpoly_API.Services.Implementations
             }
             return hocKyBlock;
         }
+
+        public HocKyBlock LayHocKyBlockHienTai()
+        {
+            DateTime datetime = DateTime.Now;
+            var hocKyBlock = _dbContext.HocKyBlock.FirstOrDefault(x=>x.NgayBatDau < datetime && x.NgayKetThuc > datetime);
+            return hocKyBlock;
+        }
     }
 }

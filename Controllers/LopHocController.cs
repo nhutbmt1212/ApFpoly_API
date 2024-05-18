@@ -33,6 +33,7 @@ namespace ApFpoly_API.Controllers
             return Ok(result);
         }
 
+
         [HttpPost, Route("ThemLopHoc")]
         public IActionResult ThemLopHoc(LopHoc lopHoc)
         {

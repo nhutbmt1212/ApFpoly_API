@@ -7,6 +7,7 @@ namespace ApFpoly_API.Services.Interfaces
     public interface IHocKyBlockDependency
     {
         List<HocKyBlock> LayHocKyBlock();
+        HocKyBlock LayHocKyBlockHienTai();
         HocKyBlock LayHocKyBlockTheoMa(string MaHocKyBlock);
 
         HocKyBlock ThemHocKyBlock(HocKyBlock hocKyBlock);

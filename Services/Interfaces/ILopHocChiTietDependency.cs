@@ -7,6 +7,8 @@ namespace ApFpoly_API.Services.Interfaces
         List<LopHocChiTiet> LayLopHocChiTiet();
         LopHocChiTiet LayLopHocChiTietTheoMa(string MaLopHocChiTiet);
 
+        List<LopHocChiTiet> LayLopHocChiTietTheoMaLop(string MaLop);
+
         LopHocChiTiet ThemLopHocChiTiet(LopHocChiTiet lopHocChiTiet);
 
         Task<LopHocChiTiet> SuaLopHocChiTiet(LopHocChiTiet lopHocChiTiet);

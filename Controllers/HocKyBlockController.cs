@@ -33,6 +33,13 @@ namespace ApFpoly_API.Controllers
             return Ok(result);
         }
 
+        [HttpGet, Route("GetHocKyBlockHienTai")]
+        public IActionResult GetHocKyBlockHienTai()
+        {
+            var result = _hocKyBlockDependency.LayHocKyBlockHienTai();
+            return Ok(result);
+        }
+
         [HttpPost, Route("ThemHocKyBlock")]
         public IActionResult ThemHocKyBlock(HocKyBlock hocKyBlock)
         {

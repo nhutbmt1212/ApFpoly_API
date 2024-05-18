@@ -31,6 +31,14 @@ namespace ApFpoly_API.Controllers
         {
             var result = _lopHocChiTietDependency.LayLopHocChiTietTheoMa(id);
             return Ok(result);
+
+
+        }
+        [HttpGet, Route("GetLopHocChiTietTheoIdLop/{id}")]
+        public IActionResult GetLopHocChiTietTheoIdLop(string id)
+        {
+            var result = _lopHocChiTietDependency.LayLopHocChiTietTheoMaLop(id);
+            return Ok(result);
         }
 
         [HttpPost, Route("ThemLopHocChiTiet")]

@@ -11,11 +11,15 @@ namespace ApFpoly_API.Controllers
     [ApiController]
     public class LichHocController : ControllerBase
     {
+     
         private readonly ILichHocDependency _lichHocDependency;
+        private readonly IHocKyBlockDependency _hocKyBlockDependency;
 
-        public LichHocController(ILichHocDependency lichHocDependency)
+
+        public LichHocController(ILichHocDependency lichHocDependency, IHocKyBlockDependency hocKyBlockDependency)
         {
             _lichHocDependency = lichHocDependency;
+            _hocKyBlockDependency = hocKyBlockDependency;
         }
 
         [HttpGet]
@@ -29,6 +33,22 @@ namespace ApFpoly_API.Controllers
         public IActionResult LayLichHocTheoId(string id)
         {
             var lichHoc = _lichHocDependency.LayLichHocTheoId(id);
+            if (lichHoc == null)
+            {
+                return NotFound();
+            }
+            return Ok(lichHoc);
+        }
+
+        [HttpGet("LayLichHocTheoMaHocKyBlockVaMaLop/{id}")]
+        public IActionResult LayLichHocTheoMaHocKyBlockVaMaLop(string id)
+        {
+            var hocKyBlockHienTai = _hocKyBlockDependency.LayHocKyBlockHienTai();
+            var hocKyBlockVaLop = new HocKyBlockVaLopDTO();
+            hocKyBlockVaLop.MaLop = id;
+            hocKyBlockVaLop.MaHocKyBlock = hocKyBlockHienTai.MaHocKyBlock;
+
+            var lichHoc = _lichHocDependency.LayLichHocTheoMaHocKyBlockVaLop(hocKyBlockVaLop);
             if (lichHoc == null)
             {
                 return NotFound();
