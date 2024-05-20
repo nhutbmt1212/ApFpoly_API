@@ -49,7 +49,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2000, 5, 20),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "nguyenvana.jpg"
+               AnhSinhVien = "pexels-justin-shaifer-501272-1222271.jpg"
            },
            new SinhVien
            {
@@ -67,7 +67,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2001, 6, 15),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "tranthib.jpg"
+               AnhSinhVien = "360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
            },
            new SinhVien
            {
@@ -85,7 +85,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2000, 7, 10),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "levanc.jpg"
+               AnhSinhVien = "pexels-simon-robben-55958-614810.jpg"
            },
            new SinhVien
            {
@@ -103,7 +103,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2001, 8, 5),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "phamthid.jpg"
+               AnhSinhVien = "images.jpg"
            },
            new SinhVien
            {
@@ -121,7 +121,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2000, 9, 25),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "hoangvane.jpg"
+               AnhSinhVien = "pexels-simon-robben-55958-614810.jpg"
            },
            new SinhVien
            {
@@ -139,7 +139,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2001, 10, 30),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "dothif.jpg"
+               AnhSinhVien = "images.jpg"
            },
            new SinhVien
            {
@@ -157,7 +157,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2000, 11, 15),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "ngovang.jpg"
+               AnhSinhVien = "pexels-justin-shaifer-501272-1222271.jpg"
            },
            new SinhVien
            {
@@ -175,7 +175,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2001, 12, 5),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "phanthih.jpg"
+               AnhSinhVien = "360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
            },
            new SinhVien
            {
@@ -193,7 +193,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2000, 1, 20),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "buivani.jpg"
+               AnhSinhVien = "pexels-simon-robben-55958-614810.jpg"
            },
            new SinhVien
            {
@@ -211,7 +211,7 @@ namespace ApFpoly_API.Data
                NgaySinh = new DateTime(2001, 2, 10),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "vothik.jpg"
+               AnhSinhVien = "images.jpg"
            }
        );
             modelBuilder.Entity<PhongHoc>().HasData(

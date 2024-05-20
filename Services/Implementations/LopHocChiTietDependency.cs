@@ -25,12 +25,12 @@ namespace ApFpoly_API.Services.Implementations
 
         public LopHocChiTiet LayLopHocChiTietTheoMa(string MaLopHocChiTiet)
         {
-            return _db.LopHocChiTiet.FirstOrDefault(s => s.MaLopHocChiTiet == MaLopHocChiTiet);
+            return _db.LopHocChiTiet.Include(x=>x.LopHoc).Include(x=>x.SinhVien).FirstOrDefault(s => s.MaLopHocChiTiet == MaLopHocChiTiet);
         }
 
         public  List<LopHocChiTiet> LayLopHocChiTietTheoMaLop(string MaLop)
         {
-            return _db.LopHocChiTiet.Where(s => s.MaLop == MaLop).ToList();
+            return _db.LopHocChiTiet.Include(x => x.LopHoc).Include(x => x.SinhVien).Where(s => s.MaLop == MaLop).ToList();
         }
 
         public async Task<LopHocChiTiet> SuaLopHocChiTiet(LopHocChiTiet lopHocChiTiet)
