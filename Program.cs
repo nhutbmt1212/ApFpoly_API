@@ -52,6 +52,7 @@ builder.Services.AddScoped<ILichHocDependency, LichHocDependency>();
 builder.Services.AddScoped<ILopHocDependency, LopHocDependency>(); 
 builder.Services.AddScoped<IHocKyBlockDependency, HocKyBlockDependency>();
 
+builder.Services.AddScoped<IValidateDependency, ValidateDependency>();
 
 var app = builder.Build();
 

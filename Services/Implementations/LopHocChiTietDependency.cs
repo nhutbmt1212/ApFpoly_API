@@ -6,17 +6,73 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IronXL;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace ApFpoly_API.Services.Implementations
 {
     public class LopHocChiTietDependency : ILopHocChiTietDependency
     {
         private readonly DataContext _db;
-
-        public LopHocChiTietDependency(DataContext db)
+        private readonly ISinhVienDependency _sinhVienDependency;
+        public LopHocChiTietDependency(DataContext db, ISinhVienDependency sinhVienDependency)
         {
             _db = db;
+            _sinhVienDependency = sinhVienDependency;
         }
+
+        public ImportResultLopHocChiTiet ImportSinhVienVaoLopHocChiTiet(string MaLop, IFormFile fileExcel)
+        {
+            List<LopHocChiTiet> list_LopHocChiTiet = new List<LopHocChiTiet>();
+            try
+            {
+                using (var stream = new MemoryStream())
+                {
+                    fileExcel.CopyTo(stream);
+                    stream.Position = 0;
+
+                    WorkBook workBook = WorkBook.Load(stream);
+                    WorkSheet workSheet = workBook.WorkSheets.First();
+                    var maSinhVien = workSheet.GetColumn(0);
+                    foreach (var item in maSinhVien)
+                    {
+                        if (item.Value.ToString() != "Mã Sinh Viên" && item.Value.ToString() != "" && item.Value.ToString() != "BẢNG SINH VIÊN TRONG LỚP")
+                        {
+                            string MaSinhVien = item.Value.ToString();
+                            var IsFindMaSinhVien = _sinhVienDependency.LaySinhVienTheoMaSinhVien(MaSinhVien);
+                            if (IsFindMaSinhVien != null)
+                            {
+                                var obj_LopHocChiTiet = new LopHocChiTiet();
+                                obj_LopHocChiTiet.MaLopHocChiTiet = GenerateRandomString(7);
+                                obj_LopHocChiTiet.MaLop = MaLop;
+                                obj_LopHocChiTiet.MaSinhVien = MaSinhVien;
+                                obj_LopHocChiTiet.TinhTrang = "Đang học";
+                                list_LopHocChiTiet.Add(obj_LopHocChiTiet);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ImportResultLopHocChiTiet { Success = false, Message = ex.Message, Data = null };
+            }
+
+            if (list_LopHocChiTiet.Count == 0)
+            {
+                return new ImportResultLopHocChiTiet { Success = false, Message = "Không tồn tại sinh viên trong hệ thống", Data = null };
+            }
+
+            return new ImportResultLopHocChiTiet { Success = true, Message = "Thành công", Data = list_LopHocChiTiet };
+        }
+        public static string GenerateRandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray()).ToUpper();
+        }
+
 
         public List<LopHocChiTiet> LayLopHocChiTiet()
         {
@@ -54,11 +110,11 @@ namespace ApFpoly_API.Services.Implementations
             }
         }
 
-        public LopHocChiTiet ThemLopHocChiTiet(LopHocChiTiet lopHocChiTiet)
+        public List<LopHocChiTiet> ThemLopHocChiTiet(List<LopHocChiTiet> lopHocChiTiet)
         {
             try
             {
-                _db.LopHocChiTiet.Add(lopHocChiTiet);
+                _db.LopHocChiTiet.AddRange(lopHocChiTiet);
                 _db.SaveChanges();
 
                 return lopHocChiTiet;

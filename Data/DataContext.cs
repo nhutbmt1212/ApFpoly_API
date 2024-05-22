@@ -21,16 +21,16 @@ namespace ApFpoly_API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LopHoc>().HasData(
-        new LopHoc { MaLop = "LH001", TenLop = "Toán cao cấp", NgayTao = DateTime.Now.AddDays(-100), SucChua = 30, TinhTrang = "Đang hoạt động" },
-        new LopHoc { MaLop = "LH002", TenLop = "Vật lý đại cương", NgayTao = DateTime.Now.AddDays(-90), SucChua = 25, TinhTrang = "Đang hoạt động" },
-        new LopHoc { MaLop = "LH003", TenLop = "Hóa học cơ bản", NgayTao = DateTime.Now.AddDays(-80), SucChua = 20, TinhTrang = "Đang hoạt động" },
-        new LopHoc { MaLop = "LH004", TenLop = "Lập trình C#", NgayTao = DateTime.Now.AddDays(-70), SucChua = 35, TinhTrang = "Đang hoạt động" },
-        new LopHoc { MaLop = "LH005", TenLop = "Lập trình Java", NgayTao = DateTime.Now.AddDays(-60), SucChua = 30, TinhTrang = "Đang hoạt động" },
-        new LopHoc { MaLop = "LH006", TenLop = "Lập trình Python", NgayTao = DateTime.Now.AddDays(-50), SucChua = 25, TinhTrang = "Đang hoạt động" },
-        new LopHoc { MaLop = "LH007", TenLop = "Lập trình JavaScript", NgayTao = DateTime.Now.AddDays(-40), SucChua = 20, TinhTrang = "Đang hoạt động" },
-        new LopHoc { MaLop = "LH008", TenLop = "Lập trình PHP", NgayTao = DateTime.Now.AddDays(-30), SucChua = 35, TinhTrang = "Đang hoạt động" },
-        new LopHoc { MaLop = "LH009", TenLop = "Lập trình Ruby", NgayTao = DateTime.Now.AddDays(-20), SucChua = 30, TinhTrang = "Đang hoạt động" },
-        new LopHoc { MaLop = "LH010", TenLop = "Lập trình Swift", NgayTao = DateTime.Now.AddDays(-10), SucChua = 25, TinhTrang = "Đang hoạt động" }
+        new LopHoc { MaLop = "LH001", TenLop = "Toán cao cấp", NgayTao = DateTime.Now.AddDays(-100), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH002", TenLop = "Vật lý đại cương", NgayTao = DateTime.Now.AddDays(-90), SucChua = 25, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH003", TenLop = "Hóa học cơ bản", NgayTao = DateTime.Now.AddDays(-80), SucChua = 20, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH004", TenLop = "Lập trình C#", NgayTao = DateTime.Now.AddDays(-70), SucChua = 35, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH005", TenLop = "Lập trình Java", NgayTao = DateTime.Now.AddDays(-60), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH006", TenLop = "Lập trình Python", NgayTao = DateTime.Now.AddDays(-50), SucChua = 25, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH007", TenLop = "Lập trình JavaScript", NgayTao = DateTime.Now.AddDays(-40), SucChua = 20, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH008", TenLop = "Lập trình PHP", NgayTao = DateTime.Now.AddDays(-30), SucChua = 35, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH009", TenLop = "Lập trình Ruby", NgayTao = DateTime.Now.AddDays(-20), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH010", TenLop = "Lập trình Swift", NgayTao = DateTime.Now.AddDays(-10), SucChua = 25, TinhTrang = "Đang Đang hoạt động" }
     );
             modelBuilder.Entity<SinhVien>().HasData(
            new SinhVien
@@ -222,7 +222,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 10),
                LoaiPhong = "Giảng Đường",
                SucChua = 100,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            },
            new PhongHoc
            {
@@ -231,7 +231,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 12),
                LoaiPhong = "Phòng Thí Nghiệm",
                SucChua = 30,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            },
            new PhongHoc
            {
@@ -240,7 +240,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 15),
                LoaiPhong = "Phòng Học Nhóm",
                SucChua = 20,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            },
            new PhongHoc
            {
@@ -249,7 +249,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 18),
                LoaiPhong = "Phòng Máy Tính",
                SucChua = 40,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            },
            new PhongHoc
            {
@@ -258,7 +258,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 20),
                LoaiPhong = "Phòng Thực Hành",
                SucChua = 50,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            },
            new PhongHoc
            {
@@ -267,7 +267,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 22),
                LoaiPhong = "Phòng Hội Thảo",
                SucChua = 70,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            },
            new PhongHoc
            {
@@ -276,7 +276,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 25),
                LoaiPhong = "Giảng Đường",
                SucChua = 100,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            },
            new PhongHoc
            {
@@ -285,7 +285,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 27),
                LoaiPhong = "Phòng Thí Nghiệm",
                SucChua = 30,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            },
            new PhongHoc
            {
@@ -294,7 +294,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 29),
                LoaiPhong = "Phòng Học Nhóm",
                SucChua = 20,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            },
            new PhongHoc
            {
@@ -303,7 +303,7 @@ namespace ApFpoly_API.Data
                NgayTao = new DateTime(2022, 1, 31),
                LoaiPhong = "Phòng Máy Tính",
                SucChua = 40,
-               TinhTrang = "Hoạt động"
+               TinhTrang = "Đang hoạt động"
            }
        );
             modelBuilder.Entity<MonHoc>().HasData(
@@ -316,7 +316,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 45,
               NoiDungMonHoc = "Toán cao cấp dành cho sinh viên ngành kỹ thuật.",
               TaiLieu = "Giáo trình Toán Cao Cấp - Tập 1",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
@@ -327,7 +327,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 60,
               NoiDungMonHoc = "Kiến thức cơ bản về vật lý cho sinh viên.",
               TaiLieu = "Giáo trình Vật Lý Đại Cương",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
@@ -338,7 +338,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 45,
               NoiDungMonHoc = "Kiến thức hóa học cơ bản cho sinh viên không chuyên.",
               TaiLieu = "Giáo trình Hóa Học Cơ Bản",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
@@ -349,7 +349,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 45,
               NoiDungMonHoc = "Giới thiệu về lập trình C.",
               TaiLieu = "Giáo trình Lập Trình C",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
@@ -360,7 +360,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 60,
               NoiDungMonHoc = "Kiến thức cơ bản về cơ sở dữ liệu.",
               TaiLieu = "Giáo trình Cơ Sở Dữ Liệu",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
@@ -371,7 +371,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 45,
               NoiDungMonHoc = "Giới thiệu về hệ điều hành và các khái niệm cơ bản.",
               TaiLieu = "Giáo trình Hệ Điều Hành",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
@@ -382,7 +382,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 45,
               NoiDungMonHoc = "Kiến thức cơ bản về mạng máy tính.",
               TaiLieu = "Giáo trình Mạng Máy Tính",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
@@ -393,7 +393,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 60,
               NoiDungMonHoc = "Giới thiệu về trí tuệ nhân tạo và các ứng dụng.",
               TaiLieu = "Giáo trình Trí Tuệ Nhân Tạo",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
@@ -404,7 +404,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 45,
               NoiDungMonHoc = "Giới thiệu về phân tích và thiết kế hệ thống.",
               TaiLieu = "Giáo trình Phân Tích Thiết Kế Hệ Thống",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
@@ -415,7 +415,7 @@ namespace ApFpoly_API.Data
               SoBuoi = 45,
               NoiDungMonHoc = "Kiến thức cơ bản về kinh tế học.",
               TaiLieu = "Giáo trình Kinh Tế Học",
-              TinhTrang = "Hoạt động"
+              TinhTrang = "Đang hoạt động"
           }
       );
             modelBuilder.Entity<HocKyBlock>().HasData(
@@ -427,7 +427,7 @@ namespace ApFpoly_API.Data
                     TenBlock = "Block 1",
                     NgayBatDau = new DateTime(2024, 1, 1),
                     NgayKetThuc = new DateTime(2024, 2, 29),
-                    TinhTrang = "Hoạt động"
+                    TinhTrang = "Đang hoạt động"
                 },
                 new HocKyBlock
                 {
@@ -436,7 +436,7 @@ namespace ApFpoly_API.Data
                     TenBlock = "Block 2",
                     NgayBatDau = new DateTime(2024, 3, 1),
                     NgayKetThuc = new DateTime(2024, 4, 30),
-                    TinhTrang = "Hoạt động"
+                    TinhTrang = "Đang hoạt động"
                 },
 
                 // Summer 2024
@@ -447,7 +447,7 @@ namespace ApFpoly_API.Data
                     TenBlock = "Block 1",
                     NgayBatDau = new DateTime(2024, 5, 1),
                     NgayKetThuc = new DateTime(2024, 6, 30),
-                    TinhTrang = "Hoạt động"
+                    TinhTrang = "Đang hoạt động"
                 },
                 new HocKyBlock
                 {
@@ -456,7 +456,7 @@ namespace ApFpoly_API.Data
                     TenBlock = "Block 2",
                     NgayBatDau = new DateTime(2024, 7, 1),
                     NgayKetThuc = new DateTime(2024, 8, 31),
-                    TinhTrang = "Hoạt động"
+                    TinhTrang = "Đang hoạt động"
                 },
 
                 // Fall 2024
@@ -467,7 +467,7 @@ namespace ApFpoly_API.Data
                     TenBlock = "Block 1",
                     NgayBatDau = new DateTime(2024, 9, 1),
                     NgayKetThuc = new DateTime(2024, 10, 31),
-                    TinhTrang = "Hoạt động"
+                    TinhTrang = "Đang hoạt động"
                 },
                 new HocKyBlock
                 {
@@ -476,7 +476,7 @@ namespace ApFpoly_API.Data
                     TenBlock = "Block 2",
                     NgayBatDau = new DateTime(2024, 11, 1),
                     NgayKetThuc = new DateTime(2024, 12, 31),
-                    TinhTrang = "Hoạt động"
+                    TinhTrang = "Đang hoạt động"
                 },
 
                 // Spring 2025
@@ -487,7 +487,7 @@ namespace ApFpoly_API.Data
                     TenBlock = "Block 1",
                     NgayBatDau = new DateTime(2025, 1, 1),
                     NgayKetThuc = new DateTime(2025, 2, 28),
-                    TinhTrang = "Hoạt động"
+                    TinhTrang = "Đang hoạt động"
                 },
                 new HocKyBlock
                 {
@@ -496,7 +496,7 @@ namespace ApFpoly_API.Data
                     TenBlock = "Block 2",
                     NgayBatDau = new DateTime(2025, 3, 1),
                     NgayKetThuc = new DateTime(2025, 4, 30),
-                    TinhTrang = "Hoạt động"
+                    TinhTrang = "Đang hoạt động"
                 }
             );
             modelBuilder.Entity<GiangVien>().HasData(
@@ -515,7 +515,7 @@ namespace ApFpoly_API.Data
         DiaChi = "123 Đường ABC, Quận XYZ, TP HCM",
         ChucVu = "Giảng viên",
         NgayThem = DateTime.Now,
-        TinhTrang = "Hoạt động",
+        TinhTrang = "Đang hoạt động",
         AnhGiangVien = "path/to/image.jpg"
     },
     new GiangVien
@@ -533,7 +533,7 @@ namespace ApFpoly_API.Data
         DiaChi = "456 Đường XYZ, Quận ABC, TP HCM",
         ChucVu = "Phó trưởng khoa",
         NgayThem = DateTime.Now,
-        TinhTrang = "Hoạt động",
+        TinhTrang = "Đang hoạt động",
         AnhGiangVien = "path/to/image.jpg"
     },
     new GiangVien
@@ -551,7 +551,7 @@ namespace ApFpoly_API.Data
         DiaChi = "789 Đường XYZ, Quận XYZ, TP HCM",
         ChucVu = "Trưởng khoa",
         NgayThem = DateTime.Now,
-        TinhTrang = "Hoạt động",
+        TinhTrang = "Đang hoạt động",
         AnhGiangVien = "path/to/image.jpg"
     },
     new GiangVien
@@ -569,7 +569,7 @@ namespace ApFpoly_API.Data
         DiaChi = "101 Đường ABC, Quận ABC, TP HCM",
         ChucVu = "Phó trưởng khoa",
         NgayThem = DateTime.Now,
-        TinhTrang = "Hoạt động",
+        TinhTrang = "Đang hoạt động",
         AnhGiangVien = "path/to/image.jpg"
     },
     new GiangVien
@@ -587,7 +587,7 @@ namespace ApFpoly_API.Data
         DiaChi = "456 Đường XYZ, Quận XYZ, TP HCM",
         ChucVu = "Giảng viên",
         NgayThem = DateTime.Now,
-        TinhTrang = "Hoạt động",
+        TinhTrang = "Đang hoạt động",
         AnhGiangVien = "path/to/image.jpg"
     },
     new GiangVien
@@ -605,7 +605,7 @@ namespace ApFpoly_API.Data
         DiaChi = "789 Đường ABC, Quận ABC, TP HCM",
         ChucVu = "Trưởng khoa",
         NgayThem = DateTime.Now,
-        TinhTrang = "Hoạt động",
+        TinhTrang = "Đang hoạt động",
         AnhGiangVien = "path/to/image.jpg"
     },
     new GiangVien
@@ -623,7 +623,7 @@ namespace ApFpoly_API.Data
         DiaChi = "101 Đường XYZ, Quận ABC, Quận XYZ, TP HCM",
         ChucVu = "Giảng viên",
         NgayThem = DateTime.Now,
-        TinhTrang = "Hoạt động",
+        TinhTrang = "Đang hoạt động",
         AnhGiangVien = "path/to/image.jpg"
     },
 new GiangVien
@@ -641,7 +641,7 @@ new GiangVien
     DiaChi = "123 Đường ABC, Quận ABC, TP HCM",
     ChucVu = "Phó trưởng khoa",
     NgayThem = DateTime.Now,
-    TinhTrang = "Hoạt động",
+    TinhTrang = "Đang hoạt động",
     AnhGiangVien = "path/to/image.jpg"
 },
 new GiangVien
@@ -659,7 +659,7 @@ new GiangVien
     DiaChi = "456 Đường XYZ, Quận XYZ, TP HCM",
     ChucVu = "Giảng viên",
     NgayThem = DateTime.Now,
-    TinhTrang = "Hoạt động",
+    TinhTrang = "Đang hoạt động",
     AnhGiangVien = "path/to/image.jpg"
 },
 new GiangVien
@@ -677,7 +677,7 @@ new GiangVien
     DiaChi = "101 Đường ABC, Quận ABC, TP HCM",
     ChucVu = "Trưởng khoa",
     NgayThem = DateTime.Now,
-    TinhTrang = "Hoạt động",
+    TinhTrang = "Đang hoạt động",
     AnhGiangVien = "path/to/image.jpg"
 }
 );

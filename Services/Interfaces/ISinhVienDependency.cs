@@ -13,6 +13,7 @@ namespace ApFpoly_API.Services.Interfaces
         Task<SinhVien> SuaSinhVien(SinhVien sinhvien);
 
         Task<SinhVien> XoaSinhVien(string MaSinhVien);
+        int SoLuongSinhVien();
     }
 }
 

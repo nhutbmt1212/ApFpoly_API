@@ -21,12 +21,13 @@ namespace ApFpoly_API.Controllers
         public SinhVienController(ISinhVienDependency sinhVien)
         {
              _sinhVien = sinhVien;
+            soLuongSinhVien = _sinhVien.SoLuongSinhVien();
         }
         [HttpGet]
         public IActionResult GetAllSinhVien()
         {
           var result = _sinhVien.LaySinhVien();
-            soLuongSinhVien = result.Count();
+            
             return Ok(result);
         }
 
@@ -40,6 +41,7 @@ namespace ApFpoly_API.Controllers
         {
             try
             {
+              
                 string Base64String = sinhvien.AnhSinhVien;
                 DateTime now = new DateTime();
                 sinhvien.MaSinhVien = "PK" + (soLuongSinhVien + 1).ToString("D4");
@@ -73,19 +75,28 @@ namespace ApFpoly_API.Controllers
             System.IO.File.WriteAllBytes(filePath, imageBytes);
         }
 
-        [HttpPut,Route("{id}")]
-        public async Task<IActionResult> SuaSinhVien(string id, SinhVien sinhVien)
+        [HttpPut, Route("{id}")]
+        public  IActionResult SuaSinhVien(string id, SinhVien sinhVien)
         {
             try
             {
-                var suaSinhVien = await _sinhVien.SuaSinhVien(sinhVien);
-                return Ok(new { success = true, data = sinhVien });
+                var existingSinhVien =  _sinhVien.LaySinhVienTheoMaSinhVien(id);
+                if (existingSinhVien.AnhSinhVien != sinhVien.AnhSinhVien)
+                {
+                    string Base64String = sinhVien.AnhSinhVien;
+                    sinhVien.AnhSinhVien = TaoTenFile(sinhVien.MaSinhVien, Base64String);
+                    XuLyAnhBase64(sinhVien.AnhSinhVien, Base64String);
+                }
+
+                var suaSinhVien =  _sinhVien.SuaSinhVien(sinhVien);
+                return Ok(new { success = true, data = suaSinhVien });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { success = false ,message = ex.Message});
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
         [HttpDelete, Route("{id}")]
         public async Task<IActionResult> XoaSinhVien(string id)
         {

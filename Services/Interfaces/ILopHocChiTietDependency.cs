@@ -9,10 +9,12 @@ namespace ApFpoly_API.Services.Interfaces
 
         List<LopHocChiTiet> LayLopHocChiTietTheoMaLop(string MaLop);
 
-        LopHocChiTiet ThemLopHocChiTiet(LopHocChiTiet lopHocChiTiet);
+        List<LopHocChiTiet> ThemLopHocChiTiet(List<LopHocChiTiet> lopHocChiTiet);
 
         Task<LopHocChiTiet> SuaLopHocChiTiet(LopHocChiTiet lopHocChiTiet);
 
         Task<LopHocChiTiet> XoaLopHocChiTiet(string MaLopHocChiTiet);
+
+        ImportResultLopHocChiTiet ImportSinhVienVaoLopHocChiTiet(string MaLop,IFormFile fileExcel);
     }
 }

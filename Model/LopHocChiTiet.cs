@@ -16,9 +16,16 @@ namespace ApFpoly_API.Model
         public string MaSinhVien { get; set; } // Khóa ngoại
         [ForeignKey("MaSinhVien")]
         public virtual SinhVien SinhVien { get; set; }
-        [StringLength(7)]
+       
    
         [Required,MaxLength(30)]
         public string TinhTrang { get; set; }
+    }
+
+    public class ImportResultLopHocChiTiet
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public List<LopHocChiTiet> Data { get; set; }
     }
 }

@@ -12,5 +12,7 @@ namespace ApFpoly_API.Services.Interfaces
         Task<GiangVien> SuaGiangVien(GiangVien giangVien);
 
         Task<GiangVien> XoaGiangVien(string MaGiangVien);
+
+        int SoLuongGiangVien();
     }
 }

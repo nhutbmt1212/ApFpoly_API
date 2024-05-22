@@ -13,7 +13,7 @@ namespace ApFpoly_API.Controllers
     public class LopHocChiTietController : ControllerBase
     {
         private readonly ILopHocChiTietDependency _lopHocChiTietDependency;
-
+     
         public LopHocChiTietController(ILopHocChiTietDependency lopHocChiTietDependency)
         {
             _lopHocChiTietDependency = lopHocChiTietDependency;
@@ -40,7 +40,24 @@ namespace ApFpoly_API.Controllers
             var result = _lopHocChiTietDependency.LayLopHocChiTietTheoMaLop(id);
             return Ok(result);
         }
+        [HttpPost, Route("ImportExcelLopHocChiTiet")]
+        public IActionResult ImportExcelLopHocChiTiet([FromForm] string MaLop, [FromForm] IFormFile fileExcel)
+        {
+            var result = _lopHocChiTietDependency.ImportSinhVienVaoLopHocChiTiet(MaLop, fileExcel);
 
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            List<LopHocChiTiet> lopHocChiTiets = result.Data;
+            //var addedLopHocChiTiet = _lopHocChiTietDependency.ThemLopHocChiTiet(lopHocChiTiets);
+
+          
+            return Ok(lopHocChiTiets);
+        }
+
+    
         [HttpPost, Route("ThemLopHocChiTiet")]
         public IActionResult ThemLopHocChiTiet(LopHocChiTietDTO lopHocChiTiet)
         {
@@ -53,8 +70,10 @@ namespace ApFpoly_API.Controllers
                     MaSinhVien = lopHocChiTiet.MaSinhVien,
                     TinhTrang = lopHocChiTiet.TinhTrang
                 };
+                List<LopHocChiTiet> lopHocChiTiets = new List<LopHocChiTiet>();
+                lopHocChiTiets.Add(newLopHocChiTiet);
 
-                var addedLopHocChiTiet = _lopHocChiTietDependency.ThemLopHocChiTiet(newLopHocChiTiet);
+                var addedLopHocChiTiet = _lopHocChiTietDependency.ThemLopHocChiTiet(lopHocChiTiets);
 
                 return Ok(new { success = true, data = addedLopHocChiTiet });
             }

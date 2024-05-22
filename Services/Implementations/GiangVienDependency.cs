@@ -24,6 +24,11 @@ namespace ApFpoly_API.Services.Implementations
             return getGiangVienTheoId;
         }
 
+        public int SoLuongGiangVien()
+        {
+            return _db.GiangVien.Count();
+        }
+
         public async Task<GiangVien> SuaGiangVien(GiangVien giangVien)
         {
             try
