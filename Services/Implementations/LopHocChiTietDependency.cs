@@ -1,13 +1,8 @@
 ﻿using ApFpoly_API.Data;
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using IronXL;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApFpoly_API.Services.Implementations
 {
@@ -39,15 +34,21 @@ namespace ApFpoly_API.Services.Implementations
                         if (item.Value.ToString() != "Mã Sinh Viên" && item.Value.ToString() != "" && item.Value.ToString() != "BẢNG SINH VIÊN TRONG LỚP")
                         {
                             string MaSinhVien = item.Value.ToString();
-                            var IsFindMaSinhVien = _sinhVienDependency.LaySinhVienTheoMaSinhVien(MaSinhVien);
-                            if (IsFindMaSinhVien != null)
+                            var existSinhVien = LayLopHocChiTietTheoMaLopVaMaSinhVien(MaLop, MaSinhVien);
+                            if (existSinhVien == null)
                             {
-                                var obj_LopHocChiTiet = new LopHocChiTiet();
-                                obj_LopHocChiTiet.MaLopHocChiTiet = GenerateRandomString(7);
-                                obj_LopHocChiTiet.MaLop = MaLop;
-                                obj_LopHocChiTiet.MaSinhVien = MaSinhVien;
-                                obj_LopHocChiTiet.TinhTrang = "Đang học";
-                                list_LopHocChiTiet.Add(obj_LopHocChiTiet);
+                                var IsFindMaSinhVien = _sinhVienDependency.LaySinhVienTheoMaSinhVien(MaSinhVien);
+                                if (IsFindMaSinhVien != null)
+                                {
+                                    var obj_LopHocChiTiet = new LopHocChiTiet();
+                                    obj_LopHocChiTiet.MaLopHocChiTiet = GenerateRandomString(7);
+                                    obj_LopHocChiTiet.MaLop = MaLop;
+                                    obj_LopHocChiTiet.MaSinhVien = MaSinhVien;
+                                    obj_LopHocChiTiet.TinhTrang = "Đang học";
+                                    obj_LopHocChiTiet.SinhVien = IsFindMaSinhVien;
+                                    list_LopHocChiTiet.Add(obj_LopHocChiTiet);
+
+                                }
                             }
                         }
                     }
@@ -63,8 +64,12 @@ namespace ApFpoly_API.Services.Implementations
                 return new ImportResultLopHocChiTiet { Success = false, Message = "Không tồn tại sinh viên trong hệ thống", Data = null };
             }
 
+
+
             return new ImportResultLopHocChiTiet { Success = true, Message = "Thành công", Data = list_LopHocChiTiet };
         }
+
+
         public static string GenerateRandomString(int length)
         {
             Random random = new Random();
@@ -81,10 +86,10 @@ namespace ApFpoly_API.Services.Implementations
 
         public LopHocChiTiet LayLopHocChiTietTheoMa(string MaLopHocChiTiet)
         {
-            return _db.LopHocChiTiet.Include(x=>x.LopHoc).Include(x=>x.SinhVien).FirstOrDefault(s => s.MaLopHocChiTiet == MaLopHocChiTiet);
+            return _db.LopHocChiTiet.Include(x => x.LopHoc).Include(x => x.SinhVien).FirstOrDefault(s => s.MaLopHocChiTiet == MaLopHocChiTiet);
         }
 
-        public  List<LopHocChiTiet> LayLopHocChiTietTheoMaLop(string MaLop)
+        public List<LopHocChiTiet> LayLopHocChiTietTheoMaLop(string MaLop)
         {
             return _db.LopHocChiTiet.Include(x => x.LopHoc).Include(x => x.SinhVien).Where(s => s.MaLop == MaLop).ToList();
         }
@@ -145,6 +150,12 @@ namespace ApFpoly_API.Services.Implementations
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public LopHocChiTiet LayLopHocChiTietTheoMaLopVaMaSinhVien(string MaLop, string MaSinhVien)
+        {
+            var existSinhVien = _db.LopHocChiTiet.FirstOrDefault(s => s.MaSinhVien == MaSinhVien && s.MaLop == MaLop);
+            return existSinhVien;
         }
     }
 }

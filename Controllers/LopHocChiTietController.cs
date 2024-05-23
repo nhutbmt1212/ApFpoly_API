@@ -51,27 +51,32 @@ namespace ApFpoly_API.Controllers
             }
 
             List<LopHocChiTiet> lopHocChiTiets = result.Data;
-            //var addedLopHocChiTiet = _lopHocChiTietDependency.ThemLopHocChiTiet(lopHocChiTiets);
+           
 
           
             return Ok(lopHocChiTiets);
         }
 
-    
+
         [HttpPost, Route("ThemLopHocChiTiet")]
-        public IActionResult ThemLopHocChiTiet(LopHocChiTietDTO lopHocChiTiet)
+        public IActionResult ThemLopHocChiTiet(List<LopHocChiTiet> lopHocChiTietList)
         {
             try
             {
-                var newLopHocChiTiet = new LopHocChiTiet
-                {
-                    MaLopHocChiTiet = lopHocChiTiet.MaLopHocChiTiet,
-                    MaLop = lopHocChiTiet.MaLop,
-                    MaSinhVien = lopHocChiTiet.MaSinhVien,
-                    TinhTrang = lopHocChiTiet.TinhTrang
-                };
                 List<LopHocChiTiet> lopHocChiTiets = new List<LopHocChiTiet>();
-                lopHocChiTiets.Add(newLopHocChiTiet);
+
+                foreach (var lopHocChiTiet in lopHocChiTietList)
+                {
+                    var newLopHocChiTiet = new LopHocChiTiet
+                    {
+                        MaLopHocChiTiet = lopHocChiTiet.MaLopHocChiTiet,
+                        MaLop = lopHocChiTiet.MaLop,
+                        MaSinhVien = lopHocChiTiet.MaSinhVien,
+                        TinhTrang = lopHocChiTiet.TinhTrang
+                    };
+
+                    lopHocChiTiets.Add(newLopHocChiTiet);
+                }
 
                 var addedLopHocChiTiet = _lopHocChiTietDependency.ThemLopHocChiTiet(lopHocChiTiets);
 
@@ -82,6 +87,7 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
 
 
         [HttpPut, Route("{id}")]
