@@ -2,6 +2,8 @@
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Text;
 
 namespace ApFpoly_API.Services.Implementations
 {
@@ -23,7 +25,42 @@ namespace ApFpoly_API.Services.Implementations
             var getPhongHocTheoId = _db.PhongHoc.FirstOrDefault(s => s.MaPhong == MaPhongHoc);
             return getPhongHocTheoId;
         }
+        public async Task<IEnumerable<PhongHoc>> SearchingPhongHoc(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = RemoveDiacritics(searchString).ToLower();
+                var phongHocs = _db.PhongHoc.AsEnumerable()
+                               .Where(s => RemoveDiacritics(s.MaPhong.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenPhong.ToLower()).Contains(searchString)
+                                     );
+                return phongHocs.ToList();
+            }
+            else
+            {
+                return await _db.PhongHoc.ToListAsync();
+            }
+        }
 
+
+        public static string RemoveDiacritics(string text)
+        {
+            var normalized = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalized)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    if (c == 'đ') stringBuilder.Append('d');
+                    else if (c == 'Đ') stringBuilder.Append('D');
+                    else stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
         public async Task<PhongHoc> SuaPhongHoc(PhongHoc PhongHoc)
         {
             try

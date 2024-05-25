@@ -12,5 +12,8 @@ namespace ApFpoly_API.Services.Interfaces
         Task<MonHoc> SuaMonHoc(MonHoc monhoc);
 
         Task<MonHoc> XoaMonHoc(string MaMonHoc);
+        Task<IEnumerable<MonHoc>> SearchingMonHoc(string searchString);
+
+     
     }
 }

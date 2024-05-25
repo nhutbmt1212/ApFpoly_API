@@ -4,7 +4,9 @@ using ApFpoly_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ApFpoly_API.Services.Implementations
@@ -26,6 +28,42 @@ namespace ApFpoly_API.Services.Implementations
         public LopHoc LayLopHocTheoMa(string MaLopHoc)
         {
             return _db.LopHoc.FirstOrDefault(s => s.MaLop == MaLopHoc);
+        }
+        public async Task<IEnumerable<LopHoc>> SearchingLopHoc(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = RemoveDiacritics(searchString).ToLower();
+                var lopHocs = _db.LopHoc.AsEnumerable()
+                               .Where(s => RemoveDiacritics(s.MaLop.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenLop.ToLower()).Contains(searchString)
+                                       );
+                return lopHocs.ToList();
+            }
+            else
+            {
+                return await _db.LopHoc.ToListAsync();
+            }
+        }
+
+
+        public static string RemoveDiacritics(string text)
+        {
+            var normalized = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalized)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    if (c == 'đ') stringBuilder.Append('d');
+                    else if (c == 'Đ') stringBuilder.Append('D');
+                    else stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
 
         public async Task<LopHoc> SuaLopHoc(LopHoc lopHoc)

@@ -18,6 +18,13 @@ namespace ApFpoly_API.Controllers
         {
             _hocKyBlockDependency = hocKyBlockDependency;
         }
+        [HttpGet, Route("SearchingHocKyBlock")]
+        public async Task<IActionResult> SearchingHocKyBlock(string searchString)
+        {
+            var listHocKyBlocks = await _hocKyBlockDependency.SearchingHocKyBlock(searchString);
+
+            return Ok(listHocKyBlocks);
+        }
 
         [HttpGet]
         public IActionResult GetAllHocKyBlock()

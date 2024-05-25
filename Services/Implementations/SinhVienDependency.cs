@@ -2,6 +2,8 @@
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Text;
 
 namespace ApFpoly_API.Services.Implementations
 {
@@ -12,6 +14,18 @@ namespace ApFpoly_API.Services.Implementations
         {
             _db = db;
         }
+
+        public IEnumerable<SinhVien> GetSinhVien(int page, int pageSize)
+        {
+            var totalCount = SoLuongSinhVien();
+            var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+            var productPerPage = _db.SinhVien
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize).OrderByDescending(x=>x.NgayThem).ToList();
+            return productPerPage;
+        }
+
+
         public List<SinhVien> LaySinhVien()
         {
             var getSinhVien = _db.SinhVien.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
@@ -22,6 +36,45 @@ namespace ApFpoly_API.Services.Implementations
         {
             var getSinhVienTheoId = _db.SinhVien.FirstOrDefault(s => s.MaSinhVien == MaSinhVien);
             return getSinhVienTheoId;
+        }
+
+        public async Task<IEnumerable<SinhVien>> SearchingSinhVien(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = RemoveDiacritics(searchString).ToLower();
+                var students = _db.SinhVien.AsEnumerable()
+                               .Where(s => RemoveDiacritics(s.MaSinhVien.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.CCCD.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.SoDienThoai.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.Email.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenSinhVien.ToLower()).Contains(searchString));
+                return students.ToList();
+            }
+            else
+            {
+                return await _db.SinhVien.ToListAsync();
+            }
+        }
+
+
+        public static string RemoveDiacritics(string text)
+        {
+            var normalized = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalized)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    if (c == 'đ') stringBuilder.Append('d');
+                    else if (c == 'Đ') stringBuilder.Append('D');
+                    else stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
 
         public int SoLuongSinhVien()
@@ -82,5 +135,10 @@ namespace ApFpoly_API.Services.Implementations
             }
         }
 
+        public SinhVien LaySinhVienTheoEmail(string Email)
+        {
+            var sinhVien = _db.SinhVien.FirstOrDefault(s => s.Email == Email);
+            return sinhVien;
+        }
     }
 }

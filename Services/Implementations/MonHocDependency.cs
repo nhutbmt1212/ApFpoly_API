@@ -1,10 +1,14 @@
 ﻿using ApFpoly_API.Data;
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Text;
 
 namespace ApFpoly_API.Services.Implementations
 {
+   
     public class MonHocDependency : IMonHocDependency
     {
         DataContext _db;
@@ -12,6 +16,7 @@ namespace ApFpoly_API.Services.Implementations
         {
             _db = db;
         }
+        
         public List<MonHoc> LayMonHoc()
         {
             var getMonHoc = _db.MonHoc.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
@@ -22,6 +27,42 @@ namespace ApFpoly_API.Services.Implementations
         {
             var getMonHocTheoId = _db.MonHoc.FirstOrDefault(s => s.MaMonHoc == MaMonHoc);
             return getMonHocTheoId;
+        }
+        public async Task<IEnumerable<MonHoc>> SearchingMonHoc(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = RemoveDiacritics(searchString).ToLower();
+                var monHocs = _db.MonHoc.AsEnumerable()
+                               .Where(s => RemoveDiacritics(s.MaMonHoc.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenMonHoc.ToLower()).Contains(searchString)
+                                       );
+                return monHocs.ToList();
+            }
+            else
+            {
+                return await _db.MonHoc.ToListAsync();
+            }
+        }
+
+
+        public static string RemoveDiacritics(string text)
+        {
+            var normalized = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalized)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    if (c == 'đ') stringBuilder.Append('d');
+                    else if (c == 'Đ') stringBuilder.Append('D');
+                    else stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
 
         public async Task<MonHoc> SuaMonHoc(MonHoc monhoc)
@@ -76,5 +117,7 @@ namespace ApFpoly_API.Services.Implementations
                 throw new Exception(ex.Message);
             }
         }
+
+       
     }
 }

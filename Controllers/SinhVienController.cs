@@ -31,6 +31,23 @@ namespace ApFpoly_API.Controllers
             return Ok(result);
         }
 
+        [HttpGet,Route("LaySinhVien")]
+        public IEnumerable<SinhVien> GetSinhVien(int page=1, int pageSize =10 )
+        {
+            var productPerPage = _sinhVien.GetSinhVien(page, pageSize);
+            return productPerPage;
+
+        }
+
+        [HttpGet,Route("SearchingSinhVien")]
+        public async Task<IActionResult> SearchingSinhVien(string searchString)
+        {
+            var listStudents =await  _sinhVien.SearchingSinhVien(searchString);
+
+            return  Ok(listStudents);
+        }
+
+
         [HttpGet,Route("GetSinhVienTheoId/{id}")]
         public IActionResult GetAllSinhVienTheoId(string id) {
             var result = _sinhVien.LaySinhVienTheoMaSinhVien(id);

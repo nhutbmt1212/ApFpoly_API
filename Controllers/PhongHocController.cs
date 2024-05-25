@@ -20,6 +20,13 @@ namespace ApFpoly_API.Controllers
             var result = _PhongHoc.LayPhongHoc();
             return Ok(result);
         }
+        [HttpGet, Route("SearchingPhongHoc")]
+        public async Task<IActionResult> SearchingSinhVien(string searchString)
+        {
+            var listPhongHocs = await _PhongHoc.SearchingPhongHoc(searchString);
+
+            return Ok(listPhongHocs);
+        }
 
         [HttpGet, Route("GetPhongHocTheoId/{id}")]
         public IActionResult GetAllPhongHocTheoId(string id)

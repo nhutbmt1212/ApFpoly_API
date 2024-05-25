@@ -9,9 +9,12 @@ namespace ApFpoly_API.Services.Interfaces
     {
         List<LichHoc> LayDanhSachLichHoc();
         LichHoc LayLichHocTheoId(string id);
+        Task<IEnumerable<LichHoc>> LayLichHocTheoIdLop(string id);
+
         List<LichHoc> LayLichHocTheoMaHocKyBlockVaLop(HocKyBlockVaLopDTO hocKyBlockVaLopDTO);
         List<LichHoc> ThemLichHoc(List<LichHoc> lichHoc);
         LichHoc SuaLichHoc(LichHoc lichHoc);
         LichHoc XoaLichHoc(string id);
+        Task<IEnumerable<LichHoc>> LayLichHocTheoMaLopVaMaHocKyBlock(string MaLop, string MaHocKyBlock);
     }
 }

@@ -3,10 +3,6 @@ using ApFpoly_API.DTO;
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApFpoly_API.Services.Implementations
 {
@@ -57,6 +53,32 @@ namespace ApFpoly_API.Services.Implementations
                 _dbContext.SaveChanges();
             }
             return lichHoc;
+        }
+
+        public async Task<IEnumerable<LichHoc>> LayLichHocTheoMaLopVaMaHocKyBlock(string MaLop, string MaHocKyBlock)
+        {
+            var monHocs = await _dbContext.LichHoc
+                .Where(s => s.MaLop == MaLop && s.MaHocKyBlock == MaHocKyBlock)
+                .Include(x => x.GiangVien)
+                .Include(x => x.LopHoc)
+                .Include(x => x.MonHoc)
+                .Include(x => x.PhongHoc)
+                .Include(x => x.HocKyBlock)
+                .ToListAsync();
+            return monHocs;
+        }
+
+        public async Task<IEnumerable<LichHoc>> LayLichHocTheoIdLop(string id)
+        {
+            var lichHocs = await _dbContext.LichHoc
+                .Where(s => s.MaLop == id)
+                  .Include(x => x.GiangVien)
+                .Include(x => x.LopHoc)
+                .Include(x => x.MonHoc)
+                .Include(x => x.PhongHoc)
+                .Include(x => x.HocKyBlock)
+                .ToListAsync();
+            return lichHocs;
         }
     }
 }

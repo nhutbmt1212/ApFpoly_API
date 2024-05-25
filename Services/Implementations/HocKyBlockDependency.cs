@@ -4,7 +4,9 @@ using ApFpoly_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ApFpoly_API.Services.Implementations
@@ -22,7 +24,43 @@ namespace ApFpoly_API.Services.Implementations
         {
             return _dbContext.HocKyBlock.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
         }
+        public async Task<IEnumerable<HocKyBlock>> SearchingHocKyBlock(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = RemoveDiacritics(searchString).ToLower();
+                var hocKyBlocks = _dbContext.HocKyBlock.AsEnumerable()
+                               .Where(s => RemoveDiacritics(s.MaHocKyBlock.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenHocKy.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenBlock.ToLower()).Contains(searchString));
+                                     
+                return hocKyBlocks.ToList();
+            }
+            else
+            {
+                return await _dbContext.HocKyBlock.ToListAsync();
+            }
+        }
 
+
+        public static string RemoveDiacritics(string text)
+        {
+            var normalized = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalized)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    if (c == 'đ') stringBuilder.Append('d');
+                    else if (c == 'Đ') stringBuilder.Append('D');
+                    else stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
         public HocKyBlock LayHocKyBlockTheoMa(string MaHocKyBlock)
         {
             return _dbContext.HocKyBlock.FirstOrDefault(x => x.MaHocKyBlock == MaHocKyBlock);

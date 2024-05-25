@@ -15,5 +15,6 @@ namespace ApFpoly_API.Services.Interfaces
         Task<HocKyBlock> SuaHocKyBlock(HocKyBlock hocKyBlock);
 
         Task<HocKyBlock> XoaHocKyBlock(string MaHocKyBlock);
+        Task<IEnumerable<HocKyBlock>> SearchingHocKyBlock(string searchString);
     }
 }

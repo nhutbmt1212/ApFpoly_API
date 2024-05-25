@@ -39,6 +39,12 @@ namespace ApFpoly_API.Controllers
             }
             return Ok(lichHoc);
         }
+        [HttpGet,Route("LayLichHocTheoIdLop/{id}")]
+        public async Task<IActionResult> LayLichHocTheoIdLop(string id)
+        {
+            var lichHocs = await _lichHocDependency.LayLichHocTheoIdLop(id);
+            return Ok(lichHocs);
+        }
 
         [HttpGet("LayLichHocTheoMaHocKyBlockVaMaLop/{id}")]
         public IActionResult LayLichHocTheoMaHocKyBlockVaMaLop(string id)
@@ -54,6 +60,13 @@ namespace ApFpoly_API.Controllers
                 return NotFound();
             }
             return Ok(lichHoc);
+        }
+
+        [HttpGet,Route("LayLichHocTheoMaLopVaMaHocKyBlock")]
+        public async Task<IActionResult> LayLichHocTheoMaLopVaMaHocKyBlock(string MaLop, string MaHocKyBlock)
+        {
+            var lichHocs = await _lichHocDependency.LayLichHocTheoMaLopVaMaHocKyBlock(MaLop, MaHocKyBlock);
+            return Ok(lichHocs);
         }
         [HttpPost]
         public IActionResult ThemLichHoc(LichHocDTO lichHocChiTietDto)

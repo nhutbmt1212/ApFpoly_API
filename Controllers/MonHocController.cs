@@ -1,5 +1,6 @@
 ﻿using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,13 @@ namespace ApFpoly_API.Controllers
             var result = _MonHoc.LayMonHoc();
             return Ok(result);
         }
+        [HttpGet, Route("SearchingMonHoc")]
+        public async Task<IActionResult> SearchingMonHoc(string searchString)
+        {
+            var listMonHocs = await _MonHoc.SearchingMonHoc(searchString);
 
+            return Ok(listMonHocs);
+        }
         [HttpGet, Route("GetMonHocTheoId/{id}")]
         public IActionResult GetAllMonHocTheoId(string id)
         {

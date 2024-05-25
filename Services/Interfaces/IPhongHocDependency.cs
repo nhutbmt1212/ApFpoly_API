@@ -12,5 +12,7 @@ namespace ApFpoly_API.Services.Interfaces
         Task<PhongHoc> SuaPhongHoc(PhongHoc PhongHoc);
 
         Task<PhongHoc> XoaPhongHoc(string MaPhongHoc);
+
+        Task<IEnumerable<PhongHoc>> SearchingPhongHoc(string searchString);
     }
 }

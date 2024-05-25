@@ -23,6 +23,13 @@ namespace ApFpoly_API.Controllers
             
             return Ok(result);
         }
+        [HttpGet, Route("SearchingGiangVien")]
+        public async Task<IActionResult> SearchingGiangVien(string searchString)
+        {
+            var listGiangViens = await _giangVien.SearchingGiangVien(searchString);
+
+            return Ok(listGiangViens);
+        }
 
         [HttpGet, Route("GetGiangVienTheoId/{id}")]
         public IActionResult GetAllGiangVienTheoId(string id)

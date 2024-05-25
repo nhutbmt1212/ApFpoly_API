@@ -6,6 +6,8 @@ namespace ApFpoly_API.Services.Interfaces
     {
         List<GiangVien> LayGiangVien();
         GiangVien LayGiangVienTheoMaGiangVien(string MaGiangVien);
+        GiangVien LayGiangVienTheoEmail(string Email);
+
 
         GiangVien ThemGiangVien(GiangVien giangVien);
 
@@ -14,5 +16,7 @@ namespace ApFpoly_API.Services.Interfaces
         Task<GiangVien> XoaGiangVien(string MaGiangVien);
 
         int SoLuongGiangVien();
+        Task<IEnumerable<GiangVien>> SearchingGiangVien(string searchString);
+
     }
 }

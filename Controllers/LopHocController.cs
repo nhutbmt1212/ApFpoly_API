@@ -18,7 +18,13 @@ namespace ApFpoly_API.Controllers
         {
             _lopHocDependency = lopHocDependency;
         }
+        [HttpGet, Route("SearchingLopHoc")]
+        public async Task<IActionResult> SearchingLopHoc(string searchString)
+        {
+            var listLopHocs = await _lopHocDependency.SearchingLopHoc(searchString);
 
+            return Ok(listLopHocs);
+        }
         [HttpGet]
         public IActionResult GetAllLopHoc()
         {
