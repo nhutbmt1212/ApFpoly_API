@@ -2,8 +2,6 @@
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 
 namespace ApFpoly_API.Controllers
 {
@@ -11,7 +9,7 @@ namespace ApFpoly_API.Controllers
     [ApiController]
     public class LichHocController : ControllerBase
     {
-     
+
         private readonly ILichHocDependency _lichHocDependency;
         private readonly IHocKyBlockDependency _hocKyBlockDependency;
 
@@ -39,7 +37,7 @@ namespace ApFpoly_API.Controllers
             }
             return Ok(lichHoc);
         }
-        [HttpGet,Route("LayLichHocTheoIdLop/{id}")]
+        [HttpGet, Route("LayLichHocTheoIdLop/{id}")]
         public async Task<IActionResult> LayLichHocTheoIdLop(string id)
         {
             var lichHocs = await _lichHocDependency.LayLichHocTheoIdLop(id);
@@ -62,7 +60,7 @@ namespace ApFpoly_API.Controllers
             return Ok(lichHoc);
         }
 
-        [HttpGet,Route("LayLichHocTheoMaLopVaMaHocKyBlock")]
+        [HttpGet, Route("LayLichHocTheoMaLopVaMaHocKyBlock")]
         public async Task<IActionResult> LayLichHocTheoMaLopVaMaHocKyBlock(string MaLop, string MaHocKyBlock)
         {
             var lichHocs = await _lichHocDependency.LayLichHocTheoMaLopVaMaHocKyBlock(MaLop, MaHocKyBlock);
@@ -106,32 +104,69 @@ namespace ApFpoly_API.Controllers
                                  select c).ToArray()).ToUpper();
             return random.Substring(0, 7);
         }
-        [HttpPut("{id}")]
-        public IActionResult SuaLichHoc(string id, LichHoc lichHoc)
+
+        [HttpPut, Route("SuaLichHoc")]
+        public async Task<IActionResult> SuaLichHoc(LichHocDTO lichHocChiTietDto)
         {
-            if (id != lichHoc.MaLichHoc)
-            {
-                return BadRequest();
-            }
             try
             {
-                var lichHocSua = _lichHocDependency.SuaLichHoc(lichHoc);
-                return NoContent();
+                List<LichHoc> listLichHoc = new List<LichHoc>();
+                foreach (var ngay in lichHocChiTietDto.NgayLichHoc)
+                {
+                    var lichHocChiTiet = new LichHoc
+                    {
+                        ThoiGianBatDau = ngay.Date + lichHocChiTietDto.GioBatDau.ToTimeSpan(),
+                        ThoiGianKetThuc = ngay.Date + lichHocChiTietDto.GioKetThuc.ToTimeSpan(),
+                        TinhTrang = lichHocChiTietDto.TinhTrang,
+                        MaLop = lichHocChiTietDto.MaLop,
+                        MaHocKyBlock = lichHocChiTietDto.MaHocKyBlock,
+                        MaPhong = lichHocChiTietDto.MaPhong,
+                        MaGiangVien = lichHocChiTietDto.MaGiangVien,
+                        MaMonHoc = lichHocChiTietDto.MaMonHoc
+                    };
+                    listLichHoc.Add(lichHocChiTiet);
+                }
+                var xuLyListLichHoc = await _lichHocDependency.CheckByIdLopIdHocKyBlockIdMonAndNgayLichHoc(listLichHoc);
+                var kqUpdateLichHoc = await _lichHocDependency.SuaLichHoc(xuLyListLichHoc);
+                return Ok(kqUpdateLichHoc);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("{id}")]
-        public IActionResult XoaLichHoc(string id)
+
+
+
+        [HttpPost, Route("XoaLichHoc")]
+        public async Task<IActionResult> XoaLichHoc(LichHocDTO lichHocChiTietDto)
         {
-            var lichHoc = _lichHocDependency.XoaLichHoc(id);
-            if (lichHoc == null)
+            try
             {
-                return NotFound();
+                List<LichHoc> listLichHoc = new List<LichHoc>();
+                foreach (var ngay in lichHocChiTietDto.NgayLichHoc)
+                {
+                    var lichHocChiTiet = new LichHoc
+                    {
+                        ThoiGianBatDau = ngay.Date + lichHocChiTietDto.GioBatDau.ToTimeSpan(),
+                        ThoiGianKetThuc = ngay.Date + lichHocChiTietDto.GioKetThuc.ToTimeSpan(),
+                        TinhTrang = lichHocChiTietDto.TinhTrang,
+                        MaLop = lichHocChiTietDto.MaLop,
+                        MaHocKyBlock = lichHocChiTietDto.MaHocKyBlock,
+                        MaPhong = lichHocChiTietDto.MaPhong,
+                        MaGiangVien = lichHocChiTietDto.MaGiangVien,
+                        MaMonHoc = lichHocChiTietDto.MaMonHoc
+                    };
+                    listLichHoc.Add(lichHocChiTiet);
+                }
+                var xuLyListLichHoc = await _lichHocDependency.CheckByIdLopIdHocKyBlockIdMonAndNgayLichHoc(listLichHoc);
+                var kqUpdateLichHoc = await _lichHocDependency.XoaLichHoc(xuLyListLichHoc);
+                return Ok(kqUpdateLichHoc);
             }
-            return NoContent();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

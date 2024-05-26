@@ -37,12 +37,7 @@ namespace ApFpoly_API.Services.Implementations
             return lichHoc;
         }
 
-        public LichHoc SuaLichHoc(LichHoc lichHoc)
-        {
-            _dbContext.LichHoc.Update(lichHoc);
-            _dbContext.SaveChanges();
-            return lichHoc;
-        }
+
 
         public LichHoc XoaLichHoc(string id)
         {
@@ -79,6 +74,76 @@ namespace ApFpoly_API.Services.Implementations
                 .Include(x => x.HocKyBlock)
                 .ToListAsync();
             return lichHocs;
+        }
+
+        public async Task<IEnumerable<LichHoc>> SuaLichHoc(List<LichHoc> lichHoc)
+        {
+            _dbContext.LichHoc.UpdateRange(lichHoc);
+            _dbContext.SaveChangesAsync();
+            return lichHoc;
+        }
+
+
+        public async Task<List<LichHoc>> CheckByIdLopIdHocKyBlockIdMonAndNgayLichHoc(List<LichHoc> lichHoc)
+        {
+            List<LichHoc> validLichHoc = new List<LichHoc>();
+
+            try
+            {
+                foreach (var lh in lichHoc)
+                {
+                    var lhThoiGianBatDau = ConvertDatetimeToDateOnly(lh.ThoiGianBatDau);
+                    var isExist = (await _dbContext.LichHoc
+                        .AsNoTracking()
+                        .Where(x => x.MaLop == lh.MaLop && x.MaMonHoc == lh.MaMonHoc && x.MaHocKyBlock == lh.MaHocKyBlock)
+                        .ToListAsync())
+                        .FirstOrDefault(x => ConvertDatetimeToDateOnly(x.ThoiGianBatDau) == lhThoiGianBatDau);
+
+
+                    if (isExist != null)
+                    {
+                        if (isExist.MaLichHoc == null)
+                        {
+                            throw new Exception("MaLichHoc is null");
+                        }
+
+                        lh.MaLichHoc = isExist.MaLichHoc;
+
+                        // Include related properties into lh
+                        lh.GiangVien = isExist.GiangVien;
+                        lh.LopHoc = isExist.LopHoc;
+                        lh.MonHoc = isExist.MonHoc;
+                        lh.PhongHoc = isExist.PhongHoc;
+                        lh.HocKyBlock = isExist.HocKyBlock;
+
+                        validLichHoc.Add(lh);
+                    }
+                    else
+                    {
+                        throw new Exception("LichHoc is null");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Xử lý ngoại lệ ở đây
+                throw new Exception(ex.Message);
+            }
+
+            return validLichHoc;
+        }
+
+        public DateOnly ConvertDatetimeToDateOnly(DateTime paramDatetime)
+        {
+            return DateOnly.FromDateTime(paramDatetime);
+        }
+
+
+        public async Task<IEnumerable<LichHoc>> XoaLichHoc(List<LichHoc> lichHoc)
+        {
+            _dbContext.LichHoc.RemoveRange(lichHoc);
+            _dbContext.SaveChangesAsync();
+            return lichHoc;
         }
     }
 }
