@@ -26,7 +26,33 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options => {
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidateIssuer =true,
+        ValidateAudience =true,
+        ValidateLifetime =true,
+        ValidateIssuerSigningKey =true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))
+    };
+});
+
 
 
 builder.Services.AddDbContext<DataContext>(options =>
@@ -48,13 +74,18 @@ builder.Services.AddScoped<ILichHocDependency, LichHocDependency>();
 builder.Services.AddScoped<ILopHocDependency, LopHocDependency>(); 
 builder.Services.AddScoped<IHocKyBlockDependency, HocKyBlockDependency>();
 builder.Services.AddScoped<IValidateDependency, ValidateDependency>();
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<AuthContext>();
 var app = builder.Build();
+app.UseAuthentication();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
    app.UseSwagger();
     app.UseSwaggerUI();
-} 
+}
+app.MapIdentityApi<IdentityUser>();
 app.UseCors("CORSPolicy");
 app.UseRouting();
 app.UseHttpsRedirection();

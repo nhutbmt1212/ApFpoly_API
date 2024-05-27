@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ApFpoly_API.Migrations.Auth
 {
     /// <inheritdoc />
-    public partial class initAuth : Migration
+    public partial class InitialAuthContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
