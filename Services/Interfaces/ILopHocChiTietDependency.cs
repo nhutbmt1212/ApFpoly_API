@@ -13,7 +13,7 @@ namespace ApFpoly_API.Services.Interfaces
 
         Task<LopHocChiTiet> SuaLopHocChiTiet(LopHocChiTiet lopHocChiTiet);
 
-        Task<LopHocChiTiet> XoaLopHocChiTiet(string MaLopHocChiTiet);
+        Task<List<LopHocChiTiet>> XoaLopHocChiTiet(List<LopHocChiTiet> lopHocChiTiet);
 
         ImportResultLopHocChiTiet ImportSinhVienVaoLopHocChiTiet(string MaLop,IFormFile fileExcel);
 

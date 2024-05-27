@@ -26,34 +26,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-    });
-    options.OperationFilter<SecurityRequirementsOperationFilter>();
-});
+builder.Services.AddSwaggerGen();
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Issuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
+
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
@@ -61,9 +36,8 @@ builder.Services.AddDbContext<AuthContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<AuthContext>();
+
+
 //register the service
 builder.Services.AddScoped<ISinhVienDependency, SinhVienDependency>();
 builder.Services.AddScoped<IGiangVienDependency, GiangVienDependency>();
@@ -73,23 +47,17 @@ builder.Services.AddScoped<ILopHocChiTietDependency, LopHocChiTietDependency>();
 builder.Services.AddScoped<ILichHocDependency, LichHocDependency>();
 builder.Services.AddScoped<ILopHocDependency, LopHocDependency>(); 
 builder.Services.AddScoped<IHocKyBlockDependency, HocKyBlockDependency>();
-
 builder.Services.AddScoped<IValidateDependency, ValidateDependency>();
-
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-  
-}  app.UseSwagger();
+   app.UseSwagger();
     app.UseSwaggerUI();
+} 
 app.UseCors("CORSPolicy");
 app.UseRouting();
-app.MapIdentityApi<IdentityUser>();
-
 app.UseHttpsRedirection();
-app.UseAuthentication();
 app.UseAuthorization();
 
 var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");

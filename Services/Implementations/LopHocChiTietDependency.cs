@@ -91,7 +91,7 @@ namespace ApFpoly_API.Services.Implementations
 
         public List<LopHocChiTiet> LayLopHocChiTietTheoMaLop(string MaLop)
         {
-            return _db.LopHocChiTiet.Include(x => x.LopHoc).Include(x => x.SinhVien).Where(s => s.MaLop == MaLop).ToList();
+            return _db.LopHocChiTiet.Include(x => x.LopHoc).Include(x => x.SinhVien).Where(s => s.MaLop == MaLop && s.TinhTrang != "Đã xóa").ToList();
         }
 
         public async Task<LopHocChiTiet> SuaLopHocChiTiet(LopHocChiTiet lopHocChiTiet)
@@ -130,32 +130,27 @@ namespace ApFpoly_API.Services.Implementations
             }
         }
 
-        public async Task<LopHocChiTiet> XoaLopHocChiTiet(string MaLopHocChiTiet)
-        {
-            try
-            {
-                var existLopHocChiTiet = await _db.LopHocChiTiet.FirstOrDefaultAsync(s => s.MaLopHocChiTiet == MaLopHocChiTiet);
-                if (existLopHocChiTiet == null)
-                {
-                    throw new Exception("Mã lớp học chi tiết không tồn tại");
-                }
-
-                existLopHocChiTiet.TinhTrang = "Đã xóa";
-                _db.LopHocChiTiet.Update(existLopHocChiTiet);
-                await _db.SaveChangesAsync();
-
-                return existLopHocChiTiet;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+       
 
         public LopHocChiTiet LayLopHocChiTietTheoMaLopVaMaSinhVien(string MaLop, string MaSinhVien)
         {
             var existSinhVien = _db.LopHocChiTiet.FirstOrDefault(s => s.MaSinhVien == MaSinhVien && s.MaLop == MaLop);
             return existSinhVien;
+        }
+
+        public async Task<List<LopHocChiTiet>> XoaLopHocChiTiet(List<LopHocChiTiet> lopHocChiTiet)
+        {
+            try
+            {
+                _db.LopHocChiTiet.UpdateRange(lopHocChiTiet);
+                _db.SaveChanges();
+
+                return lopHocChiTiet;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

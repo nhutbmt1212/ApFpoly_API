@@ -34,6 +34,12 @@ namespace ApFpoly_API.Controllers
 
 
         }
+        [HttpGet, Route("KiemTraSinhVienCoTrongLopHoc")]
+        public IActionResult KiemTraSinhVienCoTrongLopHoc( string MaLop,string MaSinhVien)
+        {
+            var result = _lopHocChiTietDependency.LayLopHocChiTietTheoMaLopVaMaSinhVien(MaLop, MaSinhVien);
+            return Ok(result);
+        }
         [HttpGet, Route("GetLopHocChiTietTheoIdLop/{id}")]
         public IActionResult GetLopHocChiTietTheoIdLop(string id)
         {
@@ -59,7 +65,7 @@ namespace ApFpoly_API.Controllers
 
 
         [HttpPost, Route("ThemLopHocChiTiet")]
-        public IActionResult ThemLopHocChiTiet(List<LopHocChiTiet> lopHocChiTietList)
+        public IActionResult ThemLopHocChiTiet(List<LopHocChiTietDTO> lopHocChiTietList)
         {
             try
             {
@@ -69,7 +75,7 @@ namespace ApFpoly_API.Controllers
                 {
                     var newLopHocChiTiet = new LopHocChiTiet
                     {
-                        MaLopHocChiTiet = lopHocChiTiet.MaLopHocChiTiet,
+                        MaLopHocChiTiet = TaoMaLopHocChiTiet(),
                         MaLop = lopHocChiTiet.MaLop,
                         MaSinhVien = lopHocChiTiet.MaSinhVien,
                         TinhTrang = lopHocChiTiet.TinhTrang
@@ -87,6 +93,15 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        public static string TaoMaLopHocChiTiet()
+        {
+            var random = Path.GetRandomFileName();
+            random = new string((from c in random
+                                 where char.IsLetterOrDigit(c)
+                                 select c).ToArray()).ToUpper();
+            return random.Substring(0, 7);
+        }
+
 
 
 
@@ -104,13 +119,29 @@ namespace ApFpoly_API.Controllers
             }
         }
 
-        [HttpDelete, Route("{id}")]
-        public async Task<IActionResult> XoaLopHocChiTiet(string id)
+        [HttpPost, Route("XoaLopHocChiTiet")]
+        public async Task<IActionResult> XoaLopHocChiTiet(List<LopHocChiTietDTO> lopHocChiTietDTOs)
         {
             try
             {
-                var deletedLopHocChiTiet = await _lopHocChiTietDependency.XoaLopHocChiTiet(id);
-                return Ok(new { success = true, message = deletedLopHocChiTiet });
+                List<LopHocChiTiet> lopHocChiTiets = new List<LopHocChiTiet>();
+
+                foreach (var lopHocChiTiet in lopHocChiTietDTOs)
+                {
+                    var xoaLopHocChiTiet = new LopHocChiTiet
+                    {
+                        MaLopHocChiTiet =lopHocChiTiet.MaLopHocChiTiet,
+                        MaLop = lopHocChiTiet.MaLop,
+                        MaSinhVien = lopHocChiTiet.MaSinhVien,
+                        TinhTrang = "Đã xóa"
+                    };
+
+                    lopHocChiTiets.Add(xoaLopHocChiTiet);
+                }
+
+                var addedLopHocChiTiet = _lopHocChiTietDependency.XoaLopHocChiTiet(lopHocChiTiets);
+
+                return Ok(new { success = true, data = addedLopHocChiTiet });
             }
             catch (Exception ex)
             {
