@@ -15,7 +15,7 @@ namespace ApFpoly_API.Controllers
         {
             _MonHoc = MonHoc;
         }
-        [HttpGet,Authorize]
+        [HttpGet]
         public IActionResult GetAllMonHoc()
         {
             var result = _MonHoc.LayMonHoc();

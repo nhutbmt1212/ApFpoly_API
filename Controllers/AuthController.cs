@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 using System.Security.Claims;
+using System.Text;
 namespace ApFpoly_API.Controllers
 {
     [Route("api/[controller]")]
@@ -16,9 +17,9 @@ namespace ApFpoly_API.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ISinhVienDependency _sinhVienDependency;
         private readonly IGiangVienDependency _giangVienDependency;
-        public AuthController(SignInManager<IdentityUser> signInManager, 
-            UserManager<IdentityUser> userManager, 
-            ISinhVienDependency sinhVienDependency, 
+        public AuthController(SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityUser> userManager,
+            ISinhVienDependency sinhVienDependency,
             IGiangVienDependency giangVienDependency,
             IConfiguration configuration)
         {
@@ -28,7 +29,7 @@ namespace ApFpoly_API.Controllers
             _giangVienDependency = giangVienDependency;
             _configuration = configuration;
         }
-        [HttpPost,Route("Login")]
+        [HttpPost, Route("Login")]
         public async Task<IActionResult> Login(string email, string password)
         {
             var result = await _signInManager.PasswordSignInAsync(email, password, true, false);
@@ -43,11 +44,13 @@ namespace ApFpoly_API.Controllers
                     {
                         var claims = new[]
                         {
-                          new Claim(JwtRegisteredClaimNames.Sub,_configuration["Jwt:Subject"]),
-                          new Claim(JwtRegisteredClaimNames.Sub,Guid.NewGuid().ToString()),
-                          new Claim("UserId",sinhVien.MaSinhVien.ToString()),
-                          new Claim("Email",sinhVien.Email.ToString()),
-                      };
+                            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim("UserId",sinhVien.MaSinhVien.ToString()),
+                            new Claim("Email", email),
+                            new Claim("Role", "Sinh viên"),
+                            new Claim(ClaimTypes.Role, "Sinh viên")
+                            };
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
                         var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                         var token = new JwtSecurityToken(
@@ -56,19 +59,23 @@ namespace ApFpoly_API.Controllers
                             claims,
                             expires: DateTime.UtcNow.AddMinutes(60),
                             signingCredentials: signIn
-                            );
+                        );
+                    
                         string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+                        
                         return Ok(new { Token = tokenValue, User = sinhVien });
                     }
-                    else if(giangVien != null)
+                    else if (giangVien != null)
                     {
                         var claims = new[]
                          {
-                          new Claim(JwtRegisteredClaimNames.Sub,_configuration["Jwt:Subject"]),
-                          new Claim(JwtRegisteredClaimNames.Sub,Guid.NewGuid().ToString()),
-                          new Claim("UserId",sinhVien.MaSinhVien.ToString()),
-                          new Claim("Email",sinhVien.Email.ToString()),
-                      };
+                            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim("UserId",giangVien.MaGiangVien.ToString()),
+                            new Claim("Email", email),
+                            new Claim("Role", giangVien.ChucVu == "Giảng viên"?"Giảng viên":"Admin"),
+                            new Claim(ClaimTypes.Role,giangVien.ChucVu == "Giảng viên"?"Giảng viên":"Admin")
+                            };
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
                         var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                         var token = new JwtSecurityToken(
@@ -77,7 +84,7 @@ namespace ApFpoly_API.Controllers
                             claims,
                             expires: DateTime.UtcNow.AddMinutes(60),
                             signingCredentials: signIn
-                            );
+                        );
                         string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
                         return Ok(new { Token = tokenValue, User = giangVien });
                     }
@@ -87,8 +94,9 @@ namespace ApFpoly_API.Controllers
                     return BadRequest("Không có user nào");
                 }
             }
-          
+
             return BadRequest("Lỗi login");
         }
+      
     }
 }

@@ -152,5 +152,18 @@ namespace ApFpoly_API.Services.Implementations
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<IEnumerable<LopHocChiTiet>> LayLopHocChiTietTheoMaSinhVien(string MaSinhVien)
+        {
+            // Giả sử dbContext là một instance của DbContext của bạn
+            var lopHocChiTiets = await _db.LopHocChiTiet
+                .Where(lhct => lhct.MaSinhVien == MaSinhVien)
+                .GroupBy(lhct => lhct.MaLop)
+                .Select(g => g.First())
+                .ToListAsync();
+
+            return lopHocChiTiets;
+        }
+
     }
 }

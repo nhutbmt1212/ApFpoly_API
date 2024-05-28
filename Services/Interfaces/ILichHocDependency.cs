@@ -19,5 +19,8 @@ namespace ApFpoly_API.Services.Interfaces
         Task<List<LichHoc>> CheckByIdLopIdHocKyBlockIdMonAndNgayLichHoc(List<LichHoc> lichHoc);
         Task<IEnumerable<LichHoc>> XoaLichHoc(List<LichHoc> lichHoc);
         Task<IEnumerable<LichHoc>> LayLichHocTheoMaLopVaMaHocKyBlock(string MaLop, string MaHocKyBlock);
+        Task<IEnumerable<LichHoc>> LayLichHocUniqueMonHocTheoMaLop(string MaLop, string MaHocKyBlock);
+        Task<IEnumerable<LichHoc>> LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(string MaLop,string MaMonHoc, string MaHocKyBlock);
+
     }
 }

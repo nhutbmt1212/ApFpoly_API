@@ -59,6 +59,28 @@ namespace ApFpoly_API.Controllers
             }
             return Ok(lichHoc);
         }
+        [HttpGet("LayLichHocUniqueMonHocTheoMaLop/{id}")]
+        public async Task<IActionResult> LayLichHocUniqueMonHocTheoMaLop(string id)
+        {
+            var hocKyBlockHienTai = _hocKyBlockDependency.LayHocKyBlockHienTai();
+            var lichHocs = await _lichHocDependency.LayLichHocUniqueMonHocTheoMaLop(id, hocKyBlockHienTai.MaHocKyBlock);
+            if (lichHocs == null || !lichHocs.Any())
+            {
+                return NotFound();
+            }
+            return Ok(lichHocs);
+        }
+        [HttpGet, Route("LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock")]
+        public async Task<IActionResult> LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(string MaLop, string MaMonHoc, string MaHocKyBlock)
+        {
+            var lichHoc =  await _lichHocDependency.LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(MaLop, MaMonHoc, MaHocKyBlock);
+            if (lichHoc != null)
+            {
+                return Ok(lichHoc);
+            }
+            return BadRequest();
+        }
+
 
         [HttpGet, Route("LayLichHocTheoMaLopVaMaHocKyBlock")]
         public async Task<IActionResult> LayLichHocTheoMaLopVaMaHocKyBlock(string MaLop, string MaHocKyBlock)

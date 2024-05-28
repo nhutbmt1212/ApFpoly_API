@@ -18,5 +18,6 @@ namespace ApFpoly_API.Services.Interfaces
         ImportResultLopHocChiTiet ImportSinhVienVaoLopHocChiTiet(string MaLop,IFormFile fileExcel);
 
         LopHocChiTiet LayLopHocChiTietTheoMaLopVaMaSinhVien(string MaLop, string MaSinhVien);
+        Task<IEnumerable<LopHocChiTiet>> LayLopHocChiTietTheoMaSinhVien(string MaSinhVien);
     }
 }

@@ -46,6 +46,21 @@ namespace ApFpoly_API.Controllers
             var result = _lopHocChiTietDependency.LayLopHocChiTietTheoMaLop(id);
             return Ok(result);
         }
+        [HttpGet("GetLopHocChiTietTheoMaSinhVien/{maSinhVien}")]
+        public async Task<IActionResult> GetLopHocChiTietTheoMaSinhVien(string maSinhVien)
+        {
+            try
+            {
+                var lopHocChiTiets = await _lopHocChiTietDependency.LayLopHocChiTietTheoMaSinhVien(maSinhVien);
+                return Ok(lopHocChiTiets);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception here
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpPost, Route("ImportExcelLopHocChiTiet")]
         public IActionResult ImportExcelLopHocChiTiet([FromForm] string MaLop, [FromForm] IFormFile fileExcel)
         {
