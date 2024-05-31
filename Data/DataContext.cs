@@ -17,9 +17,35 @@ namespace ApFpoly_API.Data
         public DbSet<LopHoc> LopHoc { get; set; }
         public DbSet<LopHocChiTiet> LopHocChiTiet { get; set; }
         public DbSet<LichHoc> LichHoc { get; set; }
+        public DbSet<DiemDanh> DiemDanh { get; set; }
+        public DbSet<BangDiem> BangDiem { get; set; }
+        public DbSet<NopBai> NopBai { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DiemDanh>()
+       .HasOne(d => d.LichHoc)
+       .WithMany()
+       .HasForeignKey(d => d.MaLichHoc)
+       .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<DiemDanh>()
+                .HasOne(d => d.SinhVien)
+                .WithMany()
+                .HasForeignKey(d => d.MaSinhVien)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<DiemDanh>()
+                .HasOne(d => d.MonHoc)
+                .WithMany()
+                .HasForeignKey(d => d.MaMonHoc)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<DiemDanh>()
+                .HasOne(d => d.GiangVien)
+                .WithMany()
+                .HasForeignKey(d => d.MaGiangVien)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<LopHoc>().HasData(
         new LopHoc { MaLop = "LH001", TenLop = "Toán cao cấp", NgayTao = DateTime.Now.AddDays(-100), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
         new LopHoc { MaLop = "LH002", TenLop = "Vật lý đại cương", NgayTao = DateTime.Now.AddDays(-90), SucChua = 25, TinhTrang = "Đang Đang hoạt động" },

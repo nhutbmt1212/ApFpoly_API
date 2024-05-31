@@ -8,9 +8,11 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Net.NetworkInformation;
 using System.Net.WebSockets;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApFpoly_API.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class SinhVienController : ControllerBase
@@ -23,6 +25,13 @@ namespace ApFpoly_API.Controllers
              _sinhVien = sinhVien;
             soLuongSinhVien = _sinhVien.SoLuongSinhVien();
         }
+        [HttpGet("SoLuongSinhVien")]
+        public IActionResult GetSoLuongSinhVien()
+        {
+            var soLuong = _sinhVien.SoLuongSinhVien();
+            return Ok(soLuong);
+        }
+
         [HttpGet]
         public IActionResult GetAllSinhVien()
         {
@@ -32,7 +41,7 @@ namespace ApFpoly_API.Controllers
         }
 
         [HttpGet,Route("LaySinhVien")]
-        public IEnumerable<SinhVien> GetSinhVien(int page=1, int pageSize =10 )
+        public IEnumerable<SinhVien> GetSinhVien(int page, int pageSize )
         {
             var productPerPage = _sinhVien.GetSinhVien(page, pageSize);
             return productPerPage;
@@ -40,9 +49,9 @@ namespace ApFpoly_API.Controllers
         }
 
         [HttpGet,Route("SearchingSinhVien")]
-        public async Task<IActionResult> SearchingSinhVien(string searchString)
+        public async Task<IActionResult> SearchingSinhVien(string searchString, int limitItem)
         {
-            var listStudents =await  _sinhVien.SearchingSinhVien(searchString);
+            var listStudents =await  _sinhVien.SearchingSinhVien(searchString, limitItem);
 
             return  Ok(listStudents);
         }

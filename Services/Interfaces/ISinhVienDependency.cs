@@ -18,7 +18,7 @@ namespace ApFpoly_API.Services.Interfaces
         int SoLuongSinhVien();
         IEnumerable<SinhVien> GetSinhVien(int page, int pageSize);
 
-        Task<IEnumerable<SinhVien>> SearchingSinhVien(string searchString);
+        Task<IEnumerable<SinhVien>> SearchingSinhVien(string searchString, int limitItem);
     }
 }
 

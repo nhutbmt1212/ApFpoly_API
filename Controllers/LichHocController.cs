@@ -88,6 +88,12 @@ namespace ApFpoly_API.Controllers
             var lichHocs = await _lichHocDependency.LayLichHocTheoMaLopVaMaHocKyBlock(MaLop, MaHocKyBlock);
             return Ok(lichHocs);
         }
+        [HttpGet,Route("LayLichHocTheoMaGiangVien")]
+        public async Task<IActionResult> LayLichHocTheoMaGiangVien(string MaLop, string MaHocKyBlock )
+        {
+            var lichHocs = await _lichHocDependency.LayLichHocTheoMaGiangVien(MaLop, MaHocKyBlock);
+            return Ok(lichHocs);
+        }
         [HttpPost]
         public IActionResult ThemLichHoc(LichHocDTO lichHocChiTietDto)
         {

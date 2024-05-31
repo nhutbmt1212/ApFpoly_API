@@ -17,13 +17,19 @@ namespace ApFpoly_API.Services.Implementations
 
         public IEnumerable<SinhVien> GetSinhVien(int page, int pageSize)
         {
+            if (page < 1)
+            {
+                page = 1;
+            }
+
             var totalCount = SoLuongSinhVien();
             var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
             var productPerPage = _db.SinhVien
                 .Skip((page - 1) * pageSize)
-                .Take(pageSize).OrderByDescending(x=>x.NgayThem).ToList();
+                .Take(pageSize).OrderByDescending(x => x.NgayThem).ToList();
             return productPerPage;
         }
+
 
 
         public List<SinhVien> LaySinhVien()
@@ -38,23 +44,27 @@ namespace ApFpoly_API.Services.Implementations
             return getSinhVienTheoId;
         }
 
-        public async Task<IEnumerable<SinhVien>> SearchingSinhVien(string searchString)
+        public async Task<IEnumerable<SinhVien>> SearchingSinhVien(string searchString, int limitItem)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
                 searchString = RemoveDiacritics(searchString).ToLower();
-                var students = _db.SinhVien.AsEnumerable()
+                var students =  _db.SinhVien.AsEnumerable()
                                .Where(s => RemoveDiacritics(s.MaSinhVien.ToLower()).Contains(searchString)
                                         || RemoveDiacritics(s.CCCD.ToLower()).Contains(searchString)
                                         || RemoveDiacritics(s.SoDienThoai.ToLower()).Contains(searchString)
                                         || RemoveDiacritics(s.Email.ToLower()).Contains(searchString)
-                                        || RemoveDiacritics(s.TenSinhVien.ToLower()).Contains(searchString));
-                return students.ToList();
+                                        || RemoveDiacritics(s.TenSinhVien.ToLower()).Contains(searchString))
+                               .Take(limitItem)
+                               .ToList()
+                               ;
+                return students;
             }
             else
             {
-                return await _db.SinhVien.ToListAsync();
+                return null;
             }
+            
         }
 
 

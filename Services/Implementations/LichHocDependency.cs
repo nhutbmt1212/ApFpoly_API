@@ -36,7 +36,7 @@ namespace ApFpoly_API.Services.Implementations
             _dbContext.SaveChanges();
             return lichHoc;
         }
-        public async Task<IEnumerable<LichHoc>> LayLichHocUniqueMonHocTheoMaLop(string MaLop,string MaHocKyBlock)
+        public async Task<IEnumerable<LichHoc>> LayLichHocUniqueMonHocTheoMaLop(string MaLop, string MaHocKyBlock)
         {
             // Giả sử _dbContext là một instance của DbContext của bạn
             var lichHocs = await _dbContext.LichHoc
@@ -45,16 +45,15 @@ namespace ApFpoly_API.Services.Implementations
                 .Include(x => x.PhongHoc)
                 .Include(x => x.HocKyBlock)
 .Include(x => x.GiangVien)
-        .Where(lh => lh.MaLop == MaLop && lh.MaHocKyBlock == MaHocKyBlock) 
+        .Where(lh => lh.MaLop == MaLop && lh.MaHocKyBlock == MaHocKyBlock)
         .GroupBy(lh => lh.MaMonHoc)
         .Select(g => g.First())
-        
-              
+
+
         .ToListAsync();
 
             return lichHocs;
         }
-
 
 
 
@@ -170,6 +169,18 @@ namespace ApFpoly_API.Services.Implementations
             var lichHocs = await _dbContext.LichHoc
                 .Where(s=>s.MaLop == MaLop && s.MaMonHoc == MaMonHoc && s.MaHocKyBlock == MaHocKyBlock)
                 .Include(x => x.GiangVien)
+                .Include(x => x.LopHoc)
+                .Include(x => x.MonHoc)
+                .Include(x => x.PhongHoc)
+                .Include(x => x.HocKyBlock).ToListAsync();
+            return lichHocs;
+        }
+
+        public async Task<IEnumerable<LichHoc>> LayLichHocTheoMaGiangVien(string MaGiangVien, string MaHocKyBlock)
+        {
+            var lichHocs = await _dbContext.LichHoc
+                .Where(s => s.MaGiangVien == MaGiangVien && s.MaHocKyBlock == MaHocKyBlock)
+                 .Include(x => x.GiangVien)
                 .Include(x => x.LopHoc)
                 .Include(x => x.MonHoc)
                 .Include(x => x.PhongHoc)

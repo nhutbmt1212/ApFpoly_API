@@ -101,7 +101,7 @@ namespace ApFpoly_API.Services.Implementations
                 var existPhongHoc = await _db.PhongHoc.FirstOrDefaultAsync(s => s.MaPhong == MaPhongHoc);
                 if (existPhongHoc == null)
                 {
-                    throw new Exception("Mã nhân viên không tồn tại");
+                    throw new Exception("Mã phòng học không tồn tại");
                 }
                 existPhongHoc.TinhTrang = "Đã xóa";
                 _db.PhongHoc.Update(existPhongHoc);

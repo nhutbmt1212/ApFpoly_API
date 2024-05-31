@@ -118,6 +118,10 @@ namespace ApFpoly_API.Services.Implementations
             }
         }
 
-       
+        public int SoLuongMonHoc()
+        {
+            var monHocs = _db.MonHoc.Count();
+            return monHocs;
+        }
     }
 }
