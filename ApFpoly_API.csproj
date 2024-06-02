@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="UploadNopBai\" />
     <Folder Include="UploadDocument\" />
   </ItemGroup>
 

@@ -37,5 +37,7 @@ namespace ApFpoly_API.Model
 
         [Required]
         public DateTime NgayTao { get; set; }
+        [MaxLength(30)]
+        public string TinhTrang { get; set; }
     }
 }
