@@ -28,6 +28,44 @@ namespace ApFpoly_API.Controllers
             return Ok(result);
 
         }
+
+        //s
+
+        [HttpGet, Route("ValidateTrungMaLopTrongHeThong")]
+        public IActionResult ValidateTrungMaLopTrongHeThong(string maLop)
+        {
+            bool result = _validateDependency.KiemTraTrungMaLopTrongHeThong(maLop);
+            return Ok(result);
+        }
+
+        [HttpGet, Route("ValidateTrungMaHocKyBlockTrongHeThong")]
+        public IActionResult ValidateTrungMaHocKyBlockTrongHeThong(string maHocKyBlock)
+        {
+            bool result = _validateDependency.KiemTraTrungMaHocKyBlockTrongHeThong(maHocKyBlock);
+            return Ok(result);
+        }
+
+        [HttpGet, Route("ValidateTrungMaPhongTrongHeThong")]
+        public IActionResult ValidateTrungMaPhongTrongHeThong(string maPhong)
+        {
+            bool result = _validateDependency.KiemTraTrungMaPhongTrongHeThong(maPhong);
+            return Ok(result);
+        }
+
+        [HttpGet, Route("ValidateTrungMaMonHocTrongHeThong")]
+        public IActionResult ValidateTrungMaMonHocTrongHeThong(string maMonHoc)
+        {
+            bool result = _validateDependency.KiemTraTrungMaMonHocTrongHeThong(maMonHoc);
+            return Ok(result);
+        }
+
+        [HttpGet, Route("ValidateTrungMaGiangVienTrongHeThong")]
+        public IActionResult ValidateTrungMaGiangVienTrongHeThong(string maGiangVien)
+        {
+            bool result = _validateDependency.KiemTraTrungMaGiangVienTrongHeThong(maGiangVien);
+            return Ok(result);
+        }
+
         [HttpGet, Route("ValidateTrungCCCDTrongHeThong")]
         public IActionResult ValidateTrungCCCDTrongHeThong(string cccd)
         {
@@ -35,6 +73,7 @@ namespace ApFpoly_API.Controllers
             return Ok(result);
         }
 
+        //s
         [HttpGet, Route("ValidateTrungEmailTrongHeThongTruEmailHienTai")]
         public IActionResult ValidateTrungEmailTrongHeThongTruEmailHienTai(string MaNguoiDung, string email)
         {

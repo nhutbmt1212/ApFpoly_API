@@ -1,4 +1,5 @@
 ﻿using ApFpoly_API.Data;
+using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 
 namespace ApFpoly_API.Services.Implementations
@@ -16,7 +17,7 @@ namespace ApFpoly_API.Services.Implementations
             if (existSinhVien == null)
             {
                 var existGiangVien = _db.GiangVien.FirstOrDefault(y => y.CCCD == cccd);
-                if (existGiangVien !=null)
+                if (existGiangVien != null)
                 {
                     return true;
                 }
@@ -45,6 +46,57 @@ namespace ApFpoly_API.Services.Implementations
             }
             return false;
         }
+
+        public bool KiemTraTrungMaGiangVienTrongHeThong(string maGiangVien)
+        {
+            var existMaGiangVien = _db.GiangVien.FirstOrDefault(s => s.MaGiangVien == maGiangVien);
+            if (existMaGiangVien == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool KiemTraTrungMaHocKyBlockTrongHeThong(string maHocKyBlock)
+        {
+            var existMaHocKyBlock = _db.HocKyBlock.FirstOrDefault(s => s.MaHocKyBlock == maHocKyBlock);
+            if (existMaHocKyBlock == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool KiemTraTrungMaLopTrongHeThong(string maLop)
+        {
+            var existMaLop = _db.LopHoc.FirstOrDefault(l => l.MaLop == maLop);
+            if (existMaLop == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool KiemTraTrungMaMonHocTrongHeThong(string maMonHoc)
+        {
+            var existMaMonHoc = _db.MonHoc.FirstOrDefault(m => m.MaMonHoc == maMonHoc);
+            if (existMaMonHoc == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool KiemTraTrungMaPhongTrongHeThong(string maPhong)
+        {
+            var existMaPhong = _db.PhongHoc.FirstOrDefault(p => p.MaPhong == maPhong);
+            if (existMaPhong == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
 
         public bool KiemTraTrungSoDienThoaiTrongHeThong(string soDienThoai)
         {
