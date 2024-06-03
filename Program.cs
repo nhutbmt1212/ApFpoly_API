@@ -98,6 +98,9 @@ builder.Services.AddScoped<IHocKyBlockDependency, HocKyBlockDependency>();
 builder.Services.AddScoped<IValidateDependency, ValidateDependency>();
 builder.Services.AddScoped<INopBaiDependency, NopBaiDependency>();
 builder.Services.AddScoped<IBangDiemDependency, BangDiemDependency>();
+builder.Services.AddScoped<IDiemDanhDependency, DiemDanhDependency>();
+
+
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
     .AddEntityFrameworkStores<AuthContext>();
