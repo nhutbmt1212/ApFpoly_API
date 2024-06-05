@@ -29,6 +29,13 @@ namespace ApFpoly_API.Controllers
 
         }
 
+        [HttpGet,Route("KiemTraTrungMonHocTrongHeThong")]
+        public IActionResult ValidateTrungMaMonHocTrongHeThong(string MaLop,string MaMonHoc)
+        {
+            bool result = _validateDependency.ValidateTrungMaMonHocTrongHeThong(MaLop, MaMonHoc);
+            return Ok(result);  
+        }
+
         //s
 
         [HttpGet, Route("ValidateTrungMaLopTrongHeThong")]
@@ -91,6 +98,20 @@ namespace ApFpoly_API.Controllers
         public IActionResult ValidateTrungCCCDTrongHeThongTruCCCDHienTai(string MaNguoiDung, string cccd)
         {
             bool result = _validateDependency.ValidateTrungCCCDTrongHeThongTruCCCDHienTai(MaNguoiDung, cccd);
+            return Ok(result);
+        }
+
+        [HttpGet,Route("ValidateThoiGianTrongLichHoc")]
+        public IActionResult ValidateThoiGianTrongLichHoc(DateTime thoiGianBatDau)
+        {
+            bool result = _validateDependency.ValidateThoiGianTrongLichHoc(thoiGianBatDau);
+            return Ok(result);
+        }
+
+        [HttpGet, Route("ValidateTrungLichHocTruIdDangTarget")]
+        public IActionResult ValidateTrungLichHocTruIdDangTarget(DateTime thoiGianBatDau, string MaLop, string MaHocKyBlock, string MaMonHoc)
+        {
+            bool result = _validateDependency.ValidateTrungLichHocTruIdDangTarget(thoiGianBatDau,MaLop,MaHocKyBlock,MaMonHoc);
             return Ok(result);
         }
     }

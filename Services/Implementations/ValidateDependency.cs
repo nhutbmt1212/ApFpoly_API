@@ -115,6 +115,25 @@ namespace ApFpoly_API.Services.Implementations
             }
             return false;
         }
+        public bool ValidateThoiGianTrongLichHoc(DateTime thoiGianBatDau)
+        {
+            var lichHoc = _db.LichHoc.FirstOrDefault(s => s.ThoiGianBatDau == thoiGianBatDau);
+            if (lichHoc == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool ValidateTrungLichHocTruIdDangTarget(DateTime thoiGianBatDau, string MaLop, string MaHocKyBlock, string MaMonHoc)
+        {
+            var lichHoc = _db.LichHoc.FirstOrDefault(s => s.ThoiGianBatDau == thoiGianBatDau && (s.MaMonHoc != MaMonHoc || s.MaLop != MaLop));
+            if (lichHoc != null)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public bool ValidateTrungCCCDTrongHeThongTruCCCDHienTai(string MaNguoiDung, string cccd)
         {
@@ -128,6 +147,15 @@ namespace ApFpoly_API.Services.Implementations
             var existSinhVien = _db.SinhVien.FirstOrDefault(x => x.Email == email && x.MaSinhVien != MaNguoiDung);
             var existGiangVien = _db.GiangVien.FirstOrDefault(y => y.Email == email && y.MaGiangVien != MaNguoiDung);
             return existSinhVien != null || existGiangVien != null;
+        }
+
+        public bool ValidateTrungMaMonHocTrongHeThong(string MaLop, string MaMonHoc)
+        {
+            var monHoc = _db.LichHoc.FirstOrDefault(s => s.MaMonHoc == MaMonHoc && s.MaLop == MaLop);
+            if (monHoc != null) {
+                return true;
+            }
+            return false;   
         }
 
         public bool ValidateTrungSoDienThoaiTrongHeThongTruSoDienThoaiHienTai(string MaNguoiDung, string soDienThoai)

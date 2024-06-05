@@ -25,7 +25,7 @@ namespace ApFpoly_API.Services.Implementations
             var totalCount = SoLuongSinhVien();
             var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
             var productPerPage = _db.SinhVien
-                .Skip((page - 1) * pageSize)
+                .Skip((page - 1) * pageSize).Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động")
                 .Take(pageSize).OrderByDescending(x => x.NgayThem).ToList();
             return productPerPage;
         }
@@ -34,7 +34,7 @@ namespace ApFpoly_API.Services.Implementations
 
         public List<SinhVien> LaySinhVien()
         {
-            var getSinhVien = _db.SinhVien.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
+            var getSinhVien = _db.SinhVien.Where(s => s.TinhTrang != "Đã xóa" || s.TinhTrang != "Ngưng hoạt động").ToList();
             return getSinhVien;
         }
 

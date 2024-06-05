@@ -5,6 +5,7 @@
         bool KiemTraTrungEmailTrongHeThong(string email);
         bool KiemTraTrungSoDienThoaiTrongHeThong(string soDienThoai);
         bool KiemTraTrungCCCDTrongHeThong(string cccd);
+        bool ValidateTrungMaMonHocTrongHeThong(string MaLop, string MaMonHoc);
 
         bool KiemTraTrungMaLopTrongHeThong(string maLop);
         bool KiemTraTrungMaHocKyBlockTrongHeThong(string maHocKyBlock);
@@ -16,5 +17,7 @@
         bool ValidateTrungSoDienThoaiTrongHeThongTruSoDienThoaiHienTai(string MaNguoiDung, string soDienThoai);
         bool ValidateTrungCCCDTrongHeThongTruCCCDHienTai(string MaNguoiDung, string cccd);
 
+        bool ValidateThoiGianTrongLichHoc(DateTime thoiGianBatDau);
+        bool ValidateTrungLichHocTruIdDangTarget(DateTime thoiGianBatDau, string MaLop, string MaHocKyBlock, string MaMonHoc);
     }
 }

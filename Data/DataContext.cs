@@ -68,7 +68,7 @@ namespace ApFpoly_API.Data
                DiaChi = "123 Đường A, Quận 1, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "123456789012",
-               Email = "nguyenvana@example.com",
+               Email = "nguyenvana@sinhvien.com",
                Khoa = "CNTT",
                ChuyenNganh = "Khoa Học Máy Tính",
                DanToc = "Kinh",
@@ -86,14 +86,14 @@ namespace ApFpoly_API.Data
                DiaChi = "456 Đường B, Quận 2, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "234567890123",
-               Email = "tranthib@example.com",
+               Email = "tranthib@sinhvien.com",
                Khoa = "Kinh Tế",
                ChuyenNganh = "Quản Trị Kinh Doanh",
                DanToc = "Kinh",
                NgaySinh = new DateTime(2001, 6, 15),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
+               AnhSinhVien = "Image_PK0002.jpeg"
            },
            new SinhVien
            {
@@ -104,14 +104,14 @@ namespace ApFpoly_API.Data
                DiaChi = "789 Đường C, Quận 3, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "345678901234",
-               Email = "levanc@example.com",
+               Email = "levanc@sinhvien.com",
                Khoa = "CNTT",
                ChuyenNganh = "Mạng Máy Tính",
                DanToc = "Kinh",
                NgaySinh = new DateTime(2000, 7, 10),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "pexels-simon-robben-55958-614810.jpg"
+               AnhSinhVien = "Image_PK0002.jpeg"
            },
            new SinhVien
            {
@@ -122,7 +122,7 @@ namespace ApFpoly_API.Data
                DiaChi = "101 Đường D, Quận 4, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "456789012345",
-               Email = "phamthid@example.com",
+               Email = "phamthid@sinhvien.com",
                Khoa = "Kinh Tế",
                ChuyenNganh = "Kế Toán",
                DanToc = "Kinh",
@@ -140,14 +140,14 @@ namespace ApFpoly_API.Data
                DiaChi = "112 Đường E, Quận 5, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "567890123456",
-               Email = "hoangvane@example.com",
+               Email = "hoangvane@sinhvien.com",
                Khoa = "CNTT",
                ChuyenNganh = "Khoa Học Máy Tính",
                DanToc = "Kinh",
                NgaySinh = new DateTime(2000, 9, 25),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "pexels-simon-robben-55958-614810.jpg"
+               AnhSinhVien = "Image_PK0002.jpeg"
            },
            new SinhVien
            {
@@ -158,14 +158,14 @@ namespace ApFpoly_API.Data
                DiaChi = "123 Đường F, Quận 6, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "678901234567",
-               Email = "dothif@example.com",
+               Email = "dothif@sinhvien.com",
                Khoa = "Kinh Tế",
                ChuyenNganh = "Quản Trị Kinh Doanh",
                DanToc = "Kinh",
                NgaySinh = new DateTime(2001, 10, 30),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "images.jpg"
+               AnhSinhVien = "Image_PK0002.jpeg"
            },
            new SinhVien
            {
@@ -176,14 +176,14 @@ namespace ApFpoly_API.Data
                DiaChi = "234 Đường G, Quận 7, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "789012345678",
-               Email = "ngovang@example.com",
+               Email = "ngovang@sinhvien.com",
                Khoa = "CNTT",
                ChuyenNganh = "Mạng Máy Tính",
                DanToc = "Kinh",
                NgaySinh = new DateTime(2000, 11, 15),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "pexels-justin-shaifer-501272-1222271.jpg"
+               AnhSinhVien = "Image_PK0002.jpeg"
            },
            new SinhVien
            {
@@ -194,14 +194,14 @@ namespace ApFpoly_API.Data
                DiaChi = "345 Đường H, Quận 8, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "890123456789",
-               Email = "phanthih@example.com",
+               Email = "phanthih@sinhvien.com",
                Khoa = "Kinh Tế",
                ChuyenNganh = "Kế Toán",
                DanToc = "Kinh",
                NgaySinh = new DateTime(2001, 12, 5),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
+               AnhSinhVien = "Image_PK0002.jpeg"
            },
            new SinhVien
            {
@@ -212,14 +212,14 @@ namespace ApFpoly_API.Data
                DiaChi = "456 Đường I, Quận 9, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "901234567890",
-               Email = "buivani@example.com",
+               Email = "buivani@sinhvien.com",
                Khoa = "CNTT",
                ChuyenNganh = "Khoa Học Máy Tính",
                DanToc = "Kinh",
                NgaySinh = new DateTime(2000, 1, 20),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "pexels-simon-robben-55958-614810.jpg"
+               AnhSinhVien = "Image_PK0002.jpeg"
            },
            new SinhVien
            {
@@ -230,14 +230,14 @@ namespace ApFpoly_API.Data
                DiaChi = "567 Đường K, Quận 10, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "012345678901",
-               Email = "vothik@example.com",
+               Email = "vothik@sinhvien.com",
                Khoa = "Kinh Tế",
                ChuyenNganh = "Quản Trị Kinh Doanh",
                DanToc = "Kinh",
                NgaySinh = new DateTime(2001, 2, 10),
                NgayThem = DateTime.Now,
                TinhTrang = "Đang học",
-               AnhSinhVien = "images.jpg"
+               AnhSinhVien = "Image_PK0002.jpeg"
            }
        );
             modelBuilder.Entity<PhongHoc>().HasData(
@@ -339,7 +339,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Toán Cao Cấp",
               NgayTao = new DateTime(2023, 1, 10),
               TinChi = 3,
-              SoBuoi = 45,
+              SoBuoi = 5,
               NoiDungMonHoc = "Toán cao cấp dành cho sinh viên ngành kỹ thuật.",
               TaiLieu = "Giáo trình Toán Cao Cấp - Tập 1",
               TinhTrang = "Đang hoạt động"
@@ -350,7 +350,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Vật Lý Đại Cương",
               NgayTao = new DateTime(2023, 1, 12),
               TinChi = 4,
-              SoBuoi = 60,
+              SoBuoi =4,
               NoiDungMonHoc = "Kiến thức cơ bản về vật lý cho sinh viên.",
               TaiLieu = "Giáo trình Vật Lý Đại Cương",
               TinhTrang = "Đang hoạt động"
@@ -361,7 +361,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Hóa Học Cơ Bản",
               NgayTao = new DateTime(2023, 1, 15),
               TinChi = 3,
-              SoBuoi = 45,
+              SoBuoi = 5,
               NoiDungMonHoc = "Kiến thức hóa học cơ bản cho sinh viên không chuyên.",
               TaiLieu = "Giáo trình Hóa Học Cơ Bản",
               TinhTrang = "Đang hoạt động"
@@ -372,7 +372,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Lập Trình C",
               NgayTao = new DateTime(2023, 1, 18),
               TinChi = 3,
-              SoBuoi = 45,
+              SoBuoi = 4,
               NoiDungMonHoc = "Giới thiệu về lập trình C.",
               TaiLieu = "Giáo trình Lập Trình C",
               TinhTrang = "Đang hoạt động"
@@ -383,7 +383,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Cơ Sở Dữ Liệu",
               NgayTao = new DateTime(2023, 1, 20),
               TinChi = 4,
-              SoBuoi = 60,
+              SoBuoi = 6,
               NoiDungMonHoc = "Kiến thức cơ bản về cơ sở dữ liệu.",
               TaiLieu = "Giáo trình Cơ Sở Dữ Liệu",
               TinhTrang = "Đang hoạt động"
@@ -394,7 +394,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Hệ Điều Hành",
               NgayTao = new DateTime(2023, 1, 22),
               TinChi = 3,
-              SoBuoi = 45,
+              SoBuoi = 4,
               NoiDungMonHoc = "Giới thiệu về hệ điều hành và các khái niệm cơ bản.",
               TaiLieu = "Giáo trình Hệ Điều Hành",
               TinhTrang = "Đang hoạt động"
@@ -405,7 +405,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Mạng Máy Tính",
               NgayTao = new DateTime(2023, 1, 25),
               TinChi = 3,
-              SoBuoi = 45,
+              SoBuoi = 4,
               NoiDungMonHoc = "Kiến thức cơ bản về mạng máy tính.",
               TaiLieu = "Giáo trình Mạng Máy Tính",
               TinhTrang = "Đang hoạt động"
@@ -416,7 +416,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Trí Tuệ Nhân Tạo",
               NgayTao = new DateTime(2023, 1, 27),
               TinChi = 4,
-              SoBuoi = 60,
+              SoBuoi = 7,
               NoiDungMonHoc = "Giới thiệu về trí tuệ nhân tạo và các ứng dụng.",
               TaiLieu = "Giáo trình Trí Tuệ Nhân Tạo",
               TinhTrang = "Đang hoạt động"
@@ -427,7 +427,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Phân Tích Thiết Kế Hệ Thống",
               NgayTao = new DateTime(2023, 1, 29),
               TinChi = 3,
-              SoBuoi = 45,
+              SoBuoi = 4,
               NoiDungMonHoc = "Giới thiệu về phân tích và thiết kế hệ thống.",
               TaiLieu = "Giáo trình Phân Tích Thiết Kế Hệ Thống",
               TinhTrang = "Đang hoạt động"
@@ -438,7 +438,7 @@ namespace ApFpoly_API.Data
               TenMonHoc = "Kinh Tế Học",
               NgayTao = new DateTime(2023, 1, 31),
               TinChi = 3,
-              SoBuoi = 45,
+              SoBuoi = 4,
               NoiDungMonHoc = "Kiến thức cơ bản về kinh tế học.",
               TaiLieu = "Giáo trình Kinh Tế Học",
               TinhTrang = "Đang hoạt động"
@@ -535,14 +535,14 @@ namespace ApFpoly_API.Data
         NgaySinh = new DateTime(1980, 5, 15),
         DanToc = "Kinh",
         Nganh = "Công nghệ thông tin",
-        Email = "nguyenvana@example.com",
+        Email = "nguyenvana@giangvien.com",
         CCCD = "123456789",
         NgayVaoLam = new DateTime(2010, 8, 20),
         DiaChi = "123 Đường ABC, Quận XYZ, TP HCM",
         ChucVu = "Giảng viên",
         NgayThem = DateTime.Now,
         TinhTrang = "Đang hoạt động",
-        AnhGiangVien = "path/to/image.jpg"
+        AnhGiangVien = "Image_PK0002.jpeg"
     },
     new GiangVien
     {
@@ -553,14 +553,14 @@ namespace ApFpoly_API.Data
         NgaySinh = new DateTime(1975, 9, 10),
         DanToc = "Kinh",
         Nganh = "Kỹ thuật điện tử",
-        Email = "tranthib@example.com",
+        Email = "tranthib@giangvien.com",
         CCCD = "987654321",
         NgayVaoLam = new DateTime(2008, 7, 15),
         DiaChi = "456 Đường XYZ, Quận ABC, TP HCM",
         ChucVu = "Phó trưởng khoa",
         NgayThem = DateTime.Now,
         TinhTrang = "Đang hoạt động",
-        AnhGiangVien = "path/to/image.jpg"
+        AnhGiangVien = "Image_PK0002.jpeg"
     },
     new GiangVien
     {
@@ -571,14 +571,14 @@ namespace ApFpoly_API.Data
         NgaySinh = new DateTime(1985, 3, 20),
         DanToc = "Kinh",
         Nganh = "Quản trị kinh doanh",
-        Email = "phamthic@example.com",
+        Email = "phamthic@giangvien.com",
         CCCD = "987654321",
         NgayVaoLam = new DateTime(2012, 5, 10),
         DiaChi = "789 Đường XYZ, Quận XYZ, TP HCM",
         ChucVu = "Trưởng khoa",
         NgayThem = DateTime.Now,
         TinhTrang = "Đang hoạt động",
-        AnhGiangVien = "path/to/image.jpg"
+        AnhGiangVien = "Image_PK0002.jpeg"
     },
     new GiangVien
     {
@@ -589,14 +589,14 @@ namespace ApFpoly_API.Data
         NgaySinh = new DateTime(1978, 8, 25),
         DanToc = "Kinh",
         Nganh = "Kỹ thuật xây dựng",
-        Email = "levand@example.com",
+        Email = "levand@giangvien.com",
         CCCD = "123456789",
         NgayVaoLam = new DateTime(2011, 6, 15),
         DiaChi = "101 Đường ABC, Quận ABC, TP HCM",
         ChucVu = "Phó trưởng khoa",
         NgayThem = DateTime.Now,
         TinhTrang = "Đang hoạt động",
-        AnhGiangVien = "path/to/image.jpg"
+        AnhGiangVien = "Image_PK0002.jpeg"
     },
     new GiangVien
     {
@@ -607,14 +607,14 @@ namespace ApFpoly_API.Data
         NgaySinh = new DateTime(1982, 10, 5),
         DanToc = "Kinh",
         Nganh = "Ngôn ngữ Anh",
-        Email = "hoangthie@example.com",
+        Email = "hoangthie@giangvien.com",
         CCCD = "987654321",
         NgayVaoLam = new DateTime(2015, 9, 20),
         DiaChi = "456 Đường XYZ, Quận XYZ, TP HCM",
         ChucVu = "Giảng viên",
         NgayThem = DateTime.Now,
         TinhTrang = "Đang hoạt động",
-        AnhGiangVien = "path/to/image.jpg"
+        AnhGiangVien = "Image_PK0002.jpeg"
     },
     new GiangVien
     {
@@ -625,14 +625,14 @@ namespace ApFpoly_API.Data
         NgaySinh = new DateTime(1970, 12, 12),
         DanToc = "Kinh",
         Nganh = "Kinh tế",
-        Email = "dangvanf@example.com",
+        Email = "dangvanf@giangvien.com",
         CCCD = "123456789",
         NgayVaoLam = new DateTime(2005, 11, 10),
         DiaChi = "789 Đường ABC, Quận ABC, TP HCM",
         ChucVu = "Trưởng khoa",
         NgayThem = DateTime.Now,
         TinhTrang = "Đang hoạt động",
-        AnhGiangVien = "path/to/image.jpg"
+        AnhGiangVien = "Image_PK0002.jpeg"
     },
     new GiangVien
     {
@@ -643,14 +643,14 @@ namespace ApFpoly_API.Data
         NgaySinh = new DateTime(1973, 6, 30),
         DanToc = "Kinh",
         Nganh = "Mỹ thuật",
-        Email = "vuthig@example.com",
+        Email = "vuthig@giangvien.com",
         CCCD = "987654321",
         NgayVaoLam = new DateTime(2013, 7, 15),
         DiaChi = "101 Đường XYZ, Quận ABC, Quận XYZ, TP HCM",
         ChucVu = "Giảng viên",
         NgayThem = DateTime.Now,
         TinhTrang = "Đang hoạt động",
-        AnhGiangVien = "path/to/image.jpg"
+        AnhGiangVien = "Image_PK0002.jpeg"
     },
 new GiangVien
 {
@@ -661,14 +661,14 @@ new GiangVien
     NgaySinh = new DateTime(1976, 4, 25),
     DanToc = "Kinh",
     Nganh = "Tài chính",
-    Email = "nguyenthanhh@example.com",
+    Email = "nguyenthanhh@giangvien.com",
     CCCD = "123456789",
     NgayVaoLam = new DateTime(2012, 8, 20),
     DiaChi = "123 Đường ABC, Quận ABC, TP HCM",
     ChucVu = "Phó trưởng khoa",
     NgayThem = DateTime.Now,
     TinhTrang = "Đang hoạt động",
-    AnhGiangVien = "path/to/image.jpg"
+    AnhGiangVien = "Image_PK0002.jpeg"
 },
 new GiangVien
 {
@@ -679,14 +679,14 @@ new GiangVien
     NgaySinh = new DateTime(1983, 9, 8),
     DanToc = "Kinh",
     Nganh = "Luật",
-    Email = "tranvani@example.com",
+    Email = "tranvani@giangvien.com",
     CCCD = "987654321",
     NgayVaoLam = new DateTime(2010, 5, 15),
     DiaChi = "456 Đường XYZ, Quận XYZ, TP HCM",
     ChucVu = "Giảng viên",
     NgayThem = DateTime.Now,
     TinhTrang = "Đang hoạt động",
-    AnhGiangVien = "path/to/image.jpg"
+    AnhGiangVien = "Image_PK0002.jpeg"
 },
 new GiangVien
 {
@@ -697,19 +697,16 @@ new GiangVien
     NgaySinh = new DateTime(1979, 11, 20),
     DanToc = "Kinh",
     Nganh = "Khoa học máy tính",
-    Email = "lethik@example.com",
+    Email = "lethik@giangvien.com",
     CCCD = "123456789",
     NgayVaoLam = new DateTime(2013, 7, 10),
     DiaChi = "101 Đường ABC, Quận ABC, TP HCM",
     ChucVu = "Trưởng khoa",
     NgayThem = DateTime.Now,
     TinhTrang = "Đang hoạt động",
-    AnhGiangVien = "path/to/image.jpg"
+    AnhGiangVien = "Image_PK0002.jpeg"
 }
 );
-
-
-
         }
     }
 }
