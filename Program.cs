@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ApFpoly_API.RealtimeExtension;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +28,8 @@ builder.Services.AddCors(options =>
 });
 
 
-
+builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -130,6 +132,20 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
     RequestPath = "/uploads"
 });
+
+var uploadsPathDocument = Path.Combine(Directory.GetCurrentDirectory(), "UploadDocument");
+if (!Directory.Exists(uploadsPathDocument))
+{
+    Directory.CreateDirectory(uploadsPathDocument);
+}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "UploadDocument")),
+    RequestPath = "/UploadDocument"
+});
+app.MapRazorPages();
+app.MapHub<ChatRealtime>("/Chat");
 
 app.MapControllers();
 

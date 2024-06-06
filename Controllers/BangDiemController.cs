@@ -47,5 +47,19 @@ namespace ApFpoly_API.Controllers
                                  select c).ToArray()).ToUpper();
             return random.Substring(0, 7);
         }
+
+        [HttpGet,Route("LayBangDiemTheoIdLop")]
+        public async Task<IActionResult> LayBangDiemTheoIdLop(string MaLop)
+        {
+            try
+            {
+                var bangDiems =await _bangDiemDependency.LayBangDiemTheoIdLop(MaLop);
+                return Ok(bangDiems);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

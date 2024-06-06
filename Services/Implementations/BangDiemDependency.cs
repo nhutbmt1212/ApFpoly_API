@@ -1,6 +1,7 @@
 ﻿using ApFpoly_API.Data;
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApFpoly_API.Services.Implementations
 {
@@ -10,6 +11,12 @@ namespace ApFpoly_API.Services.Implementations
         public BangDiemDependency(DataContext db)
         {
             _db = db;
+        }
+
+        public async Task<IEnumerable<BangDiem>> LayBangDiemTheoIdLop(string MaLop)
+        {
+            var bangDiems = await _db.BangDiem.Where(s => s.MaLop == MaLop).ToListAsync();
+            return bangDiems;
         }
 
         public async Task<BangDiem> ThemBangDiem(BangDiem bangDiem)
