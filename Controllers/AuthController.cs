@@ -97,6 +97,66 @@ namespace ApFpoly_API.Controllers
 
             return BadRequest("Lỗi login");
         }
-      
+
+        [HttpPost, Route("LoginGoogle")]
+        public async Task<IActionResult> LoginGoogle(string email)
+        {
+         
+              
+                    var sinhVien = _sinhVienDependency.LaySinhVienTheoEmail(email);
+                    var giangVien = _giangVienDependency.LayGiangVienTheoEmail(email);
+                    if (sinhVien != null)
+                    {
+                        var claims = new[]
+                        {
+                            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim("UserId",sinhVien.MaSinhVien.ToString()),
+                            new Claim("Email", email),
+                            new Claim("Role", "Sinh viên"),
+                            new Claim(ClaimTypes.Role, "Sinh viên")
+                            };
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                        var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var token = new JwtSecurityToken(
+                            _configuration["Jwt:Issuer"],
+                            _configuration["Jwt:Audience"],
+                            claims,
+                            expires: DateTime.UtcNow.AddMinutes(60),
+                            signingCredentials: signIn
+                        );
+
+                        string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+
+                        return Ok(new { Token = tokenValue, User = sinhVien });
+                    }
+                    else if (giangVien != null)
+                    {
+                        var claims = new[]
+                         {
+                            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim("UserId",giangVien.MaGiangVien.ToString()),
+                            new Claim("Email", email),
+                            new Claim("Role", giangVien.ChucVu == "Giảng viên"?"Giảng viên":"Admin"),
+                            new Claim(ClaimTypes.Role,giangVien.ChucVu == "Giảng viên"?"Giảng viên":"Admin")
+                            };
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                        var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var token = new JwtSecurityToken(
+                            _configuration["Jwt:Issuer"],
+                            _configuration["Jwt:Audience"],
+                            claims,
+                            expires: DateTime.UtcNow.AddMinutes(60),
+                            signingCredentials: signIn
+                        );
+                        string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+                        return Ok(new { Token = tokenValue, User = giangVien });
+                    }
+                
+     
+            return BadRequest("Lỗi login");
+        }
+
     }
 }

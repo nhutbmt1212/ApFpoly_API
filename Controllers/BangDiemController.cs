@@ -61,5 +61,31 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut,Route("SuaBangDiemChoSinhVien")]
+        public async Task<IActionResult> SuaBangDiemChoSinhVien(string MaLop, string MaSinhVien,string MaMonHoc,double Diem)
+        {
+            try
+            {
+                var bangDiem = await _bangDiemDependency.SuaDiemChoSinhVien(MaLop, MaSinhVien, MaMonHoc,Diem);
+                return Ok(bangDiem);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpGet,Route("LayDiemTheoSinhVien")]
+        public async Task<IActionResult> LayDiemTheoSinhVien(string MaLop, string MaSinhVien, string MaMonHoc)
+        {
+            try
+            {
+                var bangDiem = await _bangDiemDependency.LayDiemTheoSinhVien(MaLop, MaSinhVien, MaMonHoc);
+                return Ok(bangDiem);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }

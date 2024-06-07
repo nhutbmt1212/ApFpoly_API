@@ -19,6 +19,29 @@ namespace ApFpoly_API.Services.Implementations
             return bangDiems;
         }
 
+        public async Task<BangDiem> LayDiemTheoSinhVien(string MaLop, string MaSinhVien, string MaMonHoc)
+        {
+            var bangDiem = await _db.BangDiem.FirstOrDefaultAsync(s => s.MaLop == MaLop && s.MaSinhVien == MaSinhVien && s.MaMonHoc == MaMonHoc);
+    if(bangDiem != null)
+            {
+                return bangDiem;
+            }
+            return null;
+        }
+
+        public async Task<BangDiem> SuaDiemChoSinhVien(string MaLop, string MaSinhVien, string MaMonHoc,double Diem)
+        {
+            var bangDiem = await _db.BangDiem.FirstOrDefaultAsync(s => s.MaLop == MaLop && s.MaSinhVien == MaSinhVien && s.MaMonHoc == MaMonHoc);
+            if(bangDiem !=null)
+            {
+                bangDiem.Diem = Diem;
+                _db.BangDiem.Update(bangDiem);
+                await _db.SaveChangesAsync();
+                return bangDiem;
+            }
+            return null;
+        }
+
         public async Task<BangDiem> ThemBangDiem(BangDiem bangDiem)
         {
             try
