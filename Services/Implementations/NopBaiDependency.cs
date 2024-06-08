@@ -1,4 +1,5 @@
 ﻿using ApFpoly_API.Data;
+using ApFpoly_API.DTO;
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,29 @@ namespace ApFpoly_API.Services.Implementations
                 .Include(s => s.GiangVien)
                 .ToList();
             return nopBais;
+        }
+
+        public async Task<NopBai> LayBaiNopTheoSinhVien(string MaSinhVien, string MaLop, string MaMonHoc)
+        {
+            var nopBai = await _db.NopBai.FirstOrDefaultAsync(s => s.MaSinhVien == MaSinhVien && s.MaLop == MaLop && s.MaMonHoc == MaMonHoc);
+            if (nopBai == null)
+            {
+                return null;
+            }
+            return nopBai;
+        }
+
+        public async Task<NopBai> SuaBaiDaNopCuaSinhVien(NopBai nopBai)
+        {
+            var getNopBai = await _db.NopBai.FirstOrDefaultAsync(s => s.MaSinhVien == nopBai.MaSinhVien && s.MaMonHoc == nopBai.MaMonHoc && s.MaLop == nopBai.MaLop);
+
+            if (getNopBai == null)
+            {
+                return null;
+            }
+            _db.Update(getNopBai);
+            await _db.SaveChangesAsync();
+            return getNopBai;
         }
 
         public async Task<NopBai> SuaNopBai(NopBai nopBai)
