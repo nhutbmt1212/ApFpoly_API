@@ -14,7 +14,12 @@ namespace ApFpoly_API.Services.Interfaces
         Task<MonHoc> XoaMonHoc(string MaMonHoc);
         Task<IEnumerable<MonHoc>> SearchingMonHoc(string searchString);
         int SoLuongMonHoc();
+       
+        IEnumerable<MonHoc> GetMonHoc(int page, int pageSize);
 
+        Task<IEnumerable<MonHoc>> SearchingMonHocForTimKiem(string searchString, int limitItem);
+
+        public byte[] ExportMonHocToExcel();
 
     }
 }

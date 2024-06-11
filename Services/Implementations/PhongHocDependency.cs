@@ -2,6 +2,7 @@
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using System.Globalization;
 using System.Text;
 
@@ -16,7 +17,7 @@ namespace ApFpoly_API.Services.Implementations
         }
         public List<PhongHoc> LayPhongHoc()
         {
-            var getPhongHoc = _db.PhongHoc.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
+            var getPhongHoc = _db.PhongHoc.Where(s => s.TinhTrang != "Đã xóa" ).ToList();
             return getPhongHoc;
         }
 
@@ -32,8 +33,8 @@ namespace ApFpoly_API.Services.Implementations
                 searchString = RemoveDiacritics(searchString).ToLower();
                 var phongHocs = _db.PhongHoc.AsEnumerable()
                                .Where(s => RemoveDiacritics(s.MaPhong.ToLower()).Contains(searchString)
-                                        || RemoveDiacritics(s.TenPhong.ToLower()).Contains(searchString)
-                                     );
+                                        || RemoveDiacritics(s.TenPhong.ToLower()).Contains(searchString) || s.TinhTrang != "Đã xóa" 
+                                     ).Take(5);
                 return phongHocs.ToList();
             }
             else
@@ -114,5 +115,76 @@ namespace ApFpoly_API.Services.Implementations
             }
         }
 
+        public int SoLuongPhongHoc()
+        {
+            return _db.PhongHoc.Count();
+        }
+
+        public IEnumerable<PhongHoc> GetPhongHoc(int page, int pageSize)
+        {
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            var totalCount = SoLuongPhongHoc();
+            var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+            var productPerPage = _db.PhongHoc
+                .Skip((page - 1) * pageSize).Where(s => s.TinhTrang != "Đã xóa")
+                .Take(pageSize).OrderByDescending(x => x.NgayTao).ToList();
+            return productPerPage;
+        }
+
+        public async Task<IEnumerable<PhongHoc>> SearchingPhongHocForTimKiem(string searchString, int limitItem)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = RemoveDiacritics(searchString).ToLower();
+                var students = _db.PhongHoc.AsEnumerable()
+                               .Where(s => RemoveDiacritics(s.MaPhong.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenPhong.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.SucChua.ToString()).Contains(searchString)
+                                        || RemoveDiacritics(s.LoaiPhong.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TinhTrang.ToLower()).Contains(searchString))
+                               .Take(limitItem)
+                               .ToList()
+                               ;
+                return students;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public byte[] ExportPhongHocToExcel()
+        {
+            var phongHocs = _db.PhongHoc.ToList();
+            if (phongHocs == null) return [];
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("PhongHoc");
+                // Add header
+                worksheet.Cells[1, 1].Value = "Mã Phòng";
+                worksheet.Cells[1, 2].Value = "Tên Phòng";
+                worksheet.Cells[1, 3].Value = "Ngày Tạo";
+                worksheet.Cells[1, 4].Value = "Loại Phòng";
+                worksheet.Cells[1, 5].Value = "Sức Chứa";
+                worksheet.Cells[1, 6].Value = "Tình Trạng";
+
+                // Add data
+                for (int i = 0; i < phongHocs.Count; i++)
+                {
+                    worksheet.Cells[i + 2, 1].Value = phongHocs[i].MaPhong;
+                    worksheet.Cells[i + 2, 2].Value = phongHocs[i].TenPhong;
+                    worksheet.Cells[i + 2, 3].Value = phongHocs[i].NgayTao;
+                    worksheet.Cells[i + 2, 3].Style.Numberformat.Format = "dd/MM/yyyy hh:mm:ss";
+                    worksheet.Cells[i + 2, 4].Value = phongHocs[i].LoaiPhong;
+                    worksheet.Cells[i + 2, 5].Value = phongHocs[i].SucChua;
+                    worksheet.Cells[i + 2, 6].Value = phongHocs[i].TinhTrang;
+                }
+                return package.GetAsByteArray();
+            }
+        }
     }
 }

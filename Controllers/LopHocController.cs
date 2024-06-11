@@ -85,5 +85,25 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        [HttpGet, Route("SearchingLopHocForTimKiem")]
+        public async Task<IActionResult> SearchingLopHocForTimKiem(string searchString, int limitItem)
+        {
+            var listLopHocs = await _lopHocDependency.SearchingLopHocForTimKiem(searchString, limitItem);
+
+            return Ok(listLopHocs);
+        }
+        [HttpGet("SoLuongLopHoc")]
+        public IActionResult GetSoLuongLopHoc()
+        {
+            var soLuong = _lopHocDependency.SoLuongLopHoc();
+            return Ok(soLuong);
+        }
+        [HttpGet, Route("LayLopHoc")]
+        public IEnumerable<LopHoc> GetLopHoc(int page, int pageSize)
+        {
+            var productPerPage = _lopHocDependency.GetLopHoc(page, pageSize);
+            return productPerPage;
+
+        }
     }
 }

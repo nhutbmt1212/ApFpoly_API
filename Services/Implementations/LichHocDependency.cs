@@ -3,6 +3,9 @@ using ApFpoly_API.DTO;
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
 
 namespace ApFpoly_API.Services.Implementations
 {
@@ -96,8 +99,9 @@ namespace ApFpoly_API.Services.Implementations
 
         public async Task<IEnumerable<LichHoc>> SuaLichHoc(List<LichHoc> lichHoc)
         {
+
             _dbContext.LichHoc.UpdateRange(lichHoc);
-            _dbContext.SaveChangesAsync();
+           await _dbContext.SaveChangesAsync();
             return lichHoc;
         }
 
@@ -111,34 +115,28 @@ namespace ApFpoly_API.Services.Implementations
                 foreach (var lh in lichHoc)
                 {
                     var lhThoiGianBatDau = ConvertDatetimeToDateOnly(lh.ThoiGianBatDau);
-                    var isExist = (await _dbContext.LichHoc
-                        .AsNoTracking()
-                        .Where(x => x.MaLop == lh.MaLop && x.MaMonHoc == lh.MaMonHoc && x.MaHocKyBlock == lh.MaHocKyBlock)
-                        .ToListAsync())
-                        .FirstOrDefault(x => ConvertDatetimeToDateOnly(x.ThoiGianBatDau) == lhThoiGianBatDau);
+                    var existLichHocList = await _dbContext.LichHoc.Where(s => s.MaLop == lh.MaLop && s.MaMonHoc == lh.MaMonHoc
+                    && s.MaHocKyBlock == lh.MaHocKyBlock
+                    ).ToListAsync();
 
-
-                    if (isExist != null)
+                    foreach (var existLichHoc in existLichHocList)
                     {
-                        if (isExist.MaLichHoc == null)
+                        var existThoiGianBatDau = ConvertDatetimeToDateOnly(existLichHoc.ThoiGianBatDau);
+                        if (existThoiGianBatDau == lhThoiGianBatDau)
                         {
-                            throw new Exception("MaLichHoc is null");
+                            // Thêm vào danh sách nếu thời gian bắt đầu trùng khớp
+                            existLichHoc.ThoiGianBatDau = lh.ThoiGianBatDau;
+                            existLichHoc.ThoiGianKetThuc = lh.ThoiGianKetThuc;
+                            existLichHoc.TinhTrang = lh.TinhTrang;
+                            existLichHoc.MaLop = lh.MaLop;
+                            existLichHoc.MaGiangVien = lh.MaGiangVien;
+                            existLichHoc.MaHocKyBlock = lh.MaHocKyBlock;
+                            existLichHoc.MaMonHoc = lh.MaMonHoc;
+                            existLichHoc.MaPhong = lh.MaPhong;
+
+                           
+                            validLichHoc.Add(existLichHoc);
                         }
-
-                        lh.MaLichHoc = isExist.MaLichHoc;
-
-                        // Include related properties into lh
-                        lh.GiangVien = isExist.GiangVien;
-                        lh.LopHoc = isExist.LopHoc;
-                        lh.MonHoc = isExist.MonHoc;
-                        lh.PhongHoc = isExist.PhongHoc;
-                        lh.HocKyBlock = isExist.HocKyBlock;
-
-                        validLichHoc.Add(lh);
-                    }
-                    else
-                    {
-                        throw new Exception("LichHoc is null");
                     }
                 }
             }
@@ -150,6 +148,7 @@ namespace ApFpoly_API.Services.Implementations
 
             return validLichHoc;
         }
+
 
         public DateOnly ConvertDatetimeToDateOnly(DateTime paramDatetime)
         {
@@ -167,7 +166,7 @@ namespace ApFpoly_API.Services.Implementations
         public async Task<IEnumerable<LichHoc>> LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(string MaLop, string MaMonHoc, string MaHocKyBlock)
         {
             var lichHocs = await _dbContext.LichHoc
-                .Where(s=>s.MaLop == MaLop && s.MaMonHoc == MaMonHoc && s.MaHocKyBlock == MaHocKyBlock)
+                .Where(s => s.MaLop == MaLop && s.MaMonHoc == MaMonHoc && s.MaHocKyBlock == MaHocKyBlock)
                 .Include(x => x.GiangVien)
                 .Include(x => x.LopHoc)
                 .Include(x => x.MonHoc)
@@ -187,5 +186,121 @@ namespace ApFpoly_API.Services.Implementations
                 .Include(x => x.HocKyBlock).ToListAsync();
             return lichHocs;
         }
+
+        public async Task<IEnumerable<LichHoc>> LayCacLichHocDaTrung(LichHoc lichHoc)
+        {
+            TimeOnly thoiGianBatDauConverted = TimeOnly.FromDateTime(lichHoc.ThoiGianBatDau);
+            var lichHocTrungs = await _dbContext.LichHoc
+                .Where(s=> s.MaHocKyBlock == lichHoc.MaHocKyBlock && s.MaPhong == lichHoc.MaPhong)
+                .ToListAsync(); // Chuyển đổi kết quả query thành list trước khi so sánh thời gian
+
+            lichHocTrungs = lichHocTrungs
+                .Where(s => TimeOnly.FromDateTime(s.ThoiGianBatDau) == thoiGianBatDauConverted) // So sánh thời gian sau khi đã chuyển đổi kết quả query thành list
+                .ToList();
+
+            return lichHocTrungs;
+        }
+
+        public async Task<IEnumerable<LichHoc>> LayCacLichHocDaTrungTruMaLichTarget(LichHoc lichHoc)
+        {
+                TimeOnly thoiGianBatDauConverted = TimeOnly.FromDateTime(lichHoc.ThoiGianBatDau);
+
+            var lichHocs = await _dbContext.LichHoc
+                .Where(s => (s.MaLop != lichHoc.MaLop
+            || s.MaMonHoc != lichHoc.MaMonHoc)
+            && s.MaHocKyBlock == lichHoc.MaHocKyBlock && s.MaPhong == lichHoc.MaPhong
+            ).ToListAsync();
+            lichHocs = lichHocs
+              .Where(s => TimeOnly.FromDateTime(s.ThoiGianBatDau) == thoiGianBatDauConverted) // So sánh thời gian sau khi đã chuyển đổi kết quả query thành list
+              .ToList();
+
+            return lichHocs;
+        }
+        public byte[] ExportLichHocToExcel()
+        {
+            var lichHocs = _dbContext.LichHoc
+                .Include(x => x.GiangVien)
+                .Include(x => x.LopHoc)
+                .Include(x => x.MonHoc)
+                .Include(x => x.PhongHoc)
+                .Include(x => x.HocKyBlock)
+                .ToList();
+            if (lichHocs == null) return [];
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("LichHoc");
+
+                // Sort and group data
+                var sortedLichHocs = lichHocs.OrderBy(lh => lh.ThoiGianBatDau)
+                    .GroupBy(lh => new { lh.MaLop, lh.MaHocKyBlock, lh.MaPhong, lh.MaGiangVien, lh.MaMonHoc })
+                    .ToList();
+                int currentRow = 1;
+                // Add data
+                foreach (var group in sortedLichHocs)
+                {
+                    // Add title for each group
+                    // Add title for each group
+                    worksheet.Cells[currentRow, 1].Value = $"Lịch học lớp {group.Key.MaLop}";
+                    worksheet.Cells[currentRow, 1, currentRow, 9].Merge = true; // Merge 9 columns
+                    worksheet.Cells[currentRow, 1, currentRow, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Center text
+                    worksheet.Cells[currentRow, 1, currentRow, 9].Style.Font.Size = 14; // Increase font size
+                    worksheet.Cells[currentRow, 1, currentRow, 9].Style.Font.Bold = true; // Make title bold
+                    worksheet.Cells[currentRow, 1, currentRow, 9].Style.Border.BorderAround(ExcelBorderStyle.Medium); // Add border
+
+                    worksheet.Cells[currentRow, 1, currentRow, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    worksheet.Cells[currentRow, 1, currentRow, 9].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(219, 219, 219));
+                    currentRow++;
+
+
+                    // Add header
+                    worksheet.Cells[currentRow, 1].Value = "Mã Lịch Học";
+                    worksheet.Cells[currentRow, 2].Value = "Tên Lớp";
+                    worksheet.Cells[currentRow, 3].Value = "Tên Học Kỳ Và Block";
+                    worksheet.Cells[currentRow, 4].Value = "Tên Phòng";
+                    worksheet.Cells[currentRow, 5].Value = "Tên Giảng Viên";
+                    worksheet.Cells[currentRow, 6].Value = "Tên Môn Học";
+                    worksheet.Cells[currentRow, 7].Value = "Thời Gian Bắt Đầu";
+                    worksheet.Cells[currentRow, 8].Value = "Thời Gian Kết Thúc";
+                    worksheet.Cells[currentRow, 9].Value = "Tình Trạng";
+                    worksheet.Cells[currentRow, 1, currentRow, 9].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    currentRow++;
+
+                    foreach (var lichHoc in group)
+                    {
+                        worksheet.Cells[currentRow, 1].Value = lichHoc.MaLichHoc;
+                        worksheet.Cells[currentRow, 2].Value = lichHoc?.LopHoc?.TenLop;
+                        worksheet.Cells[currentRow, 3].Value = lichHoc?.HocKyBlock.TenHocKy + " - "+ lichHoc?.HocKyBlock.TenBlock;
+                        worksheet.Cells[currentRow, 4].Value = lichHoc?.PhongHoc?.TenPhong;
+                        worksheet.Cells[currentRow, 5].Value = lichHoc?.GiangVien?.TenGiangVien;
+                        worksheet.Cells[currentRow, 6].Value = lichHoc?.MonHoc?.TenMonHoc;
+                        worksheet.Cells[currentRow, 7].Value = lichHoc?.ThoiGianBatDau;
+                        worksheet.Cells[currentRow, 7].Style.Numberformat.Format = "dd/MM/yyyy hh:mm:ss";
+                        worksheet.Cells[currentRow, 8].Value = lichHoc?.ThoiGianKetThuc;
+                        worksheet.Cells[currentRow, 8].Style.Numberformat.Format = "dd/MM/yyyy hh:mm:ss";
+                        worksheet.Cells[currentRow, 9].Value = lichHoc?.TinhTrang;
+                        worksheet.Cells[currentRow, 1, currentRow, 9].Style.Border.BorderAround(ExcelBorderStyle.Thin); // Add border to each row
+                      DateTime now = DateTime.Now;
+                        DateTime ngayBatDau = new DateTime(lichHoc.ThoiGianBatDau.Year, lichHoc.ThoiGianBatDau.Month, lichHoc.ThoiGianBatDau.Day) ;
+                        if (now.Date == ngayBatDau.Date)
+                        {
+                            worksheet.Cells[currentRow, 1, currentRow, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+
+                            worksheet.Cells[currentRow, 1, currentRow, 9].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 129, 0));
+
+                        }
+                        currentRow++;
+                    }
+
+                    // Add an empty row between groups
+                    currentRow++;
+                }
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+
+                return package.GetAsByteArray();
+            }
+        }
+
     }
 }

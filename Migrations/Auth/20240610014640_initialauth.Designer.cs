@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApFpoly_API.Migrations.Auth
 {
     [DbContext(typeof(AuthContext))]
-    [Migration("20240605035414_addAuth")]
-    partial class addAuth
+    [Migration("20240610014640_initialauth")]
+    partial class initialauth
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

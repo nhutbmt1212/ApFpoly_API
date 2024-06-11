@@ -118,5 +118,41 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        [HttpGet("SoLuongMonHoc")]
+        public IActionResult GetSoLuongMonHoc()
+        {
+            var soLuong = _MonHoc.SoLuongMonHoc();
+            return Ok(soLuong);
+        }
+        [HttpGet, Route("LayMonHoc")]
+        public IEnumerable<MonHoc> GetMonHoc(int page, int pageSize)
+        {
+            var productPerPage = _MonHoc.GetMonHoc(page, pageSize);
+            return productPerPage;
+        }
+        [HttpGet, Route("SearchingMonHocForTimKiem")]
+        public async Task<IActionResult> SearchingMonHocForTimKiem(string searchString, int limitItem)
+        {
+            var listStudents = await _MonHoc.SearchingMonHocForTimKiem(searchString, limitItem);
+
+            return Ok(listStudents);
+        }
+        [HttpGet, Route("ExportMonHoc")]
+        public IActionResult ExportGiangVien()
+        {
+            var fileContents = _MonHoc.ExportMonHocToExcel();
+
+            if (fileContents == null || fileContents.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return File(
+                fileContents: fileContents,
+                contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileDownloadName: "GiangVien.xlsx"
+            );
+        }
+
     }
 }

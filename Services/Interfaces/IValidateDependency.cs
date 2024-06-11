@@ -18,6 +18,6 @@
         bool ValidateTrungCCCDTrongHeThongTruCCCDHienTai(string MaNguoiDung, string cccd);
 
         bool ValidateThoiGianTrongLichHoc(DateTime thoiGianBatDau);
-        bool ValidateTrungLichHocTruIdDangTarget(DateTime thoiGianBatDau, string MaLop, string MaHocKyBlock, string MaMonHoc);
+        bool ValidateTrungLichHocTruIdDangTarget(DateTime thoiGianBatDau, string MaLop, string MaHocKyBlock, string MaMonHoc, string MaPhong);
     }
 }

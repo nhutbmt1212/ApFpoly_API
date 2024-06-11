@@ -117,6 +117,7 @@ namespace ApFpoly_API.Services.Implementations
         }
         public bool ValidateThoiGianTrongLichHoc(DateTime thoiGianBatDau)
         {
+            Console.WriteLine('1');
             var lichHoc = _db.LichHoc.FirstOrDefault(s => s.ThoiGianBatDau == thoiGianBatDau);
             if (lichHoc == null)
             {
@@ -125,9 +126,12 @@ namespace ApFpoly_API.Services.Implementations
             return true;
         }
 
-        public bool ValidateTrungLichHocTruIdDangTarget(DateTime thoiGianBatDau, string MaLop, string MaHocKyBlock, string MaMonHoc)
+        public bool ValidateTrungLichHocTruIdDangTarget(DateTime thoiGianBatDau, string MaLop, string MaHocKyBlock, string MaMonHoc, string MaPhong)
         {
-            var lichHoc = _db.LichHoc.FirstOrDefault(s => s.ThoiGianBatDau == thoiGianBatDau && (s.MaMonHoc != MaMonHoc || s.MaLop != MaLop));
+            var lichHoc = _db.LichHoc
+                .FirstOrDefault(s => s.ThoiGianBatDau == thoiGianBatDau&&
+            (s.MaMonHoc != MaMonHoc || s.MaLop != MaLop) && s.MaPhong == MaPhong
+             );
             if (lichHoc != null)
             {
                 return true;

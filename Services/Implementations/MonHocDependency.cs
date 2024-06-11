@@ -1,14 +1,14 @@
 ﻿using ApFpoly_API.Data;
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using System.Globalization;
 using System.Text;
 
 namespace ApFpoly_API.Services.Implementations
 {
-   
+
     public class MonHocDependency : IMonHocDependency
     {
         DataContext _db;
@@ -16,10 +16,10 @@ namespace ApFpoly_API.Services.Implementations
         {
             _db = db;
         }
-        
+
         public List<MonHoc> LayMonHoc()
         {
-            var getMonHoc = _db.MonHoc.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
+            var getMonHoc = _db.MonHoc.Where(s => s.TinhTrang != "Đã xóa").ToList();
             return getMonHoc;
         }
 
@@ -35,8 +35,8 @@ namespace ApFpoly_API.Services.Implementations
                 searchString = RemoveDiacritics(searchString).ToLower();
                 var monHocs = _db.MonHoc.AsEnumerable()
                                .Where(s => RemoveDiacritics(s.MaMonHoc.ToLower()).Contains(searchString)
-                                        || RemoveDiacritics(s.TenMonHoc.ToLower()).Contains(searchString)
-                                       );
+                                        || RemoveDiacritics(s.TenMonHoc.ToLower()).Contains(searchString) || s.TinhTrang != "Đã xóa"
+                                       ).Take(5);
                 return monHocs.ToList();
             }
             else
@@ -123,5 +123,78 @@ namespace ApFpoly_API.Services.Implementations
             var monHocs = _db.MonHoc.Count();
             return monHocs;
         }
+
+        public IEnumerable<MonHoc> GetMonHoc(int page, int pageSize)
+        {
+            {
+                if (page < 1)
+                {
+                    page = 1;
+                }
+
+                var totalCount = SoLuongMonHoc();
+                var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+                var productPerPage = _db.MonHoc
+                    .Skip((page - 1) * pageSize).Where(s => s.TinhTrang != "Đã xóa")
+                    .Take(pageSize).OrderByDescending(x => x.NgayTao).ToList();
+                return productPerPage;
+            }
+        }
+        public async Task<IEnumerable<MonHoc>> SearchingMonHocForTimKiem(string searchString, int limitItem)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = RemoveDiacritics(searchString).ToLower();
+                var students = _db.MonHoc.AsEnumerable()
+                               .Where(s => RemoveDiacritics(s.MaMonHoc.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenMonHoc.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.SoBuoi.ToString()).Contains(searchString)
+                                        //|| RemoveDiacritics(s.TinChi.ToString()).Contains(searchString)
+                                        || RemoveDiacritics(s.TinhTrang.ToLower()).Contains(searchString))
+                               .Take(limitItem)
+                               .ToList()
+                               ;
+                return students;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public byte[] ExportMonHocToExcel()
+        {
+            var monHocs = _db.MonHoc.ToList();
+            if (monHocs == null) return [];
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("MonHoc");
+                // Add header
+                worksheet.Cells[1, 1].Value = "Mã Môn Học";
+                worksheet.Cells[1, 2].Value = "Tên Môn Học";
+                worksheet.Cells[1, 3].Value = "Ngày Tạo";
+                worksheet.Cells[1, 4].Value = "Tín Chỉ";
+                worksheet.Cells[1, 5].Value = "Số Buổi";
+                worksheet.Cells[1, 6].Value = "Nội Dung Môn Học";
+                worksheet.Cells[1, 7].Value = "Tài Liệu";
+                worksheet.Cells[1, 8].Value = "Tình Trạng";
+
+                // Add data
+                for (int i = 0; i < monHocs.Count; i++)
+                {
+                    worksheet.Cells[i + 2, 1].Value = monHocs[i].MaMonHoc;
+                    worksheet.Cells[i + 2, 2].Value = monHocs[i].TenMonHoc;
+                    worksheet.Cells[i + 2, 3].Value = monHocs[i].NgayTao;
+                    worksheet.Cells[i + 2, 3].Style.Numberformat.Format = "dd/MM/yyyy hh:mm:ss";
+                    worksheet.Cells[i + 2, 4].Value = monHocs[i].TinChi;
+                    worksheet.Cells[i + 2, 5].Value = monHocs[i].SoBuoi;
+                    worksheet.Cells[i + 2, 6].Value = monHocs[i].NoiDungMonHoc;
+                    worksheet.Cells[i + 2, 7].Value = monHocs[i].TaiLieu;
+                    worksheet.Cells[i + 2, 8].Value = monHocs[i].TinhTrang;
+                }
+                return package.GetAsByteArray();
+            }
+        }
     }
 }
+

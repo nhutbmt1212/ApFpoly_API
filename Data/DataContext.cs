@@ -47,28 +47,28 @@ namespace ApFpoly_API.Data
                 .HasForeignKey(d => d.MaGiangVien)
                 .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<LopHoc>().HasData(
-        new LopHoc { MaLop = "LH001", TenLop = "Toán cao cấp", NgayTao = DateTime.Now.AddDays(-100), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
-        new LopHoc { MaLop = "LH002", TenLop = "Vật lý đại cương", NgayTao = DateTime.Now.AddDays(-90), SucChua = 25, TinhTrang = "Đang Đang hoạt động" },
-        new LopHoc { MaLop = "LH003", TenLop = "Hóa học cơ bản", NgayTao = DateTime.Now.AddDays(-80), SucChua = 20, TinhTrang = "Đang Đang hoạt động" },
-        new LopHoc { MaLop = "LH004", TenLop = "Lập trình C#", NgayTao = DateTime.Now.AddDays(-70), SucChua = 35, TinhTrang = "Đang Đang hoạt động" },
-        new LopHoc { MaLop = "LH005", TenLop = "Lập trình Java", NgayTao = DateTime.Now.AddDays(-60), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
-        new LopHoc { MaLop = "LH006", TenLop = "Lập trình Python", NgayTao = DateTime.Now.AddDays(-50), SucChua = 25, TinhTrang = "Đang Đang hoạt động" },
-        new LopHoc { MaLop = "LH007", TenLop = "Lập trình JavaScript", NgayTao = DateTime.Now.AddDays(-40), SucChua = 20, TinhTrang = "Đang Đang hoạt động" },
-        new LopHoc { MaLop = "LH008", TenLop = "Lập trình PHP", NgayTao = DateTime.Now.AddDays(-30), SucChua = 35, TinhTrang = "Đang Đang hoạt động" },
-        new LopHoc { MaLop = "LH009", TenLop = "Lập trình Ruby", NgayTao = DateTime.Now.AddDays(-20), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
-        new LopHoc { MaLop = "LH010", TenLop = "Lập trình Swift", NgayTao = DateTime.Now.AddDays(-10), SucChua = 25, TinhTrang = "Đang Đang hoạt động" }
+        new LopHoc { MaLop = "LH00001", TenLop = "Toán cao cấp", NgayTao = DateTime.Now.AddDays(-100), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH00002", TenLop = "Vật lý đại cương", NgayTao = DateTime.Now.AddDays(-90), SucChua = 25, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH00003", TenLop = "Hóa học cơ bản", NgayTao = DateTime.Now.AddDays(-80), SucChua = 20, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH00004", TenLop = "Lập trình C#", NgayTao = DateTime.Now.AddDays(-70), SucChua = 35, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH00005", TenLop = "Lập trình Java", NgayTao = DateTime.Now.AddDays(-60), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH00006", TenLop = "Lập trình Python", NgayTao = DateTime.Now.AddDays(-50), SucChua = 25, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH00007", TenLop = "Lập trình JavaScript", NgayTao = DateTime.Now.AddDays(-40), SucChua = 20, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH00008", TenLop = "Lập trình PHP", NgayTao = DateTime.Now.AddDays(-30), SucChua = 35, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH00009", TenLop = "Lập trình Ruby", NgayTao = DateTime.Now.AddDays(-20), SucChua = 30, TinhTrang = "Đang Đang hoạt động" },
+        new LopHoc { MaLop = "LH00010", TenLop = "Lập trình Swift", NgayTao = DateTime.Now.AddDays(-10), SucChua = 25, TinhTrang = "Đang Đang hoạt động" }
     );
             modelBuilder.Entity<SinhVien>().HasData(
            new SinhVien
            {
-               MaSinhVien = "SV001",
+               MaSinhVien = "SV00001",
                TenSinhVien = "Nguyễn Văn A",
                SoDienThoai = "0901234567",
                GioiTinh = "Nam",
                DiaChi = "123 Đường A, Quận 1, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "123456789012",
-               Email = "nguyenvana@sinhvien.com",
+               Email = "nhutbmt82@gmai.com",
                Khoa = "CNTT",
                ChuyenNganh = "Khoa Học Máy Tính",
                DanToc = "Kinh",
@@ -79,7 +79,7 @@ namespace ApFpoly_API.Data
            },
            new SinhVien
            {
-               MaSinhVien = "SV002",
+               MaSinhVien = "SV00002",
                TenSinhVien = "Trần Thị B",
                SoDienThoai = "0902345678",
                GioiTinh = "Nữ",
@@ -97,7 +97,7 @@ namespace ApFpoly_API.Data
            },
            new SinhVien
            {
-               MaSinhVien = "SV003",
+               MaSinhVien = "SV00003",
                TenSinhVien = "Lê Văn C",
                SoDienThoai = "0903456789",
                GioiTinh = "Nam",
@@ -115,7 +115,7 @@ namespace ApFpoly_API.Data
            },
            new SinhVien
            {
-               MaSinhVien = "SV004",
+               MaSinhVien = "SV00004",
                TenSinhVien = "Phạm Thị D",
                SoDienThoai = "0904567890",
                GioiTinh = "Nữ",
@@ -133,7 +133,7 @@ namespace ApFpoly_API.Data
            },
            new SinhVien
            {
-               MaSinhVien = "SV005",
+               MaSinhVien = "SV00005",
                TenSinhVien = "Hoàng Văn E",
                SoDienThoai = "0905678901",
                GioiTinh = "Nam",
@@ -151,7 +151,7 @@ namespace ApFpoly_API.Data
            },
            new SinhVien
            {
-               MaSinhVien = "SV006",
+               MaSinhVien = "SV00006",
                TenSinhVien = "Đỗ Thị F",
                SoDienThoai = "0906789012",
                GioiTinh = "Nữ",
@@ -169,7 +169,7 @@ namespace ApFpoly_API.Data
            },
            new SinhVien
            {
-               MaSinhVien = "SV007",
+               MaSinhVien = "SV00007",
                TenSinhVien = "Ngô Văn G",
                SoDienThoai = "0907890123",
                GioiTinh = "Nam",
@@ -187,7 +187,7 @@ namespace ApFpoly_API.Data
            },
            new SinhVien
            {
-               MaSinhVien = "SV008",
+               MaSinhVien = "SV00008",
                TenSinhVien = "Phan Thị H",
                SoDienThoai = "0908901234",
                GioiTinh = "Nữ",
@@ -205,7 +205,7 @@ namespace ApFpoly_API.Data
            },
            new SinhVien
            {
-               MaSinhVien = "SV009",
+               MaSinhVien = "SV00009",
                TenSinhVien = "Bùi Văn I",
                SoDienThoai = "0909012345",
                GioiTinh = "Nam",
@@ -223,7 +223,7 @@ namespace ApFpoly_API.Data
            },
            new SinhVien
            {
-               MaSinhVien = "SV010",
+               MaSinhVien = "SV00010",
                TenSinhVien = "Võ Thị K",
                SoDienThoai = "0900123456",
                GioiTinh = "Nữ",
@@ -243,7 +243,7 @@ namespace ApFpoly_API.Data
             modelBuilder.Entity<PhongHoc>().HasData(
            new PhongHoc
            {
-               MaPhong = "P001",
+               MaPhong = "P000001",
                TenPhong = "Phòng A1",
                NgayTao = new DateTime(2022, 1, 10),
                LoaiPhong = "Giảng Đường",
@@ -252,7 +252,7 @@ namespace ApFpoly_API.Data
            },
            new PhongHoc
            {
-               MaPhong = "P002",
+               MaPhong = "P000002",
                TenPhong = "Phòng B1",
                NgayTao = new DateTime(2022, 1, 12),
                LoaiPhong = "Phòng Thí Nghiệm",
@@ -261,7 +261,7 @@ namespace ApFpoly_API.Data
            },
            new PhongHoc
            {
-               MaPhong = "P003",
+               MaPhong = "P000003",
                TenPhong = "Phòng C1",
                NgayTao = new DateTime(2022, 1, 15),
                LoaiPhong = "Phòng Học Nhóm",
@@ -270,7 +270,7 @@ namespace ApFpoly_API.Data
            },
            new PhongHoc
            {
-               MaPhong = "P004",
+               MaPhong = "P000004",
                TenPhong = "Phòng D1",
                NgayTao = new DateTime(2022, 1, 18),
                LoaiPhong = "Phòng Máy Tính",
@@ -279,7 +279,7 @@ namespace ApFpoly_API.Data
            },
            new PhongHoc
            {
-               MaPhong = "P005",
+               MaPhong = "P000005",
                TenPhong = "Phòng E1",
                NgayTao = new DateTime(2022, 1, 20),
                LoaiPhong = "Phòng Thực Hành",
@@ -288,7 +288,7 @@ namespace ApFpoly_API.Data
            },
            new PhongHoc
            {
-               MaPhong = "P006",
+               MaPhong = "P000006",
                TenPhong = "Phòng F1",
                NgayTao = new DateTime(2022, 1, 22),
                LoaiPhong = "Phòng Hội Thảo",
@@ -297,7 +297,7 @@ namespace ApFpoly_API.Data
            },
            new PhongHoc
            {
-               MaPhong = "P007",
+               MaPhong = "P000007",
                TenPhong = "Phòng G1",
                NgayTao = new DateTime(2022, 1, 25),
                LoaiPhong = "Giảng Đường",
@@ -306,7 +306,7 @@ namespace ApFpoly_API.Data
            },
            new PhongHoc
            {
-               MaPhong = "P008",
+               MaPhong = "P000008",
                TenPhong = "Phòng H1",
                NgayTao = new DateTime(2022, 1, 27),
                LoaiPhong = "Phòng Thí Nghiệm",
@@ -315,7 +315,7 @@ namespace ApFpoly_API.Data
            },
            new PhongHoc
            {
-               MaPhong = "P009",
+               MaPhong = "P000009",
                TenPhong = "Phòng I1",
                NgayTao = new DateTime(2022, 1, 29),
                LoaiPhong = "Phòng Học Nhóm",
@@ -324,7 +324,7 @@ namespace ApFpoly_API.Data
            },
            new PhongHoc
            {
-               MaPhong = "P010",
+               MaPhong = "P000010",
                TenPhong = "Phòng J1",
                NgayTao = new DateTime(2022, 1, 31),
                LoaiPhong = "Phòng Máy Tính",
@@ -335,7 +335,7 @@ namespace ApFpoly_API.Data
             modelBuilder.Entity<MonHoc>().HasData(
           new MonHoc
           {
-              MaMonHoc = "MH001",
+              MaMonHoc = "MH00001",
               TenMonHoc = "Toán Cao Cấp",
               NgayTao = new DateTime(2023, 1, 10),
               TinChi = 3,
@@ -346,18 +346,18 @@ namespace ApFpoly_API.Data
           },
           new MonHoc
           {
-              MaMonHoc = "MH002",
+              MaMonHoc = "MH00002",
               TenMonHoc = "Vật Lý Đại Cương",
               NgayTao = new DateTime(2023, 1, 12),
               TinChi = 4,
-              SoBuoi =4,
+              SoBuoi = 4,
               NoiDungMonHoc = "Kiến thức cơ bản về vật lý cho sinh viên.",
               TaiLieu = "Giáo trình Vật Lý Đại Cương",
               TinhTrang = "Đang hoạt động"
           },
           new MonHoc
           {
-              MaMonHoc = "MH003",
+              MaMonHoc = "MH00003",
               TenMonHoc = "Hóa Học Cơ Bản",
               NgayTao = new DateTime(2023, 1, 15),
               TinChi = 3,
@@ -368,7 +368,7 @@ namespace ApFpoly_API.Data
           },
           new MonHoc
           {
-              MaMonHoc = "MH004",
+              MaMonHoc = "MH00004",
               TenMonHoc = "Lập Trình C",
               NgayTao = new DateTime(2023, 1, 18),
               TinChi = 3,
@@ -379,7 +379,7 @@ namespace ApFpoly_API.Data
           },
           new MonHoc
           {
-              MaMonHoc = "MH005",
+              MaMonHoc = "MH00005",
               TenMonHoc = "Cơ Sở Dữ Liệu",
               NgayTao = new DateTime(2023, 1, 20),
               TinChi = 4,
@@ -390,7 +390,7 @@ namespace ApFpoly_API.Data
           },
           new MonHoc
           {
-              MaMonHoc = "MH006",
+              MaMonHoc = "MH00006",
               TenMonHoc = "Hệ Điều Hành",
               NgayTao = new DateTime(2023, 1, 22),
               TinChi = 3,
@@ -401,7 +401,7 @@ namespace ApFpoly_API.Data
           },
           new MonHoc
           {
-              MaMonHoc = "MH007",
+              MaMonHoc = "MH00007",
               TenMonHoc = "Mạng Máy Tính",
               NgayTao = new DateTime(2023, 1, 25),
               TinChi = 3,
@@ -412,7 +412,7 @@ namespace ApFpoly_API.Data
           },
           new MonHoc
           {
-              MaMonHoc = "MH008",
+              MaMonHoc = "MH00008",
               TenMonHoc = "Trí Tuệ Nhân Tạo",
               NgayTao = new DateTime(2023, 1, 27),
               TinChi = 4,
@@ -423,7 +423,7 @@ namespace ApFpoly_API.Data
           },
           new MonHoc
           {
-              MaMonHoc = "MH009",
+              MaMonHoc = "MH00009",
               TenMonHoc = "Phân Tích Thiết Kế Hệ Thống",
               NgayTao = new DateTime(2023, 1, 29),
               TinChi = 3,
@@ -434,7 +434,7 @@ namespace ApFpoly_API.Data
           },
           new MonHoc
           {
-              MaMonHoc = "MH010",
+              MaMonHoc = "MH00010",
               TenMonHoc = "Kinh Tế Học",
               NgayTao = new DateTime(2023, 1, 31),
               TinChi = 3,
@@ -528,14 +528,14 @@ namespace ApFpoly_API.Data
             modelBuilder.Entity<GiangVien>().HasData(
     new GiangVien
     {
-        MaGiangVien = "GV001",
+        MaGiangVien = "GV00001",
         TenGiangVien = "Nguyễn Văn A",
         GioiTinh = "Nam",
         SoDienThoai = "0123456789",
         NgaySinh = new DateTime(1980, 5, 15),
         DanToc = "Kinh",
         Nganh = "Công nghệ thông tin",
-        Email = "nguyenvana@giangvien.com",
+        Email = "nhuttmpk02967@fpt.edu.vn",
         CCCD = "123456789",
         NgayVaoLam = new DateTime(2010, 8, 20),
         DiaChi = "123 Đường ABC, Quận XYZ, TP HCM",
@@ -546,7 +546,7 @@ namespace ApFpoly_API.Data
     },
     new GiangVien
     {
-        MaGiangVien = "GV002",
+        MaGiangVien = "GV00002",
         TenGiangVien = "Trần Thị B",
         GioiTinh = "Nữ",
         SoDienThoai = "0987654321",
@@ -564,7 +564,7 @@ namespace ApFpoly_API.Data
     },
     new GiangVien
     {
-        MaGiangVien = "GV003",
+        MaGiangVien = "GV00003",
         TenGiangVien = "Phạm Thị C",
         GioiTinh = "Nữ",
         SoDienThoai = "0123456789",
@@ -582,7 +582,7 @@ namespace ApFpoly_API.Data
     },
     new GiangVien
     {
-        MaGiangVien = "GV004",
+        MaGiangVien = "GV00004",
         TenGiangVien = "Lê Văn D",
         GioiTinh = "Nam",
         SoDienThoai = "0987654321",
@@ -600,7 +600,7 @@ namespace ApFpoly_API.Data
     },
     new GiangVien
     {
-        MaGiangVien = "GV005",
+        MaGiangVien = "GV00005",
         TenGiangVien = "Hoàng Thị E",
         GioiTinh = "Nữ",
         SoDienThoai = "0123456789",
@@ -618,7 +618,7 @@ namespace ApFpoly_API.Data
     },
     new GiangVien
     {
-        MaGiangVien = "GV006",
+        MaGiangVien = "GV00006",
         TenGiangVien = "Đặng Văn F",
         GioiTinh = "Nam",
         SoDienThoai = "0987654321",
@@ -636,7 +636,7 @@ namespace ApFpoly_API.Data
     },
     new GiangVien
     {
-        MaGiangVien = "GV007",
+        MaGiangVien = "GV00007",
         TenGiangVien = "Vũ Thị G",
         GioiTinh = "Nữ",
         SoDienThoai = "0123456789",
@@ -654,7 +654,7 @@ namespace ApFpoly_API.Data
     },
 new GiangVien
 {
-    MaGiangVien = "GV008",
+    MaGiangVien = "GV00008",
     TenGiangVien = "Nguyễn Thanh H",
     GioiTinh = "Nam",
     SoDienThoai = "0987654321",
@@ -672,7 +672,7 @@ new GiangVien
 },
 new GiangVien
 {
-    MaGiangVien = "GV009",
+    MaGiangVien = "GV00009",
     TenGiangVien = "Trần Văn I",
     GioiTinh = "Nam",
     SoDienThoai = "0123456789",
@@ -690,7 +690,7 @@ new GiangVien
 },
 new GiangVien
 {
-    MaGiangVien = "GV010",
+    MaGiangVien = "GV00010",
     TenGiangVien = "Lê Thị K",
     GioiTinh = "Nữ",
     SoDienThoai = "0987654321",

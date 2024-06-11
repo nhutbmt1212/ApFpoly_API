@@ -88,30 +88,7 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(ex);
             }
         }
-        [HttpPut,Route("SuaNopBai")]
-        public async Task<IActionResult> SuaNopBai(NopBaiDTO nopBaiDTO)
-        {
-            try
-            {
-                var nopBaiConverted = new NopBai
-                {
-                    MaNopBai = nopBaiDTO.MaNopBai,
-                    MaLop = nopBaiDTO.MaLop,
-                    MaMonHoc = nopBaiDTO.MaMonHoc,
-                    MaSinhVien = nopBaiDTO.MaSinhVien,
-                    MaGiangVien = nopBaiDTO.MaGiangVien,
-                    TenFileNop = nopBaiDTO.TenFileNop,
-                    PhuongThucNopBai = nopBaiDTO.PhuongThucNopBai,
-                    NgayTao = nopBaiDTO.NgayTao,
-                    TinhTrang = nopBaiDTO.TinhTrang
-                };
-                return Ok(nopBaiConverted);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
+       
         [HttpGet,Route("LayBaiNopTheoSinhVien")]
         public async Task<IActionResult> LayBaiNopTheoSinhVien (string MaSinhVien,string MaLop, string MaMonHoc)
         {
@@ -142,7 +119,7 @@ namespace ApFpoly_API.Controllers
                     NgayTao = nopBaiDTO.NgayTao,
                     TinhTrang = nopBaiDTO.TinhTrang
                 };
-                var responseNopBai = await _nopBaiDependency.SuaNopBai(nopBaiConverted);
+                var responseNopBai = await _nopBaiDependency.SuaBaiDaNopCuaSinhVien(nopBaiConverted);
                 return Ok(responseNopBai);
             }
             catch(Exception ex)

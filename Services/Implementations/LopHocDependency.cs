@@ -22,7 +22,7 @@ namespace ApFpoly_API.Services.Implementations
 
         public List<LopHoc> LayLopHoc()
         {
-            return _db.LopHoc.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
+            return _db.LopHoc.Where(s => s.TinhTrang != "Đã xóa").ToList();
         }
 
         public LopHoc LayLopHocTheoMa(string MaLopHoc)
@@ -36,8 +36,8 @@ namespace ApFpoly_API.Services.Implementations
                 searchString = RemoveDiacritics(searchString).ToLower();
                 var lopHocs = _db.LopHoc.AsEnumerable()
                                .Where(s => RemoveDiacritics(s.MaLop.ToLower()).Contains(searchString)
-                                        || RemoveDiacritics(s.TenLop.ToLower()).Contains(searchString)
-                                       );
+                                        || RemoveDiacritics(s.TenLop.ToLower()).Contains(searchString) || s.TinhTrang != "Đã xóa" 
+                                       ).Take(5);
                 return lopHocs.ToList();
             }
             else
@@ -122,6 +122,45 @@ namespace ApFpoly_API.Services.Implementations
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public int SoLuongLopHoc()
+        {
+            return _db.LopHoc.Count();
+        }
+
+        public async Task<IEnumerable<LopHoc>> SearchingLopHocForTimKiem(string searchString, int limitItem)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = RemoveDiacritics(searchString).ToLower();
+                var lopHocs = _db.LopHoc.AsEnumerable()
+                               .Where(s => RemoveDiacritics(s.MaLop.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenLop.ToLower()).Contains(searchString))
+                                      
+                               .Take(limitItem)
+                               .ToList();
+                return lopHocs;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<LopHoc> GetLopHoc(int page, int pageSize)
+        {
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            var totalCount = SoLuongLopHoc();
+            var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+            var lopHocPerPage = _db.LopHoc
+                .Skip((page - 1) * pageSize).Where(s => s.TinhTrang != "Đã xóa")
+                .Take(pageSize).OrderByDescending(x => x.NgayTao).ToList();
+            return lopHocPerPage;
         }
     }
 }

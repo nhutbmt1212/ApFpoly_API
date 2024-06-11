@@ -109,9 +109,9 @@ namespace ApFpoly_API.Controllers
         }
 
         [HttpGet, Route("ValidateTrungLichHocTruIdDangTarget")]
-        public IActionResult ValidateTrungLichHocTruIdDangTarget(DateTime thoiGianBatDau, string MaLop, string MaHocKyBlock, string MaMonHoc)
+        public IActionResult ValidateTrungLichHocTruIdDangTarget(DateTime thoiGianBatDau, string MaLop, string MaHocKyBlock, string MaMonHoc, string MaPhong)
         {
-            bool result = _validateDependency.ValidateTrungLichHocTruIdDangTarget(thoiGianBatDau,MaLop,MaHocKyBlock,MaMonHoc);
+            bool result = _validateDependency.ValidateTrungLichHocTruIdDangTarget(thoiGianBatDau,MaLop,MaHocKyBlock,MaMonHoc,MaPhong);
             return Ok(result);
         }
     }

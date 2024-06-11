@@ -3,6 +3,7 @@ using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using IronXL;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 
 namespace ApFpoly_API.Services.Implementations
 {
@@ -26,28 +27,32 @@ namespace ApFpoly_API.Services.Implementations
                     fileExcel.CopyTo(stream);
                     stream.Position = 0;
 
-                    WorkBook workBook = WorkBook.Load(stream);
-                    WorkSheet workSheet = workBook.WorkSheets.First();
-                    var maSinhVien = workSheet.GetColumn(0);
-                    foreach (var item in maSinhVien)
+                    using (var package = new ExcelPackage(stream))
                     {
-                        if (item.Value.ToString() != "Mã Sinh Viên" && item.Value.ToString() != "" && item.Value.ToString() != "BẢNG SINH VIÊN TRONG LỚP")
-                        {
-                            string MaSinhVien = item.Value.ToString();
-                            var existSinhVien = LayLopHocChiTietTheoMaLopVaMaSinhVien(MaLop, MaSinhVien);
-                            if (existSinhVien == null)
-                            {
-                                var IsFindMaSinhVien = _sinhVienDependency.LaySinhVienTheoMaSinhVien(MaSinhVien);
-                                if (IsFindMaSinhVien != null)
-                                {
-                                    var obj_LopHocChiTiet = new LopHocChiTiet();
-                                    obj_LopHocChiTiet.MaLopHocChiTiet = GenerateRandomString(7);
-                                    obj_LopHocChiTiet.MaLop = MaLop;
-                                    obj_LopHocChiTiet.MaSinhVien = MaSinhVien;
-                                    obj_LopHocChiTiet.TinhTrang = "Đang học";
-                                    obj_LopHocChiTiet.SinhVien = IsFindMaSinhVien;
-                                    list_LopHocChiTiet.Add(obj_LopHocChiTiet);
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
+                        ExcelWorksheet workSheet = package.Workbook.Worksheets.First();
+                        int rowCount = workSheet.Dimension.Rows;
+
+                        for (int row = 1; row <= rowCount; row++)
+                        {
+                            string MaSinhVien = workSheet.Cells[row, 1].Value.ToString();
+                            if (MaSinhVien != "Mã Sinh Viên" && MaSinhVien != "" && MaSinhVien != "BẢNG SINH VIÊN TRONG LỚP")
+                            {
+                                var existSinhVien = LayLopHocChiTietTheoMaLopVaMaSinhVien(MaLop, MaSinhVien);
+                                if (existSinhVien == null)
+                                {
+                                    var IsFindMaSinhVien = _sinhVienDependency.LaySinhVienTheoMaSinhVien(MaSinhVien);
+                                    if (IsFindMaSinhVien != null)
+                                    {
+                                        var obj_LopHocChiTiet = new LopHocChiTiet();
+                                        obj_LopHocChiTiet.MaLopHocChiTiet = GenerateRandomString(7);
+                                        obj_LopHocChiTiet.MaLop = MaLop;
+                                        obj_LopHocChiTiet.MaSinhVien = MaSinhVien;
+                                        obj_LopHocChiTiet.TinhTrang = "Đang học";
+                                        obj_LopHocChiTiet.SinhVien = IsFindMaSinhVien;
+                                        list_LopHocChiTiet.Add(obj_LopHocChiTiet);
+                                    }
                                 }
                             }
                         }
@@ -64,10 +69,9 @@ namespace ApFpoly_API.Services.Implementations
                 return new ImportResultLopHocChiTiet { Success = false, Message = "Không tồn tại sinh viên trong hệ thống", Data = null };
             }
 
-
-
             return new ImportResultLopHocChiTiet { Success = true, Message = "Thành công", Data = list_LopHocChiTiet };
         }
+
 
 
         public static string GenerateRandomString(int length)

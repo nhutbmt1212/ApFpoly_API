@@ -22,7 +22,7 @@ namespace ApFpoly_API.Services.Implementations
 
         public List<HocKyBlock> LayHocKyBlock()
         {
-            return _dbContext.HocKyBlock.Where(s => s.TinhTrang != "Đã xóa" && s.TinhTrang != "Ngưng hoạt động").ToList();
+            return _dbContext.HocKyBlock.Where(s => s.TinhTrang != "Đã xóa").ToList();
         }
         public async Task<IEnumerable<HocKyBlock>> SearchingHocKyBlock(string searchString)
         {
@@ -32,7 +32,7 @@ namespace ApFpoly_API.Services.Implementations
                 var hocKyBlocks = _dbContext.HocKyBlock.AsEnumerable()
                                .Where(s => RemoveDiacritics(s.MaHocKyBlock.ToLower()).Contains(searchString)
                                         || RemoveDiacritics(s.TenHocKy.ToLower()).Contains(searchString)
-                                        || RemoveDiacritics(s.TenBlock.ToLower()).Contains(searchString));
+                                        || RemoveDiacritics(s.TenBlock.ToLower()).Contains(searchString) || s.TinhTrang != "Đã xóa" ).Take(5);
                                      
                 return hocKyBlocks.ToList();
             }

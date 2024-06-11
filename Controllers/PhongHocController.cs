@@ -1,6 +1,5 @@
 ﻿using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApFpoly_API.Controllers
@@ -21,7 +20,7 @@ namespace ApFpoly_API.Controllers
             return Ok(result);
         }
         [HttpGet, Route("SearchingPhongHoc")]
-        public async Task<IActionResult> SearchingSinhVien(string searchString)
+        public async Task<IActionResult> SearchingPhongHoc(string searchString)
         {
             var listPhongHocs = await _PhongHoc.SearchingPhongHoc(searchString);
 
@@ -73,5 +72,44 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        [HttpGet("SoLuongPhongHoc")]
+        public IActionResult GetSoLuongPhongHoc()
+        {
+            var soLuong = _PhongHoc.SoLuongPhongHoc();
+            return Ok(soLuong);
+        }
+        [HttpGet, Route("LayPhongHoc")]
+        public IEnumerable<PhongHoc> GetPhongHoc(int page, int pageSize)
+        {
+            var productPerPage = _PhongHoc.GetPhongHoc(page, pageSize);
+            return productPerPage;
+        }
+
+        [HttpGet, Route("SearchingPhongHocForTimKiem")]
+        public async Task<IActionResult> SearchingPhongHocForTimKiem(string searchString, int limitItem)
+        {
+            var listStudents = await _PhongHoc.SearchingPhongHocForTimKiem(searchString, limitItem);
+
+            return Ok(listStudents);
+        }
+        [HttpGet, Route("ExportPhongHoc")]
+        public IActionResult ExportGiangVien()
+        {
+            var fileContents = _PhongHoc.ExportPhongHocToExcel();
+
+            if (fileContents == null || fileContents.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return File(
+                fileContents: fileContents,
+                contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileDownloadName: "GiangVien.xlsx"
+            );
+        }
     }
+    
 }
+
+

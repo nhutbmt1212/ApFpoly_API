@@ -23,5 +23,9 @@ namespace ApFpoly_API.Services.Interfaces
         Task<IEnumerable<LichHoc>> LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(string MaLop,string MaMonHoc, string MaHocKyBlock);
         Task<IEnumerable<LichHoc>> LayLichHocTheoMaGiangVien(string MaGiangVien, string MaHocKyBlock);
 
+        Task<IEnumerable<LichHoc>> LayCacLichHocDaTrung(LichHoc lichHoc);
+        Task<IEnumerable<LichHoc>> LayCacLichHocDaTrungTruMaLichTarget(LichHoc lichHoc);
+
+        byte[] ExportLichHocToExcel();
     }
 }

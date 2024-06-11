@@ -19,6 +19,9 @@ namespace ApFpoly_API.Services.Interfaces
         IEnumerable<SinhVien> GetSinhVien(int page, int pageSize);
 
         Task<IEnumerable<SinhVien>> SearchingSinhVien(string searchString, int limitItem);
+
+        public byte[] ExportSinhVienToExcel();
+
     }
 }
 

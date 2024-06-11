@@ -17,7 +17,7 @@ namespace ApFpoly_API.Model
         [MaxLength(7)]
         public string MaLop { get; set; } // Khóa ngoại
         [ForeignKey("MaLop")]
-        public virtual LopHoc LopHoc { get; set; }
+        public virtual LopHoc? LopHoc { get; set; }
         [MaxLength(7)]
         public string MaHocKyBlock { get; set; } // Khóa ngoại
         [ForeignKey("MaHocKyBlock")]

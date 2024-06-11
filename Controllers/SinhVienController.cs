@@ -9,6 +9,7 @@ using System.Net.NetworkInformation;
 using System.Net.WebSockets;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApFpoly_API.Controllers
 {
@@ -45,7 +46,6 @@ namespace ApFpoly_API.Controllers
         {
             var productPerPage = _sinhVien.GetSinhVien(page, pageSize);
             return productPerPage;
-
         }
 
         [HttpGet,Route("SearchingSinhVien")]
@@ -135,5 +135,22 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(new {success = false, message = ex.Message });
             }
         }
+        [HttpGet,Route("ExportSinhVien")]
+        public IActionResult ExportSinhVien()
+        {
+            var fileContents = _sinhVien.ExportSinhVienToExcel();
+
+            if (fileContents == null || fileContents.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return File(
+                fileContents: fileContents,
+                contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileDownloadName: "SinhVien.xlsx"
+            );
+        }
+
     }
 }

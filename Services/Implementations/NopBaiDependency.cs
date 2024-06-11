@@ -44,8 +44,9 @@ namespace ApFpoly_API.Services.Implementations
             {
                 return null;
             }
-            _db.Update(getNopBai);
-            await _db.SaveChangesAsync();
+            nopBai.MaNopBai = getNopBai.MaNopBai;
+             _db.Entry(getNopBai).CurrentValues.SetValues(nopBai);
+             _db.SaveChanges();
             return getNopBai;
         }
 
@@ -54,7 +55,7 @@ namespace ApFpoly_API.Services.Implementations
             try
             {
             _db.Update(nopBai);
-                _db.SaveChangesAsync();
+            await  _db.SaveChangesAsync();
                 return nopBai;
             }
             catch (Exception ex)

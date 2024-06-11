@@ -15,5 +15,9 @@ namespace ApFpoly_API.Services.Interfaces
 
         Task<LopHoc> XoaLopHoc(string MaLopHoc);
         Task<IEnumerable<LopHoc>> SearchingLopHoc(string searchString);
+        int SoLuongLopHoc();
+
+        Task<IEnumerable<LopHoc>> SearchingLopHocForTimKiem(string searchString, int limitItem);
+        IEnumerable<LopHoc> GetLopHoc(int page, int pageSize);
     }
 }

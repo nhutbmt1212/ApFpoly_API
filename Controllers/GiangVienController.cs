@@ -109,5 +109,42 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        [HttpGet, Route("SearchingGiangVienForTimKiem")]
+        public async Task<IActionResult> SearchingGiangVienForTimKiem(string searchString, int limitItem)
+        {
+            var listGiangViens = await _giangVien.SearchingGiangVienForTimKiem(searchString, limitItem);
+
+            return Ok(listGiangViens);
+        }
+        [HttpGet("SoLuongGiangVien")]
+        public IActionResult GetSoLuongGiangVien()
+        {
+            var soLuong = _giangVien.SoLuongGiangVien();
+            return Ok(soLuong);
+        }
+        [HttpGet, Route("LayGiangVien")]
+        public IEnumerable<GiangVien> GetGiangVien(int page, int pageSize)
+        {
+            var productPerPage = _giangVien.GetGiangVien(page, pageSize);
+            return productPerPage;
+
+        }
+        [HttpGet, Route("ExportGiangVien")]
+        public IActionResult ExportGiangVien()
+        {
+            var fileContents = _giangVien.ExportGiangVienToExcel();
+
+            if (fileContents == null || fileContents.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return File(
+                fileContents: fileContents,
+                contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileDownloadName: "GiangVien.xlsx"
+            );
+        }
+
     }
 }

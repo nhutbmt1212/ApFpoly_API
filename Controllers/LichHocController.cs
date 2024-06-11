@@ -64,16 +64,16 @@ namespace ApFpoly_API.Controllers
         {
             var hocKyBlockHienTai = _hocKyBlockDependency.LayHocKyBlockHienTai();
             var lichHocs = await _lichHocDependency.LayLichHocUniqueMonHocTheoMaLop(id, hocKyBlockHienTai.MaHocKyBlock);
-            if (lichHocs == null || !lichHocs.Any())
-            {
-                return NotFound();
-            }
+            //if (lichHocs == null || !lichHocs.Any())
+            //{
+            //    return NotFound();
+            //}
             return Ok(lichHocs);
         }
         [HttpGet, Route("LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock")]
         public async Task<IActionResult> LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(string MaLop, string MaMonHoc, string MaHocKyBlock)
         {
-            var lichHoc =  await _lichHocDependency.LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(MaLop, MaMonHoc, MaHocKyBlock);
+            var lichHoc = await _lichHocDependency.LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(MaLop, MaMonHoc, MaHocKyBlock);
             if (lichHoc != null)
             {
                 return Ok(lichHoc);
@@ -88,8 +88,8 @@ namespace ApFpoly_API.Controllers
             var lichHocs = await _lichHocDependency.LayLichHocTheoMaLopVaMaHocKyBlock(MaLop, MaHocKyBlock);
             return Ok(lichHocs);
         }
-        [HttpGet,Route("LayLichHocTheoMaGiangVien")]
-        public async Task<IActionResult> LayLichHocTheoMaGiangVien(string MaLop, string MaHocKyBlock )
+        [HttpGet, Route("LayLichHocTheoMaGiangVien")]
+        public async Task<IActionResult> LayLichHocTheoMaGiangVien(string MaLop, string MaHocKyBlock)
         {
             var lichHocs = await _lichHocDependency.LayLichHocTheoMaGiangVien(MaLop, MaHocKyBlock);
             return Ok(lichHocs);
@@ -104,6 +104,7 @@ namespace ApFpoly_API.Controllers
                 {
                     var lichHocChiTiet = new LichHoc
                     {
+                        
                         MaLichHoc = TaoMaLichHoc(),
                         ThoiGianBatDau = ngay.Date + lichHocChiTietDto.GioBatDau.ToTimeSpan(),
                         ThoiGianKetThuc = ngay.Date + lichHocChiTietDto.GioKetThuc.ToTimeSpan(),
@@ -141,8 +142,10 @@ namespace ApFpoly_API.Controllers
                 List<LichHoc> listLichHoc = new List<LichHoc>();
                 foreach (var ngay in lichHocChiTietDto.NgayLichHoc)
                 {
+                    var kqLichHoc = await _lichHocDependency.LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(lichHocChiTietDto.MaLop, lichHocChiTietDto.MaMonHoc, lichHocChiTietDto.MaHocKyBlock);
                     var lichHocChiTiet = new LichHoc
                     {
+                        
                         ThoiGianBatDau = ngay.Date + lichHocChiTietDto.GioBatDau.ToTimeSpan(),
                         ThoiGianKetThuc = ngay.Date + lichHocChiTietDto.GioKetThuc.ToTimeSpan(),
                         TinhTrang = lichHocChiTietDto.TinhTrang,
@@ -176,6 +179,7 @@ namespace ApFpoly_API.Controllers
                 {
                     var lichHocChiTiet = new LichHoc
                     {
+                        
                         ThoiGianBatDau = ngay.Date + lichHocChiTietDto.GioBatDau.ToTimeSpan(),
                         ThoiGianKetThuc = ngay.Date + lichHocChiTietDto.GioKetThuc.ToTimeSpan(),
                         TinhTrang = lichHocChiTietDto.TinhTrang,
@@ -195,6 +199,84 @@ namespace ApFpoly_API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost, Route("LayCacLichHocDaTrung")]
+        public async Task<IActionResult> LayCacLichHocDaTrung(LichHocDTO lichHocDTO)
+        {
+            try
+            {
+                DateTime now = DateTime.Now; // Lấy ngày giờ hiện tại
+                int gioBatDau = lichHocDTO.GioBatDau.Hour; // Lấy giờ bắt đầu từ lichHocDTO.GioBatDau
+                int phutBatDau = lichHocDTO.GioBatDau.Minute; // Lấy phút bắt đầu từ lichHocDTO.GioBatDau
+                int giayBatDau = lichHocDTO.GioBatDau.Second; // Lấy giây bắt đầu từ lichHocDTO.GioBatDau
+
+                DateTime ThoiGianBatDau = new DateTime(now.Year, now.Month, now.Day, gioBatDau, phutBatDau, giayBatDau);
+
+
+
+
+                var lichHocChiTiet = new LichHoc
+                {
+                    
+                    ThoiGianBatDau = ThoiGianBatDau,
+                    MaLop = lichHocDTO.MaLop,
+                    MaHocKyBlock = lichHocDTO.MaHocKyBlock,
+                    MaPhong = lichHocDTO.MaPhong,
+                    MaGiangVien = lichHocDTO.MaGiangVien,
+                    MaMonHoc = lichHocDTO.MaMonHoc
+                };
+                var lichHocsValidate = await _lichHocDependency.LayCacLichHocDaTrung(lichHocChiTiet);
+                return Ok(lichHocsValidate);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpPost,Route("LayCacLichHocDaTrungTruMaLichTarget")]
+        public async Task<IActionResult> LayCacLichHocDaTrungTruMaLichTarget(LichHocDTO lichHocDTO)
+        {
+            try
+            {
+                DateTime now = DateTime.Now; // Lấy ngày giờ hiện tại
+                int gioBatDau = lichHocDTO.GioBatDau.Hour; // Lấy giờ bắt đầu từ lichHocDTO.GioBatDau
+                int phutBatDau = lichHocDTO.GioBatDau.Minute; // Lấy phút bắt đầu từ lichHocDTO.GioBatDau
+                int giayBatDau = lichHocDTO.GioBatDau.Second; // Lấy giây bắt đầu từ lichHocDTO.GioBatDau
+                DateTime ThoiGianBatDau = new DateTime(now.Year, now.Month, now.Day, gioBatDau, phutBatDau, giayBatDau);
+                var lichHocChiTiet = new LichHoc
+                {
+                    
+                    ThoiGianBatDau = ThoiGianBatDau,
+                    MaLop = lichHocDTO.MaLop,
+                    MaHocKyBlock = lichHocDTO.MaHocKyBlock,
+                    MaPhong = lichHocDTO.MaPhong,
+                    MaGiangVien = lichHocDTO.MaGiangVien,
+                    MaMonHoc = lichHocDTO.MaMonHoc
+                };
+                var lichHocsValidate = await _lichHocDependency.LayCacLichHocDaTrungTruMaLichTarget(lichHocChiTiet);
+                return Ok(lichHocsValidate);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpGet, Route("ExportLichHoc")]
+        public IActionResult ExportLichHoc()
+        {
+            var fileContents = _lichHocDependency.ExportLichHocToExcel();
+
+            if (fileContents == null || fileContents.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return File(
+                fileContents: fileContents,
+                contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileDownloadName: "SinhVien.xlsx"
+            );
         }
     }
 }
