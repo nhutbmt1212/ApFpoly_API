@@ -104,7 +104,7 @@ namespace ApFpoly_API.Controllers
                 {
                     var lichHocChiTiet = new LichHoc
                     {
-                        
+
                         MaLichHoc = TaoMaLichHoc(),
                         ThoiGianBatDau = ngay.Date + lichHocChiTietDto.GioBatDau.ToTimeSpan(),
                         ThoiGianKetThuc = ngay.Date + lichHocChiTietDto.GioKetThuc.ToTimeSpan(),
@@ -145,7 +145,7 @@ namespace ApFpoly_API.Controllers
                     var kqLichHoc = await _lichHocDependency.LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(lichHocChiTietDto.MaLop, lichHocChiTietDto.MaMonHoc, lichHocChiTietDto.MaHocKyBlock);
                     var lichHocChiTiet = new LichHoc
                     {
-                        
+
                         ThoiGianBatDau = ngay.Date + lichHocChiTietDto.GioBatDau.ToTimeSpan(),
                         ThoiGianKetThuc = ngay.Date + lichHocChiTietDto.GioKetThuc.ToTimeSpan(),
                         TinhTrang = lichHocChiTietDto.TinhTrang,
@@ -179,7 +179,7 @@ namespace ApFpoly_API.Controllers
                 {
                     var lichHocChiTiet = new LichHoc
                     {
-                        
+
                         ThoiGianBatDau = ngay.Date + lichHocChiTietDto.GioBatDau.ToTimeSpan(),
                         ThoiGianKetThuc = ngay.Date + lichHocChiTietDto.GioKetThuc.ToTimeSpan(),
                         TinhTrang = lichHocChiTietDto.TinhTrang,
@@ -218,7 +218,7 @@ namespace ApFpoly_API.Controllers
 
                 var lichHocChiTiet = new LichHoc
                 {
-                    
+
                     ThoiGianBatDau = ThoiGianBatDau,
                     MaLop = lichHocDTO.MaLop,
                     MaHocKyBlock = lichHocDTO.MaHocKyBlock,
@@ -234,7 +234,7 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(ex);
             }
         }
-        [HttpPost,Route("LayCacLichHocDaTrungTruMaLichTarget")]
+        [HttpPost, Route("LayCacLichHocDaTrungTruMaLichTarget")]
         public async Task<IActionResult> LayCacLichHocDaTrungTruMaLichTarget(LichHocDTO lichHocDTO)
         {
             try
@@ -246,7 +246,7 @@ namespace ApFpoly_API.Controllers
                 DateTime ThoiGianBatDau = new DateTime(now.Year, now.Month, now.Day, gioBatDau, phutBatDau, giayBatDau);
                 var lichHocChiTiet = new LichHoc
                 {
-                    
+
                     ThoiGianBatDau = ThoiGianBatDau,
                     MaLop = lichHocDTO.MaLop,
                     MaHocKyBlock = lichHocDTO.MaHocKyBlock,
@@ -277,6 +277,28 @@ namespace ApFpoly_API.Controllers
                 contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 fileDownloadName: "SinhVien.xlsx"
             );
+        }
+
+        [HttpPost,Route("XoaLichHocTheoMonHoc")]
+        public async Task<IActionResult> XoaLichHocTheoMonHoc(List<LichHoc> lichHoc)
+        {
+            try
+            {
+                List<LichHoc> listLichHocCanXoa = new List<LichHoc>();
+                foreach (var item in lichHoc)
+                {
+                    var lichHocs = await _lichHocDependency.LayLichHoctheoIdMonHocIdLopVaIdHocKyBlock(item.MaLop, item.MaMonHoc, item.MaHocKyBlock);
+                    listLichHocCanXoa.AddRange(lichHocs);
+                }
+
+                var lichHocDaXoa = await _lichHocDependency.XoaLichHoc(listLichHocCanXoa);
+                return Ok(lichHocDaXoa);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

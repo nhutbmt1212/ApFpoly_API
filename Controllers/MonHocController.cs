@@ -153,6 +153,36 @@ namespace ApFpoly_API.Controllers
                 fileDownloadName: "GiangVien.xlsx"
             );
         }
+        static private Dictionary<string, string> listUrlEncode = new Dictionary<string, string>();
+        [HttpPost, Route("EncodeUrlMonHoc")]
+        public IActionResult EncodeUrlChiTietMonHoc(string MaLop, string TenLop, string MaMonHoc, string TenMonHoc)
+        {
+            try
+            {
+                listUrlEncode[TenLop] = MaLop.ToUpper();
+                listUrlEncode[TenMonHoc] = MaMonHoc.ToUpper();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet,Route("DecodeUrlMonHoc")]
+        public IActionResult DecodeUrlMonHoc(string encodeTenLopHoc,string encodeTenMonHoc)
+        {
+            try
+            {
+                var maLopHoc = listUrlEncode[encodeTenLopHoc.ToUpper()];
+                var maMonHoc = listUrlEncode[encodeTenMonHoc.ToUpper()];
+                return Ok(new { maLopHoc,maMonHoc });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
     }
 }

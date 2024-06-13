@@ -200,6 +200,8 @@ namespace ApFpoly_API.Services.Implementations
                     worksheet.Cells[i + 2, 14].Value = sinhViens[i].TinhTrang;
                     worksheet.Cells[i + 2, 15].Value = sinhViens[i].AnhSinhVien;
                 }
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
                 return package.GetAsByteArray();
             }
 

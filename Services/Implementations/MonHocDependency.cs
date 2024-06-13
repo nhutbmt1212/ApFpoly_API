@@ -192,6 +192,8 @@ namespace ApFpoly_API.Services.Implementations
                     worksheet.Cells[i + 2, 7].Value = monHocs[i].TaiLieu;
                     worksheet.Cells[i + 2, 8].Value = monHocs[i].TinhTrang;
                 }
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
                 return package.GetAsByteArray();
             }
         }

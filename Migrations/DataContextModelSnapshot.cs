@@ -206,7 +206,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nam",
                             Nganh = "Công nghệ thông tin",
                             NgaySinh = new DateTime(1980, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(190),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3547),
                             NgayVaoLam = new DateTime(2010, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0123456789",
                             TenGiangVien = "Nguyễn Văn A",
@@ -224,7 +224,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nữ",
                             Nganh = "Kỹ thuật điện tử",
                             NgaySinh = new DateTime(1975, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(195),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3553),
                             NgayVaoLam = new DateTime(2008, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0987654321",
                             TenGiangVien = "Trần Thị B",
@@ -242,7 +242,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nữ",
                             Nganh = "Quản trị kinh doanh",
                             NgaySinh = new DateTime(1985, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(199),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3556),
                             NgayVaoLam = new DateTime(2012, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0123456789",
                             TenGiangVien = "Phạm Thị C",
@@ -260,7 +260,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nam",
                             Nganh = "Kỹ thuật xây dựng",
                             NgaySinh = new DateTime(1978, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(202),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3559),
                             NgayVaoLam = new DateTime(2011, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0987654321",
                             TenGiangVien = "Lê Văn D",
@@ -278,7 +278,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nữ",
                             Nganh = "Ngôn ngữ Anh",
                             NgaySinh = new DateTime(1982, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(205),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3562),
                             NgayVaoLam = new DateTime(2015, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0123456789",
                             TenGiangVien = "Hoàng Thị E",
@@ -296,7 +296,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nam",
                             Nganh = "Kinh tế",
                             NgaySinh = new DateTime(1970, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(208),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3565),
                             NgayVaoLam = new DateTime(2005, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0987654321",
                             TenGiangVien = "Đặng Văn F",
@@ -314,7 +314,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nữ",
                             Nganh = "Mỹ thuật",
                             NgaySinh = new DateTime(1973, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(211),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3568),
                             NgayVaoLam = new DateTime(2013, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0123456789",
                             TenGiangVien = "Vũ Thị G",
@@ -332,7 +332,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nam",
                             Nganh = "Tài chính",
                             NgaySinh = new DateTime(1976, 4, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(214),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3572),
                             NgayVaoLam = new DateTime(2012, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0987654321",
                             TenGiangVien = "Nguyễn Thanh H",
@@ -350,7 +350,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nam",
                             Nganh = "Luật",
                             NgaySinh = new DateTime(1983, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(217),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3575),
                             NgayVaoLam = new DateTime(2010, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0123456789",
                             TenGiangVien = "Trần Văn I",
@@ -368,7 +368,7 @@ namespace ApFpoly_API.Migrations
                             GioiTinh = "Nữ",
                             Nganh = "Khoa học máy tính",
                             NgaySinh = new DateTime(1979, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(220),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3578),
                             NgayVaoLam = new DateTime(2013, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0987654321",
                             TenGiangVien = "Lê Thị K",
@@ -569,7 +569,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00001",
-                            NgayTao = new DateTime(2024, 3, 2, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9790),
+                            NgayTao = new DateTime(2024, 3, 4, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3114),
                             SucChua = (short)30,
                             TenLop = "Toán cao cấp",
                             TinhTrang = "Đang Đang hoạt động"
@@ -577,7 +577,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00002",
-                            NgayTao = new DateTime(2024, 3, 12, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9805),
+                            NgayTao = new DateTime(2024, 3, 14, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3131),
                             SucChua = (short)25,
                             TenLop = "Vật lý đại cương",
                             TinhTrang = "Đang Đang hoạt động"
@@ -585,7 +585,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00003",
-                            NgayTao = new DateTime(2024, 3, 22, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9811),
+                            NgayTao = new DateTime(2024, 3, 24, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3134),
                             SucChua = (short)20,
                             TenLop = "Hóa học cơ bản",
                             TinhTrang = "Đang Đang hoạt động"
@@ -593,7 +593,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00004",
-                            NgayTao = new DateTime(2024, 4, 1, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9813),
+                            NgayTao = new DateTime(2024, 4, 3, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3135),
                             SucChua = (short)35,
                             TenLop = "Lập trình C#",
                             TinhTrang = "Đang Đang hoạt động"
@@ -601,7 +601,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00005",
-                            NgayTao = new DateTime(2024, 4, 11, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9814),
+                            NgayTao = new DateTime(2024, 4, 13, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3138),
                             SucChua = (short)30,
                             TenLop = "Lập trình Java",
                             TinhTrang = "Đang Đang hoạt động"
@@ -609,7 +609,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00006",
-                            NgayTao = new DateTime(2024, 4, 21, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9816),
+                            NgayTao = new DateTime(2024, 4, 23, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3140),
                             SucChua = (short)25,
                             TenLop = "Lập trình Python",
                             TinhTrang = "Đang Đang hoạt động"
@@ -617,7 +617,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00007",
-                            NgayTao = new DateTime(2024, 5, 1, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9817),
+                            NgayTao = new DateTime(2024, 5, 3, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3141),
                             SucChua = (short)20,
                             TenLop = "Lập trình JavaScript",
                             TinhTrang = "Đang Đang hoạt động"
@@ -625,7 +625,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00008",
-                            NgayTao = new DateTime(2024, 5, 11, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9819),
+                            NgayTao = new DateTime(2024, 5, 13, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3143),
                             SucChua = (short)35,
                             TenLop = "Lập trình PHP",
                             TinhTrang = "Đang Đang hoạt động"
@@ -633,7 +633,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00009",
-                            NgayTao = new DateTime(2024, 5, 21, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9821),
+                            NgayTao = new DateTime(2024, 5, 23, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3144),
                             SucChua = (short)30,
                             TenLop = "Lập trình Ruby",
                             TinhTrang = "Đang Đang hoạt động"
@@ -641,7 +641,7 @@ namespace ApFpoly_API.Migrations
                         new
                         {
                             MaLop = "LH00010",
-                            NgayTao = new DateTime(2024, 5, 31, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9822),
+                            NgayTao = new DateTime(2024, 6, 2, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3146),
                             SucChua = (short)25,
                             TenLop = "Lập trình Swift",
                             TinhTrang = "Đang Đang hoạt động"
@@ -1088,12 +1088,12 @@ namespace ApFpoly_API.Migrations
                             ChuyenNganh = "Khoa Học Máy Tính",
                             DanToc = "Kinh",
                             DiaChi = "123 Đường A, Quận 1, TP.HCM",
-                            Email = "nhutbmt82@gmai.com",
+                            Email = "nhutbmt82@gmail.com",
                             GioiTinh = "Nam",
                             Khoa = "CNTT",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9967),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3344),
                             SoDienThoai = "0901234567",
                             TenSinhVien = "Nguyễn Văn A",
                             TinhTrang = "Đang học"
@@ -1111,7 +1111,7 @@ namespace ApFpoly_API.Migrations
                             Khoa = "Kinh Tế",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2001, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9972),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3349),
                             SoDienThoai = "0902345678",
                             TenSinhVien = "Trần Thị B",
                             TinhTrang = "Đang học"
@@ -1129,7 +1129,7 @@ namespace ApFpoly_API.Migrations
                             Khoa = "CNTT",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2000, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9975),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3353),
                             SoDienThoai = "0903456789",
                             TenSinhVien = "Lê Văn C",
                             TinhTrang = "Đang học"
@@ -1147,7 +1147,7 @@ namespace ApFpoly_API.Migrations
                             Khoa = "Kinh Tế",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2001, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9979),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3358),
                             SoDienThoai = "0904567890",
                             TenSinhVien = "Phạm Thị D",
                             TinhTrang = "Đang học"
@@ -1165,7 +1165,7 @@ namespace ApFpoly_API.Migrations
                             Khoa = "CNTT",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2000, 9, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9982),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3361),
                             SoDienThoai = "0905678901",
                             TenSinhVien = "Hoàng Văn E",
                             TinhTrang = "Đang học"
@@ -1183,7 +1183,7 @@ namespace ApFpoly_API.Migrations
                             Khoa = "Kinh Tế",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2001, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9985),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3365),
                             SoDienThoai = "0906789012",
                             TenSinhVien = "Đỗ Thị F",
                             TinhTrang = "Đang học"
@@ -1201,7 +1201,7 @@ namespace ApFpoly_API.Migrations
                             Khoa = "CNTT",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2000, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 342, DateTimeKind.Local).AddTicks(9988),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3371),
                             SoDienThoai = "0907890123",
                             TenSinhVien = "Ngô Văn G",
                             TinhTrang = "Đang học"
@@ -1219,7 +1219,7 @@ namespace ApFpoly_API.Migrations
                             Khoa = "Kinh Tế",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2001, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(30),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3375),
                             SoDienThoai = "0908901234",
                             TenSinhVien = "Phan Thị H",
                             TinhTrang = "Đang học"
@@ -1237,7 +1237,7 @@ namespace ApFpoly_API.Migrations
                             Khoa = "CNTT",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2000, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(34),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3378),
                             SoDienThoai = "0909012345",
                             TenSinhVien = "Bùi Văn I",
                             TinhTrang = "Đang học"
@@ -1255,7 +1255,7 @@ namespace ApFpoly_API.Migrations
                             Khoa = "Kinh Tế",
                             NgayNhapHoc = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2001, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayThem = new DateTime(2024, 6, 10, 8, 46, 26, 343, DateTimeKind.Local).AddTicks(37),
+                            NgayThem = new DateTime(2024, 6, 12, 7, 25, 20, 257, DateTimeKind.Local).AddTicks(3383),
                             SoDienThoai = "0900123456",
                             TenSinhVien = "Võ Thị K",
                             TinhTrang = "Đang học"

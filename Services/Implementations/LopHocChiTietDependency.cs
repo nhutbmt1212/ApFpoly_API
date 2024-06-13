@@ -40,7 +40,7 @@ namespace ApFpoly_API.Services.Implementations
                             if (MaSinhVien != "Mã Sinh Viên" && MaSinhVien != "" && MaSinhVien != "BẢNG SINH VIÊN TRONG LỚP")
                             {
                                 var existSinhVien = LayLopHocChiTietTheoMaLopVaMaSinhVien(MaLop, MaSinhVien);
-                                if (existSinhVien == null)
+                                if (existSinhVien != null)
                                 {
                                     var IsFindMaSinhVien = _sinhVienDependency.LaySinhVienTheoMaSinhVien(MaSinhVien);
                                     if (IsFindMaSinhVien != null)

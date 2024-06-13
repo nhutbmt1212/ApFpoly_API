@@ -231,6 +231,8 @@ namespace ApFpoly_API.Services.Implementations
                     worksheet.Cells[i + 2, 14].Value = giangViens[i].TinhTrang;
                     worksheet.Cells[i + 2, 15].Value = giangViens[i].AnhGiangVien;
                 }
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
                 return package.GetAsByteArray();
             }
         }

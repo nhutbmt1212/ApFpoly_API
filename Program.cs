@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CORSPolicy", builder =>
-        builder.WithOrigins("https://apclone-22ec7.web.app")
+        builder.WithOrigins("https://apclone-22ec7.web.app/")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()

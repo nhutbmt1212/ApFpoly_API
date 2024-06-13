@@ -68,7 +68,7 @@ namespace ApFpoly_API.Data
                DiaChi = "123 Đường A, Quận 1, TP.HCM",
                NgayNhapHoc = new DateTime(2021, 9, 1),
                CCCD = "123456789012",
-               Email = "nhutbmt82@gmai.com",
+               Email = "nhutbmt82@gmail.com",
                Khoa = "CNTT",
                ChuyenNganh = "Khoa Học Máy Tính",
                DanToc = "Kinh",

@@ -200,6 +200,7 @@ namespace ApFpoly_API.Services.Implementations
 
             return lichHocTrungs;
         }
+        
 
         public async Task<IEnumerable<LichHoc>> LayCacLichHocDaTrungTruMaLichTarget(LichHoc lichHoc)
         {

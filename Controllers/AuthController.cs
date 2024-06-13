@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 namespace ApFpoly_API.Controllers
@@ -60,9 +62,9 @@ namespace ApFpoly_API.Controllers
                             expires: DateTime.UtcNow.AddMinutes(60),
                             signingCredentials: signIn
                         );
-                    
+
                         string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
-                        
+
                         return Ok(new { Token = tokenValue, User = sinhVien });
                     }
                     else if (giangVien != null)
@@ -101,14 +103,14 @@ namespace ApFpoly_API.Controllers
         [HttpPost, Route("LoginGoogle")]
         public async Task<IActionResult> LoginGoogle(string email)
         {
-         
-              
-                    var sinhVien = _sinhVienDependency.LaySinhVienTheoEmail(email);
-                    var giangVien = _giangVienDependency.LayGiangVienTheoEmail(email);
-                    if (sinhVien != null)
-                    {
-                        var claims = new[]
-                        {
+
+
+            var sinhVien = _sinhVienDependency.LaySinhVienTheoEmail(email);
+            var giangVien = _giangVienDependency.LayGiangVienTheoEmail(email);
+            if (sinhVien != null)
+            {
+                var claims = new[]
+                {
                             new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                             new Claim("UserId",sinhVien.MaSinhVien.ToString()),
@@ -116,24 +118,24 @@ namespace ApFpoly_API.Controllers
                             new Claim("Role", "Sinh viên"),
                             new Claim(ClaimTypes.Role, "Sinh viên")
                             };
-                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-                        var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                        var token = new JwtSecurityToken(
-                            _configuration["Jwt:Issuer"],
-                            _configuration["Jwt:Audience"],
-                            claims,
-                            expires: DateTime.UtcNow.AddMinutes(60),
-                            signingCredentials: signIn
-                        );
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken(
+                    _configuration["Jwt:Issuer"],
+                    _configuration["Jwt:Audience"],
+                    claims,
+                    expires: DateTime.UtcNow.AddMinutes(60),
+                    signingCredentials: signIn
+                );
 
-                        string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+                string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
 
-                        return Ok(new { Token = tokenValue, User = sinhVien });
-                    }
-                    else if (giangVien != null)
-                    {
-                        var claims = new[]
-                         {
+                return Ok(new { Token = tokenValue, User = sinhVien });
+            }
+            else if (giangVien != null)
+            {
+                var claims = new[]
+                 {
                             new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                             new Claim("UserId",giangVien.MaGiangVien.ToString()),
@@ -141,22 +143,64 @@ namespace ApFpoly_API.Controllers
                             new Claim("Role", giangVien.ChucVu == "Giảng viên"?"Giảng viên":"Admin"),
                             new Claim(ClaimTypes.Role,giangVien.ChucVu == "Giảng viên"?"Giảng viên":"Admin")
                             };
-                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-                        var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                        var token = new JwtSecurityToken(
-                            _configuration["Jwt:Issuer"],
-                            _configuration["Jwt:Audience"],
-                            claims,
-                            expires: DateTime.UtcNow.AddMinutes(60),
-                            signingCredentials: signIn
-                        );
-                        string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
-                        return Ok(new { Token = tokenValue, User = giangVien });
-                    }
-                
-     
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken(
+                    _configuration["Jwt:Issuer"],
+                    _configuration["Jwt:Audience"],
+                    claims,
+                    expires: DateTime.UtcNow.AddMinutes(60),
+                    signingCredentials: signIn
+                );
+                string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+                return Ok(new { Token = tokenValue, User = giangVien });
+            }
+
+
             return BadRequest("Lỗi login");
         }
 
+        [HttpPost,Route("QuenMatKhau")]
+        public async Task<IActionResult> QuenMatKhau(string email)
+        {
+            try
+            {
+                Random random = new Random();
+                int otp = random.Next(100000, 999999);
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 25,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("khachsanasap@gmail.com", "ulwg gvjl vqmb iwya")
+                };
+                using (var message = new MailMessage("khachsanasap@gmail.com", email)
+                {
+                    Subject = "Lấy lại mật khẩu website ASAP Tour",
+                    Body = $"Mã OTP của bạn: {otp}"
+                })
+                {
+                    try
+                    {
+                        await smtp.SendMailAsync(message);
+                        return Ok(otp);
+                    }
+                    catch (Exception)
+                    {
+                        return BadRequest("Error100");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
+
     }
+
 }

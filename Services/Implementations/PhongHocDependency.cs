@@ -183,6 +183,8 @@ namespace ApFpoly_API.Services.Implementations
                     worksheet.Cells[i + 2, 5].Value = phongHocs[i].SucChua;
                     worksheet.Cells[i + 2, 6].Value = phongHocs[i].TinhTrang;
                 }
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
                 return package.GetAsByteArray();
             }
         }
