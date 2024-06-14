@@ -59,6 +59,53 @@ namespace ApFpoly_API.Controllers
             }
             return Ok(lichHoc);
         }
+        //new 
+        [HttpGet("LayLichHocTheoMaGiangVienVaMaHocKyBlock/{maGiangVien}/{maHocKyBlock}")]
+        public IActionResult LayLichHocTheoMaGiangVienVaMaHocKyBlock(string maGiangVien, string maHocKyBlock)
+        {
+            // Get the current HocKyBlock
+            var hocKyBlockHienTai = _hocKyBlockDependency.LayHocKyBlockHienTai();
+
+            // Get the LichHoc objects
+            var lichHoc = _lichHocDependency.LayLichHocTheoMaGiangVienVaMaHocKyBlock(maGiangVien, maHocKyBlock);
+
+            // Check if the LichHoc objects exist
+            if (lichHoc == null)
+            {
+                return NotFound();
+            }
+
+            // Remove duplicates
+            lichHoc = lichHoc.GroupBy(lh => new { lh.MaMonHoc, lh.MaLop })
+                             .Select(g => g.First())
+                             .ToList();
+
+            return Ok(lichHoc);
+        }
+        [HttpGet("LayLichHocTheoMaSinhVienVaMaHocKyBlock/{maSinhVien}/{maHocKyBlock}")]
+        public IActionResult LayLichHocTheoMaSinhVienVaMaHocKyBlock(string maSinhVien, string maHocKyBlock)
+        {
+            // Get the current HocKyBlock
+            var hocKyBlockHienTai = _hocKyBlockDependency.LayHocKyBlockHienTai();
+
+            // Get the LichHoc objects
+            var lichHoc = _lichHocDependency.LayLichHocTheoMaSinhVienVaMaHocKyBlock(maSinhVien, maHocKyBlock);
+
+            // Check if the LichHoc objects exist
+            if (lichHoc == null)
+            {
+                return NotFound();
+            }
+
+            // Remove duplicates
+        
+
+            return Ok(lichHoc);
+        }
+
+
+        //
+
         [HttpGet("LayLichHocUniqueMonHocTheoMaLop/{id}")]
         public async Task<IActionResult> LayLichHocUniqueMonHocTheoMaLop(string id)
         {
@@ -94,7 +141,7 @@ namespace ApFpoly_API.Controllers
             var lichHocs = await _lichHocDependency.LayLichHocTheoMaGiangVien(MaLop, MaHocKyBlock);
             return Ok(lichHocs);
         }
-     
+        
         [HttpPost]
         public IActionResult ThemLichHoc(LichHocDTO lichHocChiTietDto)
         {

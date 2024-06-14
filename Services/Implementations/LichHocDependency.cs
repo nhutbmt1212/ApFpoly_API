@@ -32,6 +32,53 @@ namespace ApFpoly_API.Services.Implementations
         {
             return _dbContext.LichHoc.Include(x => x.GiangVien).Include(x => x.LopHoc).Include(x => x.MonHoc).Include(x => x.PhongHoc).Where(x => x.MaHocKyBlock == hocKyBlockVaLopDTO.MaHocKyBlock && x.MaLop == hocKyBlockVaLopDTO.MaLop).ToList();
         }
+        public List<LichHoc> LayLichHocTheoMaGiangVienVaMaHocKyBlock(string maGiangVien, string maHocKyBlock)
+        {
+            var lichhoc = _dbContext.LichHoc.Include(x => x.GiangVien).Include(x => x.LopHoc).Include(x => x.MonHoc).Include(x => x.PhongHoc)
+                .Where(x => x.MaHocKyBlock == maHocKyBlock && x.MaGiangVien == maGiangVien)
+                .ToList();
+            lichhoc = lichhoc.GroupBy(lh => new { lh.MaMonHoc, lh.MaLop })
+                    .Select(g => 
+                    {
+                        var lichHoc = g.First();
+                        lichHoc.ThoiGianBatDau = g.Min(lh => lh.ThoiGianBatDau);
+                        lichHoc.ThoiGianKetThuc = g.Max(lh => lh.ThoiGianKetThuc);
+                        return lichHoc;
+                    })
+                    .ToList();
+
+
+
+            return lichhoc;
+        }
+
+        public List<LichHoc> LayLichHocTheoMaSinhVienVaMaHocKyBlock(string maSinhVien, string maHocKyBlock)
+        {
+            var maLopList = _dbContext.LopHocChiTiet.Where(lhc => lhc.MaSinhVien == maSinhVien && lhc.TinhTrang != "Đã xóa").Select(lhc => lhc.MaLop).ToList();
+
+            var lichHoc = _dbContext.LichHoc.Include(x => x.GiangVien).Include(x => x.LopHoc).Include(x => x.MonHoc).Include(x => x.PhongHoc)
+                .Where(x => x.MaHocKyBlock == maHocKyBlock && maLopList.Contains(x.MaLop))
+                .ToList();
+
+            lichHoc = lichHoc.GroupBy(lh => new { lh.MaMonHoc, lh.MaLop })
+
+                     .Select(g => 
+                     {
+
+                         var lichHoc = g.First();
+                         lichHoc.ThoiGianBatDau = g.Min(lh => lh.ThoiGianBatDau);
+                         lichHoc.ThoiGianKetThuc = g.Max(lh => lh.ThoiGianKetThuc);
+                         return lichHoc;
+
+                     })
+
+                     .ToList();
+
+            return lichHoc;
+        }
+
+
+
 
         public List<LichHoc> ThemLichHoc(List<LichHoc> lichHoc)
         {

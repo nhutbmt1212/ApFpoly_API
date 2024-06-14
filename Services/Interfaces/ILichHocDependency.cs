@@ -15,7 +15,8 @@ namespace ApFpoly_API.Services.Interfaces
         List<LichHoc> ThemLichHoc(List<LichHoc> lichHoc);
 
         Task<IEnumerable<LichHoc>> SuaLichHoc(List<LichHoc> lichHoc);
-
+        List<LichHoc> LayLichHocTheoMaGiangVienVaMaHocKyBlock(string maGiangVien, string maHocKyBlock);
+        List<LichHoc> LayLichHocTheoMaSinhVienVaMaHocKyBlock(string maSinhVien, string maHocKyBlock);
         Task<List<LichHoc>> CheckByIdLopIdHocKyBlockIdMonAndNgayLichHoc(List<LichHoc> lichHoc);
         Task<IEnumerable<LichHoc>> XoaLichHoc(List<LichHoc> lichHoc);
         Task<IEnumerable<LichHoc>> LayLichHocTheoMaLopVaMaHocKyBlock(string MaLop, string MaHocKyBlock);
