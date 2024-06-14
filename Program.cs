@@ -20,13 +20,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CORSPolicy", builder =>
-        builder.WithOrigins("https://apclone-22ec7.web.app/")
+        builder.WithOrigins("https://apclone-22ec7.web.app", "http://localhost:4200")
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials()
-            .SetIsOriginAllowed((host) => true));
+            .AllowCredentials());
 });
-
 
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();

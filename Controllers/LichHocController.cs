@@ -94,6 +94,7 @@ namespace ApFpoly_API.Controllers
             var lichHocs = await _lichHocDependency.LayLichHocTheoMaGiangVien(MaLop, MaHocKyBlock);
             return Ok(lichHocs);
         }
+     
         [HttpPost]
         public IActionResult ThemLichHoc(LichHocDTO lichHocChiTietDto)
         {
