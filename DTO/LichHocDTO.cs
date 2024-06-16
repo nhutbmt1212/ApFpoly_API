@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApFpoly_API.Model;
+using System;
 
 namespace ApFpoly_API.DTO
 {
@@ -28,5 +29,20 @@ namespace ApFpoly_API.DTO
         public string MaPhong { get; set; }
         public string MaGiangVien { get; set; }
         public string MaMonHoc { get; set; }
+    }
+
+    public class LichHocDTOForGet
+    {
+        public string MaLop { get; set; }
+        public string? MaGiangVien { get; set; }
+        public string? MaPhongHoc { get; set; }
+      
+        public List<MonHoc> MonHoc { get; set; }
+        public LopHoc LopHoc { get; set; }
+        public GiangVien? GiangVien { get; set; }
+        public PhongHoc? PhongHoc { get; set; }
+       
+        public int? soLuongNguoiTrongLop { get; set; }
+        public int sucChua { get; set; }
     }
 }

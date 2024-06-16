@@ -45,8 +45,7 @@ namespace ApFpoly_API.Controllers
         {
             try
             {
-              
-
+             
                 var addedLopHoc = _lopHocDependency.ThemLopHoc(lopHoc);
 
                 return Ok(new { success = true, data = addedLopHoc });

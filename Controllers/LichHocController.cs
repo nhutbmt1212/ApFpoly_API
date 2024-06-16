@@ -70,15 +70,13 @@ namespace ApFpoly_API.Controllers
             var lichHoc = _lichHocDependency.LayLichHocTheoMaGiangVienVaMaHocKyBlock(maGiangVien, maHocKyBlock);
 
             // Check if the LichHoc objects exist
-            if (lichHoc == null)
+            if (lichHoc.Count ==0)
             {
-                return NotFound();
+                return Ok(null);
             }
 
             // Remove duplicates
-            lichHoc = lichHoc.GroupBy(lh => new { lh.MaMonHoc, lh.MaLop })
-                             .Select(g => g.First())
-                             .ToList();
+        
 
             return Ok(lichHoc);
         }
@@ -87,21 +85,29 @@ namespace ApFpoly_API.Controllers
         {
             // Get the current HocKyBlock
             var hocKyBlockHienTai = _hocKyBlockDependency.LayHocKyBlockHienTai();
-
             // Get the LichHoc objects
             var lichHoc = _lichHocDependency.LayLichHocTheoMaSinhVienVaMaHocKyBlock(maSinhVien, maHocKyBlock);
-
             // Check if the LichHoc objects exist
             if (lichHoc == null)
             {
                 return NotFound();
             }
-
             // Remove duplicates
-        
-
             return Ok(lichHoc);
         }
+
+        [HttpGet("LayLichHocTheoMaLopMaMonHocVaMaHocKyBlock/{maLop}/{maMonHoc}/{maHocKyBlock}")]
+        public IActionResult LayLichHocTheoMaLopMaMonHocVaMaHocKyBlock(string maLop, string maMonHoc, string maHocKyBlock)
+        {
+            var lichHoc = _lichHocDependency.LayLichHocTheoMaLopMaMonHocVaMaHocKyBlock(maLop, maMonHoc, maHocKyBlock);
+            if (lichHoc == null)
+            {
+                return NotFound();
+            }
+            return Ok(lichHoc);
+        }
+
+
 
 
         //
@@ -127,6 +133,20 @@ namespace ApFpoly_API.Controllers
             }
             return BadRequest();
         }
+        //int page, int pageSize
+        [HttpGet,Route("GetLichHocUniqueMaMonHoc/{page}/{pageSize}")]
+    public async Task<IActionResult> GetLichHocUniqueMaMonHoc(int page, int pageSize)
+        {
+            try
+            {
+                var lichHocs =await _lichHocDependency.GetLichHocUniqueMaMonHoc( page,  pageSize);
+                return Ok(lichHocs);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message); 
+            }
+        }
 
 
         [HttpGet, Route("LayLichHocTheoMaLopVaMaHocKyBlock")]
@@ -141,7 +161,13 @@ namespace ApFpoly_API.Controllers
             var lichHocs = await _lichHocDependency.LayLichHocTheoMaGiangVien(MaLop, MaHocKyBlock);
             return Ok(lichHocs);
         }
-        
+        [HttpGet,Route("SearchLichHoc/{searchString}/{pageSize}")]
+        public async Task<IActionResult> SearchLichHoc(string searchString, int pageSize)
+        {
+            var lichHocs = await _lichHocDependency.SearchLichHoc(searchString, pageSize);
+            return Ok(lichHocs);
+        }
+
         [HttpPost]
         public IActionResult ThemLichHoc(LichHocDTO lichHocChiTietDto)
         {

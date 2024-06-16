@@ -37,6 +37,10 @@ namespace ApFpoly_API.Services.Implementations
             var lichhoc = _dbContext.LichHoc.Include(x => x.GiangVien).Include(x => x.LopHoc).Include(x => x.MonHoc).Include(x => x.PhongHoc)
                 .Where(x => x.MaHocKyBlock == maHocKyBlock && x.MaGiangVien == maGiangVien)
                 .ToList();
+            if (lichhoc.Count == 0)
+            {
+                return lichhoc;
+            }
             lichhoc = lichhoc.GroupBy(lh => new { lh.MaMonHoc, lh.MaLop })
                     .Select(g => 
                     {
@@ -52,6 +56,8 @@ namespace ApFpoly_API.Services.Implementations
             return lichhoc;
         }
 
+
+
         public List<LichHoc> LayLichHocTheoMaSinhVienVaMaHocKyBlock(string maSinhVien, string maHocKyBlock)
         {
             var maLopList = _dbContext.LopHocChiTiet.Where(lhc => lhc.MaSinhVien == maSinhVien && lhc.TinhTrang != "Đã xóa").Select(lhc => lhc.MaLop).ToList();
@@ -59,7 +65,10 @@ namespace ApFpoly_API.Services.Implementations
             var lichHoc = _dbContext.LichHoc.Include(x => x.GiangVien).Include(x => x.LopHoc).Include(x => x.MonHoc).Include(x => x.PhongHoc)
                 .Where(x => x.MaHocKyBlock == maHocKyBlock && maLopList.Contains(x.MaLop))
                 .ToList();
-
+            if (lichHoc.Count == 0)
+            {
+                return lichHoc;
+            }
             lichHoc = lichHoc.GroupBy(lh => new { lh.MaMonHoc, lh.MaLop })
 
                      .Select(g => 
@@ -73,6 +82,23 @@ namespace ApFpoly_API.Services.Implementations
                      })
 
                      .ToList();
+
+            return lichHoc;
+        }
+
+        public LichHoc LayLichHocTheoMaLopMaMonHocVaMaHocKyBlock(string MaLop, string MaMonHoc, string MaHocKyBlock)
+        {
+            var lichHocList = _dbContext.LichHoc
+                .Include(x => x.GiangVien)
+                .Include(x => x.LopHoc)
+                .Include(x => x.MonHoc)
+                .Include(x => x.PhongHoc)
+                .Where(x => x.MaLop == MaLop && x.MaMonHoc == MaMonHoc && x.MaHocKyBlock == MaHocKyBlock)
+                .ToList();
+
+            var lichHoc = lichHocList.First();
+            lichHoc.ThoiGianBatDau = lichHocList.Min(lh => lh.ThoiGianBatDau);
+            lichHoc.ThoiGianKetThuc = lichHocList.Max(lh => lh.ThoiGianKetThuc);
 
             return lichHoc;
         }
@@ -350,5 +376,89 @@ namespace ApFpoly_API.Services.Implementations
             }
         }
 
+        public async Task<List<LichHocDTOForGet>> GetLichHocUniqueMaMonHoc(int page, int pageSize)
+        {
+            // Lấy danh sách các LopHoc theo giới hạn đã cho
+            var lopHocList = await _dbContext.LopHoc
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var lichHocDTOList = new List<LichHocDTOForGet>();
+
+            foreach (var lopHoc in lopHocList)
+            {
+                var lichHocList = await _dbContext.LichHoc
+                    .Include(x => x.GiangVien)
+                    .Include(x => x.MonHoc)
+                    .Include(x => x.PhongHoc)
+                    .Where(x => x.MaLop == lopHoc.MaLop)
+                    .ToListAsync();
+                var lopHocChiTietList = await _dbContext.LopHocChiTiet.Where(lhc => lhc.MaLop == lopHoc.MaLop && lhc.TinhTrang != "Đã xóa").ToListAsync();
+                var lichHocDTO = new LichHocDTOForGet
+                {
+                    MaLop = lopHoc.MaLop,
+                    LopHoc = lopHoc,
+                    sucChua = lopHoc.SucChua,
+                    soLuongNguoiTrongLop = lopHocChiTietList.Count() ,
+
+                };
+
+                if (lichHocList.Any())
+                {
+                    lichHocDTO.MonHoc = lichHocList.Select(x => x.MonHoc).Distinct().ToList();
+                    lichHocDTO.MaGiangVien = lichHocList.First().MaGiangVien;
+                    lichHocDTO.MaPhongHoc = lichHocList.First().MaPhong;
+                    lichHocDTO.GiangVien = lichHocList.First().GiangVien;
+                    lichHocDTO.PhongHoc = lichHocList.First().PhongHoc;
+                }
+
+                lichHocDTOList.Add(lichHocDTO);
+            }
+
+            return lichHocDTOList;
+        }
+
+        public async Task<List<LichHocDTOForGet>> SearchLichHoc(string searchString, int pageSize)
+        {
+
+            var lopHocList = await _dbContext.LopHoc.
+                Where(lh=>lh.MaLop.Contains(searchString))
+               .Take(pageSize)
+               .ToListAsync();
+            var lichHocDTOList = new List<LichHocDTOForGet>();
+
+            foreach (var lopHoc in lopHocList)
+            {
+                var lichHocList = await _dbContext.LichHoc
+                    .Include(x => x.GiangVien)
+                    .Include(x => x.MonHoc)
+                    .Include(x => x.PhongHoc)
+                    .Where(x => x.MaLop == lopHoc.MaLop)
+                    .ToListAsync();
+                var lopHocChiTietList = await _dbContext.LopHocChiTiet.Where(lhc => lhc.MaLop == lopHoc.MaLop && lhc.TinhTrang != "Đã xóa").ToListAsync();
+                var lichHocDTO = new LichHocDTOForGet
+                {
+                    MaLop = lopHoc.MaLop,
+                    LopHoc = lopHoc,
+                    sucChua = lopHoc.SucChua,
+                    soLuongNguoiTrongLop = lopHocChiTietList.Count(),
+
+                };
+
+                if (lichHocList.Any())
+                {
+                    lichHocDTO.MonHoc = lichHocList.Select(x => x.MonHoc).Distinct().ToList();
+                    lichHocDTO.MaGiangVien = lichHocList.First().MaGiangVien;
+                    lichHocDTO.MaPhongHoc = lichHocList.First().MaPhong;
+                    lichHocDTO.GiangVien = lichHocList.First().GiangVien;
+                    lichHocDTO.PhongHoc = lichHocList.First().PhongHoc;
+                }
+
+                lichHocDTOList.Add(lichHocDTO);
+            }
+
+            return lichHocDTOList;
+        }
     }
 }

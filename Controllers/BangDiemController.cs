@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ApFpoly_API.DTO;
 using ApFpoly_API.Model;
+using System.Net.WebSockets;
 
 namespace ApFpoly_API.Controllers
 {
@@ -82,6 +83,32 @@ namespace ApFpoly_API.Controllers
                 var bangDiem = await _bangDiemDependency.LayDiemTheoSinhVien(MaLop, MaSinhVien, MaMonHoc);
                 return Ok(bangDiem);
             }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet, Route("LayBangDiem")]
+        public async Task<IActionResult> LayBangDiem()
+        {
+            try
+            {
+                var bangDiems = await _bangDiemDependency.LayBangDiem();
+                return Ok(bangDiems);
+            }
+            catch (Exception ex)
+            {
+return BadRequest(ex);
+            }
+        }
+        [HttpGet,Route("LayBangDiemTheoId/{MaLop}/{MaMonHoc}")]
+        public async Task<IActionResult> LayBangDiemTheoId(string MaLop, string MaMonHoc)
+        {
+            try {
+                var bangDiems = await _bangDiemDependency.LayBangDiemTheoId(MaLop, MaMonHoc);
+                return Ok(bangDiems);
+                 }
             catch(Exception ex)
             {
                 return BadRequest(ex);
