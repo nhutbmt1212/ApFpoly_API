@@ -99,7 +99,7 @@ namespace ApFpoly_API.Controllers
             }
             catch (Exception ex)
             {
-return BadRequest(ex);
+            return BadRequest(ex);
             }
         }
         [HttpGet,Route("LayBangDiemTheoId/{MaLop}/{MaMonHoc}")]
@@ -112,6 +112,32 @@ return BadRequest(ex);
             catch(Exception ex)
             {
                 return BadRequest(ex);
+            }
+        }
+        [HttpGet,Route("DongYBangDiem/{MaLop}/{MaMonHoc}")]
+        public async Task<IActionResult> DongYBangDiem(string MaLop, string MaMonHoc)
+        {
+            try
+            {
+                var bangDiems = await _bangDiemDependency.DongYBangDiem(MaLop, MaMonHoc);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpGet,Route("LayBangDiemChoSinhVienTheoIdLopVaMonHoc/{MaLop}/{MaMonHoc}")]
+        public async Task<IActionResult> LayBangDiemChoSinhVien(string MaLop, string MaMonHoc)
+        {
+            try
+            {
+                var bangDiems = await _bangDiemDependency.LayBangDiemChoSinhVien(MaLop, MaMonHoc);
+                return Ok(new {success = true, data = bangDiems,message="Lấy bảng điểm  cho sinh viên thành công" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new {success = false, message=ex.Message });
             }
         }
     }

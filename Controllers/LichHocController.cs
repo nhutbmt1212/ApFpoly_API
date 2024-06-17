@@ -99,12 +99,20 @@ namespace ApFpoly_API.Controllers
         [HttpGet("LayLichHocTheoMaLopMaMonHocVaMaHocKyBlock/{maLop}/{maMonHoc}/{maHocKyBlock}")]
         public IActionResult LayLichHocTheoMaLopMaMonHocVaMaHocKyBlock(string maLop, string maMonHoc, string maHocKyBlock)
         {
-            var lichHoc = _lichHocDependency.LayLichHocTheoMaLopMaMonHocVaMaHocKyBlock(maLop, maMonHoc, maHocKyBlock);
+            try
+            {
+ var lichHoc = _lichHocDependency.LayLichHocTheoMaLopMaMonHocVaMaHocKyBlock(maLop, maMonHoc, maHocKyBlock);
             if (lichHoc == null)
             {
                 return NotFound();
             }
             return Ok(lichHoc);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+           
         }
 
 

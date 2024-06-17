@@ -9,9 +9,104 @@ namespace ApFpoly_API.Services.Implementations
     public class BangDiemDependency : IBangDiemDependency
     {
         private readonly DataContext _db;
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1,1);
         public BangDiemDependency(DataContext db)
         {
             _db = db;
+        }
+
+        public async Task<List<BangDiem>> DongYBangDiem(string MaLop, string MaMonHoc)
+        {
+            await _semaphore.WaitAsync();
+            try
+            {
+                var lichHocFirstData = await _db.LichHoc.FirstOrDefaultAsync(s => s.MaLop == MaLop && s.MaMonHoc == MaMonHoc);
+                var bangDiems = await _db.BangDiem.Where(s => s.MaLop == MaLop && s.MaMonHoc == MaMonHoc).ToListAsync();
+                var nopBais = await _db.NopBai.Where(s => s.MaLop == MaLop && s.MaMonHoc == MaMonHoc).ToListAsync();
+                var sinhViensTrongLop = await _db.LopHocChiTiet.Where(s => s.MaLop == MaLop && s.TinhTrang != "Đã xóa").ToListAsync();
+
+
+                var maSinhVienDaDuocCham = new HashSet<string>(bangDiems.Select(bd => bd.MaSinhVien));
+                var maSinhVienDaNopBai = new HashSet<string>(nopBais.Select(nb => nb.MaSinhVien));
+
+
+                var sinhVienDaDuocCham = bangDiems.Where(svl => bangDiems.Any(bd => bd.MaSinhVien == svl.MaSinhVien))
+             .ToList();
+            var sinhVienChuaDuocCham = sinhViensTrongLop.Where(svl => !bangDiems.Any(bd => bd.MaSinhVien == svl.MaSinhVien) && nopBais.Any(nb => nb.MaSinhVien == svl.MaSinhVien))
+                .Select(cdc => new BangDiem
+                {
+                    MaBangDiem = TaoMaBangDiem(),
+                    MaLop = MaLop,
+                    MaSinhVien = cdc.MaSinhVien,
+                    MaMonHoc = MaMonHoc,
+                    MaGiangVien = lichHocFirstData.MaGiangVien,
+                    Diem = 0,
+                    NgayTao = DateTime.Now,
+                    TinhTrang = "Đã được duyệt",
+                }).ToList();
+            var sinhVienChuaNopBai = sinhViensTrongLop.Where(svl => nopBais.Any(nb => nb.MaSinhVien != svl.MaSinhVien))
+                .Select(cdc => new BangDiem
+                {
+                    MaBangDiem = TaoMaBangDiem(),
+                    MaLop = MaLop,
+                    MaSinhVien = cdc.MaSinhVien,
+                    MaMonHoc = MaMonHoc,
+                    MaGiangVien = lichHocFirstData.MaGiangVien,
+                    Diem = 0,
+                    NgayTao = DateTime.Now,
+                    TinhTrang = "Đã được duyệt",
+                })
+                .ToList();
+            var tasks = new List<Task>();
+
+
+            if (sinhVienDaDuocCham.Count > 0)
+            {
+                foreach (var item in sinhVienDaDuocCham)
+                {
+                    item.TinhTrang = "Đã được duyệt";
+                }
+                tasks.Add(SuaSinhVienTrongBangDiem(sinhVienDaDuocCham));
+            }
+            if (sinhVienChuaDuocCham.Count > 0)
+            {
+                foreach (var item in sinhVienDaDuocCham)
+                {
+                    item.TinhTrang = "Đã được duyệt";
+                }
+                tasks.Add(ThemSinhVienVaoBangDiem(sinhVienChuaDuocCham));
+            }
+            if (sinhVienChuaNopBai.Count > 0)
+            {
+                tasks.Add(ThemSinhVienVaoBangDiem(sinhVienChuaNopBai));
+            }
+            await Task.WhenAll(tasks);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+            return null;
+        }
+        public async Task<List<BangDiem>> ThemSinhVienVaoBangDiem(List<BangDiem> bangDiems)
+        {
+             _db.BangDiem.AddRange(bangDiems);
+             _db.SaveChanges();
+            return bangDiems;
+        }
+        public async Task<List<BangDiem>> SuaSinhVienTrongBangDiem (List<BangDiem> bangDiems)
+        {
+            _db.BangDiem.UpdateRange(bangDiems);
+            _db.SaveChanges();
+            return bangDiems;
+        }
+        public static string TaoMaBangDiem()
+        {
+            var random = Path.GetRandomFileName();
+            random = new string((from c in random
+                                 where char.IsLetterOrDigit(c)
+                                 select c).ToArray()).ToUpper();
+            return random.Substring(0, 7);
         }
 
         public async Task<List<LopBangDiemDTO>> LayBangDiem()
@@ -63,29 +158,49 @@ namespace ApFpoly_API.Services.Implementations
                                 HocKyBlock = _db.HocKyBlock.FirstOrDefault(mh => mh.MaHocKyBlock == lh.MaHocKyBlock), // Lấy thông tin học kỳ/block từ bảng HocKyBlock
                                 SiSo = subSl != null ? subSl.SiSo : 0, // Nếu không có thông tin thì sĩ số là 0
                                 TongSoNop = subNb != null ? subNb.TongSoNop : 0, // Nếu không có thông tin thì tổng số nộp là 0
-                                TinhTrang = subNb?.TinhTrang ?? "Đang đợi duyệt" // Sử dụng toán tử ?? để cung cấp giá trị mặc định khi không có thông tin
+                                TinhTrang = _db.BangDiem.FirstOrDefault(s => s.MaLop == lh.MaLop && s.MaMonHoc == lh.MaMonHoc)?.TinhTrang ?? "Chưa có"
                             }).ToList();
 
             return bangDiem; // Trả về danh sách bảng điểm đã được tạo ra từ các
         }
-
-        public async Task<List<BangDiem>> LayBangDiemTheoId(string MaLop, string MaMonHoc)
+        public async Task<List<BangDiemDTOForChiTiet>> LayBangDiemTheoId(string MaLop, string MaMonHoc)
         {
-            //var bangDiems = await _db.BangDiem.Where(s => s.MaLop == MaLop && s.MaMonHoc == MaMonHoc && s.TinhTrang != "Đã xóa")
-            //    .ToListAsync();
-            //return bangDiems;   
-            var sinhVienTrongLop = await _db.LopHocChiTiet.Where(s => s.MaLop == MaLop && s.TinhTrang != "Đã xóa").ToListAsync();
-            var layNhungSinhVienDaNopBai =  _db.NopBai.AsEnumerable().Join(sinhVienTrongLop,
-                sv=>sv.MaSinhVien,
-                nb=>nb.MaSinhVien,
-                (sv,nb)=>new {SinhVien = sv,NopBai = nb})
-                .Where(s=>s.NopBai.TinhTrang == "Đã nộp")
-                .Select(x=>x.NopBai)
-                .ToList();
-
-
-            var s = "23123213231321'";
-            return null;
+            var lichHoc = await _db.LichHoc.FirstOrDefaultAsync(s => s.MaLop == MaLop && s.MaMonHoc == MaMonHoc);
+            var sinhVienVaTinhTrang = await _db.LopHocChiTiet
+                .Where(lhc => lhc.MaLop == MaLop && lhc.TinhTrang != "Đã xóa")
+                .GroupJoin(_db.NopBai,
+                    lhc => new { lhc.MaSinhVien, MaMonHoc },
+                    nb => new { nb.MaSinhVien, nb.MaMonHoc },
+                    (lhc, nbCollection) => new { LopHocChiTiet = lhc, NopBai = nbCollection })
+                .SelectMany(
+                    joined => joined.NopBai.DefaultIfEmpty(),
+                    (joined, nb) => new
+                    {
+                        MaSinhVien = joined.LopHocChiTiet.MaSinhVien,
+                        TinhTrangNopBai = nb != null && nb.MaMonHoc == MaMonHoc ? "Đã nộp" : "Chưa nộp",
+                    })
+                .GroupJoin(_db.BangDiem,
+                    lhc => new { lhc.MaSinhVien, MaMonHoc },
+                    bd => new { bd.MaSinhVien, bd.MaMonHoc },
+                    (lhc, bdCollection) => new { LopHocChiTiet = lhc, BangDiem = bdCollection })
+                .SelectMany(
+                    joined => joined.BangDiem.DefaultIfEmpty(),
+                    (joined, bd) => new BangDiemDTOForChiTiet
+                    {
+                        MaSinhVien = joined.LopHocChiTiet.MaSinhVien,
+                        SinhVien = _db.SinhVien.FirstOrDefault(s => s.MaSinhVien == joined.LopHocChiTiet.MaSinhVien),
+                        TinhTrang = bd != null && bd.MaMonHoc == MaMonHoc && joined.LopHocChiTiet.TinhTrangNopBai == "Đã nộp" ? "Đã chấm" : joined.LopHocChiTiet.TinhTrangNopBai,
+                        MaLop = MaLop,
+                        LopHoc = _db.LopHoc.FirstOrDefault(s => s.MaLop == MaLop),
+                        MaMonHoc = MaMonHoc,
+                        MonHoc = _db.MonHoc.FirstOrDefault(s => s.MaMonHoc == MaMonHoc),
+                        MaGiangVien = lichHoc.MaGiangVien,
+                        GiangVien = _db.GiangVien.FirstOrDefault(s => s.MaGiangVien == lichHoc.MaGiangVien),
+                        Diem = bd != null ? bd.Diem : 0,
+                        NgayTao = bd != null ? bd.NgayTao : null,
+                    })
+                .ToListAsync();
+            return sinhVienVaTinhTrang;
         }
 
         public async Task<IEnumerable<BangDiem>> LayBangDiemTheoIdLop(string MaLop)
@@ -103,7 +218,6 @@ namespace ApFpoly_API.Services.Implementations
             }
             return null;
         }
-
         public async Task<BangDiem> SuaDiemChoSinhVien(string MaLop, string MaSinhVien, string MaMonHoc, double Diem)
         {
             var bangDiem = await _db.BangDiem.FirstOrDefaultAsync(s => s.MaLop == MaLop && s.MaSinhVien == MaSinhVien && s.MaMonHoc == MaMonHoc);
@@ -130,6 +244,12 @@ namespace ApFpoly_API.Services.Implementations
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<List<BangDiem>> LayBangDiemChoSinhVien(string MaLop, string MaMonHoc)
+        {
+            var bangDiem =await  _db.BangDiem.Where(s => s.MaLop == MaLop && s.MaMonHoc == MaMonHoc).ToListAsync();
+            return bangDiem;
         }
     }
 }

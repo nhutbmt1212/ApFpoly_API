@@ -10,6 +10,8 @@ namespace ApFpoly_API.Services.Interfaces
         Task<BangDiem> SuaDiemChoSinhVien(string MaLop, string MaSinhVien, string MaMonHoc,double Diem);
         Task<BangDiem> LayDiemTheoSinhVien(string MaLop, string MaSinhVien, string MaMonHoc);
         Task<List<LopBangDiemDTO>> LayBangDiem();
-        Task<List<BangDiem>> LayBangDiemTheoId(string MaLop, string MaMonHoc);
+        Task<List<BangDiemDTOForChiTiet>> LayBangDiemTheoId(string MaLop, string MaMonHoc);
+        Task<List<BangDiem>> DongYBangDiem(string MaLop, string MaMonHoc);
+        Task<List<BangDiem>> LayBangDiemChoSinhVien(string MaLop,string MaMonHoc);
     }
 }

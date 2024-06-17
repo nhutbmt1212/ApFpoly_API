@@ -64,7 +64,7 @@ namespace ApFpoly_API.Controllers
             {
                 return BadRequest(ex);
             }
-            return Ok("Lưu file thành công");
+            return Ok(new {success =true, message="Lưu file thành công"});
         }
         public static string TaoNopBaiHoc()
         {
