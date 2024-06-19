@@ -107,10 +107,24 @@ namespace ApFpoly_API.Services.Implementations
 
 
         public List<LichHoc> ThemLichHoc(List<LichHoc> lichHoc)
-        {
+            {
+       
+            foreach (var item in lichHoc)
+            {
+                var lichHocDb =  _dbContext.LichHoc.AsNoTracking()
+                    .FirstOrDefault(s => s.MaMonHoc == item.MaMonHoc &&
+                s.MaLop == item.MaLop &&
+                s.MaHocKyBlock == item.MaHocKyBlock &&
+                s.ThoiGianBatDau.Date == item.ThoiGianBatDau.Date);
+                if (lichHocDb != null)
+                {
+                    item.MaLichHoc = lichHocDb.MaLichHoc;
+                }
+            }
             _dbContext.LichHoc.AddRange(lichHoc);
             _dbContext.SaveChanges();
             return lichHoc;
+        
         }
         public async Task<IEnumerable<LichHoc>> LayLichHocUniqueMonHocTheoMaLop(string MaLop, string MaHocKyBlock)
         {
@@ -133,16 +147,16 @@ namespace ApFpoly_API.Services.Implementations
 
 
 
-        public LichHoc XoaLichHoc(string id)
-        {
-            var lichHoc = _dbContext.LichHoc.FirstOrDefault(x => x.MaLichHoc == id);
-            if (lichHoc != null)
-            {
-                _dbContext.LichHoc.Remove(lichHoc);
-                _dbContext.SaveChanges();
-            }
-            return lichHoc;
-        }
+        //public LichHoc XoaLichHoc(string id)
+        //{
+        //    var lichHoc = _dbContext.LichHoc.FirstOrDefault(x => x.MaLichHoc == id);
+        //    if (lichHoc != null)
+        //    {
+        //        _dbContext.LichHoc.Remove(lichHoc);
+        //        _dbContext.SaveChanges();
+        //    }
+        //    return lichHoc;
+        //}
 
         public async Task<IEnumerable<LichHoc>> LayLichHocTheoMaLopVaMaHocKyBlock(string MaLop, string MaHocKyBlock)
         {
@@ -231,8 +245,20 @@ namespace ApFpoly_API.Services.Implementations
 
         public async Task<IEnumerable<LichHoc>> XoaLichHoc(List<LichHoc> lichHoc)
         {
+            foreach (var item in lichHoc)
+            {
+                var lichHocDb = await _dbContext.LichHoc.AsNoTracking()
+                    .FirstOrDefaultAsync(s => s.MaMonHoc == item.MaMonHoc &&
+                s.MaLop == item.MaLop &&
+                s.MaHocKyBlock == item.MaHocKyBlock &&
+                s.ThoiGianBatDau.Date == item.ThoiGianBatDau.Date);
+                if(lichHocDb != null)
+                {
+                    item.MaLichHoc = lichHocDb.MaLichHoc;
+                }
+            }
             _dbContext.LichHoc.RemoveRange(lichHoc);
-            _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
             return lichHoc;
         }
 

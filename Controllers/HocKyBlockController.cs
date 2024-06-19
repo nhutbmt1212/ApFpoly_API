@@ -89,5 +89,12 @@ namespace ApFpoly_API.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        [HttpGet, Route("SearchingHocKyBlockForTimKiem")]
+        public async Task<IActionResult> SearchingMonHocForTimKiem(string searchString, int limitItem)
+        {
+            var listStudents = await _hocKyBlockDependency.SearchingHocKyBlockForTimKiem(searchString, limitItem);
+
+            return Ok(listStudents);
+        }
     }
 }

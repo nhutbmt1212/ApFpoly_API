@@ -2,6 +2,7 @@
 using ApFpoly_API.Model;
 using ApFpoly_API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace ApFpoly_API.Controllers
 {
@@ -126,6 +127,31 @@ namespace ApFpoly_API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+        [HttpGet, Route("DownloadFileNopBai/{tenFile}")]
+        public async Task<IActionResult> DownloadFile(string tenFile)
+        {
+            try
+            {
+            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "UploadNopBai", tenFile);
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(filepath, out var contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
+            return File(bytes, contentType, Path.GetFileName(filepath));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Lấy file không thành công"
+                });
+            }
+
+
         }
     }
 }

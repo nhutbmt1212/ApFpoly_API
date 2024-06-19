@@ -273,8 +273,7 @@ namespace ApFpoly_API.Controllers
                     };
                     listLichHoc.Add(lichHocChiTiet);
                 }
-                var xuLyListLichHoc = await _lichHocDependency.CheckByIdLopIdHocKyBlockIdMonAndNgayLichHoc(listLichHoc);
-                var kqUpdateLichHoc = await _lichHocDependency.XoaLichHoc(xuLyListLichHoc);
+                var kqUpdateLichHoc = await _lichHocDependency.XoaLichHoc(listLichHoc);
                 return Ok(kqUpdateLichHoc);
             }
             catch (Exception ex)

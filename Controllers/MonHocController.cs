@@ -81,7 +81,7 @@ namespace ApFpoly_API.Controllers
         public async Task<IActionResult> DownloadFile(string idMonHoc)
         {
             var monHoc =  _MonHoc.LayMonHocTheoMaMonHoc(idMonHoc);
-            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "UploadDocument", "BaoCao_Pk02967_TruongMinhNhut_1717048729342.docx");
+            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "UploadDocument",monHoc?.TaiLieu);
             var provider = new FileExtensionContentTypeProvider();
             if (!provider.TryGetContentType(filepath, out var contentType))
             {

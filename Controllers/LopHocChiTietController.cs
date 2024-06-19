@@ -64,7 +64,8 @@ namespace ApFpoly_API.Controllers
         [HttpPost, Route("ImportExcelLopHocChiTiet")]
         public IActionResult ImportExcelLopHocChiTiet([FromForm] string MaLop, [FromForm] IFormFile fileExcel)
         {
-            var result = _lopHocChiTietDependency.ImportSinhVienVaoLopHocChiTiet(MaLop, fileExcel);
+            try { 
+                  var result = _lopHocChiTietDependency.ImportSinhVienVaoLopHocChiTiet(MaLop, fileExcel);
 
             if (!result.Success)
             {
@@ -75,7 +76,12 @@ namespace ApFpoly_API.Controllers
            
 
           
-            return Ok(lopHocChiTiets);
+            return Ok(lopHocChiTiets);     }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+      
         }
 
 

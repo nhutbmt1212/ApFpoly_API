@@ -97,5 +97,25 @@ namespace ApFpoly_API.Services.Implementations
             var hocKyBlock = _dbContext.HocKyBlock.FirstOrDefault(x=>x.NgayBatDau < datetime && x.NgayKetThuc > datetime);
             return hocKyBlock;
         }
+        public async Task<IEnumerable<HocKyBlock>> SearchingHocKyBlockForTimKiem(string searchString, int limitItem)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = RemoveDiacritics(searchString).ToLower();
+                var students = _dbContext.HocKyBlock.AsEnumerable()
+                               .Where(s => RemoveDiacritics(s.MaHocKyBlock.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenHocKy.ToLower()).Contains(searchString)
+                                        || RemoveDiacritics(s.TenBlock.ToString()).Contains(searchString)
+                                  )
+                               .Take(limitItem)
+                               .ToList()
+                               ;
+                return students;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

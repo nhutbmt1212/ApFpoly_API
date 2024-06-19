@@ -32,15 +32,15 @@ namespace ApFpoly_API.Services.Implementations
                         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
                         ExcelWorksheet workSheet = package.Workbook.Worksheets.First();
-                        int rowCount = workSheet.Dimension.Rows;
+                        int rowCount = workSheet.Dimension?.Rows ?? 0;
 
                         for (int row = 1; row <= rowCount; row++)
                         {
-                            string MaSinhVien = workSheet.Cells[row, 1].Value.ToString();
+                            string MaSinhVien = workSheet.Cells[row, 1].Value?.ToString() ?? string.Empty;
                             if (MaSinhVien != "Mã Sinh Viên" && MaSinhVien != "" && MaSinhVien != "BẢNG SINH VIÊN TRONG LỚP")
                             {
                                 var existSinhVien = LayLopHocChiTietTheoMaLopVaMaSinhVien(MaLop, MaSinhVien);
-                                if (existSinhVien != null)
+                                if (existSinhVien == null)
                                 {
                                     var IsFindMaSinhVien = _sinhVienDependency.LaySinhVienTheoMaSinhVien(MaSinhVien);
                                     if (IsFindMaSinhVien != null)
@@ -63,7 +63,6 @@ namespace ApFpoly_API.Services.Implementations
             {
                 return new ImportResultLopHocChiTiet { Success = false, Message = ex.Message, Data = null };
             }
-
             if (list_LopHocChiTiet.Count == 0)
             {
                 return new ImportResultLopHocChiTiet { Success = false, Message = "Không tồn tại sinh viên trong hệ thống", Data = null };
@@ -138,7 +137,7 @@ namespace ApFpoly_API.Services.Implementations
 
         public LopHocChiTiet LayLopHocChiTietTheoMaLopVaMaSinhVien(string MaLop, string MaSinhVien)
         {
-            var existSinhVien = _db.LopHocChiTiet.FirstOrDefault(s => s.MaSinhVien == MaSinhVien && s.MaLop == MaLop);
+            var existSinhVien = _db.LopHocChiTiet.FirstOrDefault(s => s.MaSinhVien == MaSinhVien && s.MaLop == MaLop && s.TinhTrang != "Đã xóa");
             return existSinhVien;
         }
 

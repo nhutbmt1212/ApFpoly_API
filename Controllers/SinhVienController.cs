@@ -70,7 +70,7 @@ namespace ApFpoly_API.Controllers
               
                 string Base64String = sinhvien.AnhSinhVien;
                 DateTime now = new DateTime();
-                sinhvien.MaSinhVien = "PK" + (soLuongSinhVien + 1).ToString("D4");
+                sinhvien.MaSinhVien = "PK" + (soLuongSinhVien + 1).ToString("D5");
                 sinhvien.AnhSinhVien = TaoTenFile(sinhvien.MaSinhVien, Base64String);
                 var sinhVienMoi = _sinhVien.ThemSinhVien(sinhvien);
                 XuLyAnhBase64(sinhvien.AnhSinhVien, Base64String);
